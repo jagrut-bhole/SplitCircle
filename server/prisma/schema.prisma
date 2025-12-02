@@ -12,3 +12,40 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id             String   @id @default(cuid())
+  username       String   @unique
+  email          String   @unique
+  passwordHashed String
+  name           String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  expensesPaid  Expense[] @relation("PaidBy")
+}
+
+model Expense {
+  id        String   @id @default(cuid())
+  title     String
+  amount    Float
+  date      DateTime
+  paidById  String
+  groupId   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  paidBy    User     @relation("PaidBy", fields: [paidById], references: [id])
+  @@index([paidById])
+  @@index([groupId])
+  @@index([date])
+}
+
+model Group {
+  id          String    @id @default(cuid())
+  name        String
+  createdById String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([createdById])
+}
