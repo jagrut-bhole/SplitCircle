@@ -35,14 +35,14 @@ export function generateRefreshToken(userId:string,email:string) {
 
     if(!expiry ||!secret) {
         throw new Error("Refresh token or expiry not defined!!");
-    }
-// @ts-ignore   
+    }  
+    //@ts-ignore
         return jwt.sign(
             {
                 userId,email
             },secret,
             {
-                expiresIn:expiry
+                expiresIn:process.env.REFRESH_TOKEN_EXPIRY as string
             }
         )
 }
