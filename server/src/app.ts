@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 
 //routes login
 import { authRouter } from './routes/auth.routes.js';
+import { userRouter } from './routes/user.routes.js';
+import { groupRouter } from './routes/group.routes.js';
 //
 
 const app:Express = express();
@@ -34,6 +36,8 @@ app.use('/health',(req:Request,res:Response) => {
 
 //Routes setup
 app.use('/api/v1/auth',authRouter);
+app.use('/api/v1/user',userRouter);
+app.use('/api/v1/group',groupRouter);
 //
 
 export default app;

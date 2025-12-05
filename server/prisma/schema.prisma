@@ -8,38 +8,179 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
-  email     String    @unique
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
   password  String
   name      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Expense   Expense[]
-}
-
-model Expense {
-  id        String   @id @default(cuid())
-  title     String
-  amount    Float
-  date      DateTime
-  paidById  String
-  groupId   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [paidById], references: [id])
 
-  @@index([date])
-  @@index([groupId])
-  @@index([paidById])
+  // RELATIONS
+  expensesPaid        Expense[]      @relation("PaidBy")
+  expensesSplits      ExpenseSplit[]
+  friendships1        Friendship[]   @relation("User1")
+  friendships2        Friendship[]   @relation("User2")
+  balancesAsUser1     Balance[]      @relation("BalanceUser1")
+  balancesAsUser2     Balance[]      @relation("BalanceUser2")
+  groupMemberships    GroupMember[] // Groups this user is part of
+  groupsCreated       Group[]        @relation("CreatedBy")
+  activities          Activity[]     @relation("ActivityActor")
+  settlementsGiven    Settlement[]   @relation("SettlementPayer")
+  settlementsReceived Settlement[]   @relation("SettlementReceiver")
+
+  @@index([username])
+  @@index([email])
+}
+
+model Friendship {
+  id        String   @id @default(cuid())
+  user1Id   String
+  user2Id   String
+  createdAt DateTime @default(now())
+
+  user1 User @relation("User1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2 User @relation("User2", fields: [user2Id], references: [id], onDelete: Cascade)
+
+  @@unique([user1Id, user2Id])
+  @@index([user1Id])
+  @@index([user2Id])
+}
+
+model Balance {
+  id          String   @id @default(cuid())
+  user1Id     String
+  user2Id     String
+  amount      Float
+  lastUpdated DateTime @updatedAt
+
+  user1 User @relation("BalanceUser1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2 User @relation("BalanceUser2", fields: [user2Id], references: [id], onDelete: Cascade)
+
+  @@unique([user1Id, user2Id])
+  @@index([user1Id])
+  @@index([user2Id])
 }
 
 model Group {
   id          String   @id @default(cuid())
   name        String
+  description String?
   createdById String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  //relations
+  createdBy   User          @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+  members     GroupMember[]
+  expenses    Expense[]
+  settlements Settlement[]
+  activities  Activity[]
+
   @@index([createdById])
+}
+
+model GroupMember {
+  id       String          @id @default(cuid())
+  groupId  String
+  userId   String
+  joinedAt DateTime        @default(now())
+
+  //relations
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
+}
+
+model Expense {
+  id          String    @id @default(cuid())
+  title       String
+  note        String
+  currency    String    @default("INR")
+  amount      Float
+  date        DateTime
+  paidById    String // User who paid the expense
+  groupId     String?
+  spliType    SplitType @default(EQUAL)
+  createdById String //User who created the expense entry
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  //relations
+  paidBy     User           @relation("PaidBy", fields: [paidById], references: [id], onDelete: Cascade)
+  group      Group?         @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  splits     ExpenseSplit[]
+  activities Activity[]
+
+  @@index([groupId])
+  @@index([paidById])
+  @@index([date])
+}
+
+enum SplitType {
+  EQUAL
+  UNEQUAL
+  PERCENTAGE
+}
+
+model ExpenseSplit {
+  id         String @id @default(cuid())
+  expenseId  String
+  userId     String
+  amount     Float // Amount this user owes
+  percentage Float? // Only used if splitType is PERCENTAGE
+
+  // Relations
+  expense Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([expenseId, userId]) // Each user appears once per expense
+  @@index([expenseId])
+  @@index([userId])
+}
+
+model Activity {
+  id           String       @id @default(cuid())
+  note         String
+  userId       String // User who performed the action
+  groupId      String?
+  expenseId    String?
+  settlementId String?
+  metadata     Json? // Additional data (old values, new values, etc.)
+  createdAt    DateTime     @default(now())
+
+  // Relations
+  actor      User        @relation("ActivityActor", fields: [userId], references: [id], onDelete: Cascade)
+  group      Group?      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  expense    Expense?    @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  settlement Settlement? @relation(fields: [settlementId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([groupId])
+  @@index([expenseId])
+  @@index([createdAt])
+}
+
+model Settlement {
+  id        String   @id @default(cuid())
+  groupId   String
+  paidById  String // User who is paying/settling
+  paidToId  String // User receiving the payment
+  amount    Float
+  note      String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  group      Group      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  paidBy     User       @relation("SettlementPayer", fields: [paidById], references: [id], onDelete: Cascade)
+  paidTo     User       @relation("SettlementReceiver", fields: [paidToId], references: [id], onDelete: Cascade)
+  activities Activity[]
+
+  @@index([groupId])
+  @@index([paidById])
+  @@index([paidToId])
+  @@index([createdAt])
 }
