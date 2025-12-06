@@ -3,7 +3,7 @@ import { normalizeFriendshipIds } from "../utils/friendships.utils.js";
 
 export class UserService {
 
-    async extractCurrentUser(username:string) {
+    async extractCurrentUserId(username:string) {
         const user = await prisma.user.findUnique({
             where: {
                 username
@@ -194,7 +194,9 @@ export class UserService {
                 id:friend.id,
                 name:friend.name,
                 username: friend.username,
-                email: friend.email
+                email: friend.email,
+                balance:finalBalance,
+                friendshipCreatedAt: f.createdAt
             })
         }
 

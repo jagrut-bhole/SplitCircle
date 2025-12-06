@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { authRouter } from './routes/auth.routes.js';
 import { userRouter } from './routes/user.routes.js';
 import { groupRouter } from './routes/group.routes.js';
+import { expenseRouter } from './routes/expense.routes.js';
 //
 
 const app:Express = express();
@@ -38,6 +39,7 @@ app.use('/health',(req:Request,res:Response) => {
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/group',groupRouter);
+app.use('/api/v1/expense',expenseRouter);
 //
 
 export default app;

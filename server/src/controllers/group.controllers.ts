@@ -33,7 +33,7 @@ export const createGroupController = asyncHandler(async(req:Request,res:Response
     }
 })
 
-export const getGroupUsers = asyncHandler(async(req:Request,res:Response) => {
+export const getGroupUsersController = asyncHandler(async(req:Request,res:Response) => {
     try {
         const currentUserId = req.user?.id as string;
 
@@ -70,58 +70,119 @@ export const getGroupUsers = asyncHandler(async(req:Request,res:Response) => {
     }
 })
 
-/*
-Step 2: List User's Groups
-Service Method
-Method: getUserGroups
-Parameters:
+export const getGroupDetailController = asyncHandler(async(req:Request,res:Response) => {
+    try {
+        const userId = req.user?.id as string;
 
-userId: string
-
-What it should do:
-
-Find all GroupMember records where userId matches
-Include the related Group and its members
-For each group, calculate:
-
-Total members count
-User's role (ADMIN/MEMBER)
-Total expenses count (optional)
-Outstanding balance (optional, can add later)
-
-
-Sort by most recently updated
-Return formatted list
-
-Prisma hint:
-typescriptconst groups = await prisma.groupMember.findMany({
-  where: { userId },
-  include: {
-    group: {
-      include: {
-        members: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                username: true
-              }
-            }
-          }
-        },
-        _count: {
-          select: {
-            expenses: true
-          }
+        if (!userId) {
+            return res.status(401).json({
+                message: "Unable to get User ID"
+            })
         }
-      }
+
+        const groupId = req.params.groupId as string;
+
+        if (!groupId) {
+            return res.status(401).json({
+                message : "Group Id not Found!!",
+                success : true
+            })
+        }
+
+        const result = await groupService.getGroupDetails(userId,groupId);
+
+        return res.status(201).json({
+            message : "Group Details Fetched SuccessFully!!",
+            success : true,
+            data : result
+        })
+
+    } catch (error:any) {
+        console.log("Error: ",error.message);
+
+        if(error.message === "You are not a member of this group!!") {
+            return res.status(401).json({
+                message: "You are not a member of this group!!",
+                success: false
+            })
+        }
+
+        if (error.message === "Group Not Found") {
+            return res.status(401).json()
+        }
+        
+        return res.status(500).json({
+            message: "Unable to fetch Group Details",
+            success:false
+        })
     }
-  },
-  orderBy: {
-    group: {
-      updatedAt: 'desc'
+})
+
+export const addMemberController = asyncHandler(async(req:Request,res:Response) => {
+    try {
+        const { username } = req.body as {
+            username : string
+        };
+
+        if (!username) {
+            return res.status(401).json({
+                message: "Please enter the username!!",
+                success: false
+            })
+        }
+
+        const groupId = req.params.groupId as string
+
+        if (!groupId) {
+            return res.status(401).json({
+                message: "Invalid Group ID",
+                success : false
+            })
+        }
+
+        const userId = req.user?.id as string;
+
+        const result = await groupService.addMembers(username , groupId, userId);
+
+        return res.status(200).json({
+            message: "Ding Ding !!",
+            success : true,
+            data : result
+        })
+
+    } catch (error : any) {
+        console.log("Error: ", error.message);
+
+        if(error.message === "Group Not Found") {
+            return res.status(400).json({
+                message: "Group Not Found!!",
+                success : false
+            })
+        }
+
+        if(error.message === "User is already a member of this group.") {
+            return res.status(401).json({
+                message:"User is already a member of this group!!",
+                success : false
+            })
+        }
+
+        return res.status(500).json({
+            messsage : "Unable to fetch group details",
+            success : false
+        })
     }
-  }
-});
-*/
+})
+
+//YODO
+export const removeMemberController = asyncHandler(async(req:Request,res:Response) => {
+    try {
+        const userId = req.user?.id as string;
+
+        const groupId = req.params.groupId  as string;
+
+        const result = await groupService.removeMember(userId,groupId);
+    } catch (error : any) {
+        console.log("Error: ",error.message);
+    }
+})

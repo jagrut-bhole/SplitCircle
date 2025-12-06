@@ -51,7 +51,7 @@ export const addFriendController = asyncHandler(async(req:Request,res:Response) 
             });
         }
 
-        const friendUserId = await userService.extractCurrentUser(username);
+        const friendUserId = await userService.extractCurrentUserId(username);
 
         if(!friendUserId || friendUserId.length === 0) {
             return res.status(400).json({

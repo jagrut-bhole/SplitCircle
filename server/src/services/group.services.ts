@@ -115,24 +115,187 @@ export class GroupService {
     }
     }
 
-    async getGroupUsers(userId : string) {
-        const allgroups = await prisma.group.findMany({
-            where:  {
-                id : userId
+    async getGroupUsers(userId:string) {
+        const groups = await prisma.groupMember.findMany({
+            where: {
+                userId
             },
-            select : {
-                name : true,
-                description:true
+            include: {
+                group: {
+                    include : {
+                        members : {
+                            include : {
+                                user: {
+                                    select : {
+                                        id : true,
+                                        name : true,
+                                        username : true
+                                    }
+                                }
+                            } 
+                        },
+                        _count: {
+                            select: {
+                                expenses:true
+                            }
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                group: {
+                    updatedAt: 'desc'
+                }
             }
-        });
+        })
 
-        if (allgroups.length === 0) {
-            throw new Error("Groups Not Made")
-        }
         return {
-            group : allgroups,
-            success : true
+            group: groups,
+            success: true
         }
+    }
+
+    async getGroupDetails(userId : string, groupId : string) {
+
+        const isMember = await prisma.groupMember.findUnique({
+            where : {
+                groupId_userId: {
+                    groupId,
+                    userId
+                }
+            } 
+        })
+        if (!isMember) {
+            throw new Error("You are not a member of this group!!")
+        }
+
+        const group = await prisma.group.findMany({
+            where : {
+                id : groupId
+            },
+            include : {
+                members : {
+                    include : {
+                        user : {
+                            select : {
+                                id : true,
+                                name : true,
+                                username : true 
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        if (!group) {
+            throw new Error("Group Not Found");
+        }
+
+        const recentExpenses = await prisma.expense.findMany({
+            where : {
+                groupId : groupId
+            },
+            orderBy : {
+                createdAt : 'desc' 
+            },
+            include : {
+                paidBy: {
+                    select: {
+                        id :  true,
+                        name : true,
+                        username : true,
+                    }
+                }
+            }
+        })
+
+        return {
+            group,
+            recentExpenses
+        }
+    }
+
+    async addMembers(username : string, groupId : string, addedByUserId : string) {
+
+        const userToBeAdded = await userService.extractCurrentUserId(username) as string;
+
+        const group = await prisma.group.findUnique({
+            where : {
+                id : groupId 
+            } 
+        })
+
+        if (!group) {
+            throw new Error("Group Not Found");
+        }
+
+        const existingMember = await prisma.groupMember.findUnique({
+            where: {
+                groupId_userId : {
+                    groupId,
+                    userId : userToBeAdded
+                }
+            }
+        })
+
+        if (existingMember) {
+            throw new Error("User is already a member of this group.")
+        }
+
+        const result = await prisma.$transaction(async tx => {
+            await tx.groupMember.create({
+                data: {
+                    groupId,
+                    userId : userToBeAdded
+                }
+            })
+
+            const addedName = await userService.extractNameFromId(userToBeAdded) as string;
+            const addedBy = await userService.extractNameFromId(addedByUserId) as string;
+
+            await tx.activity.create({
+                data: {
+                    userId:addedByUserId,
+                    groupId,
+                    note: `${addedBy} added ${addedName} to the group`
+                }
+            })
+
+            return await tx.group.findUnique({
+                where : {
+                    id : groupId
+                },
+                include: {
+                    members : {
+                        include : {
+                            user : {
+                                select : {
+                                    id : true,
+                                    name : true,
+                                    email : true,
+                                    username : true
+                                } 
+                            }
+                        }
+                    }
+                }
+            })
+
+        })
+        return {
+            message: "Member added successfully!!",
+            data: result
+        }
+    }
+
+    //TODO
+    async removeMember(userId : string, groupId : string) {
+        const removed = await prisma.groupMember.delete({
+            where : {
+                id : groupId
+            }
+        })
     }
 
 }

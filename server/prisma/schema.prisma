@@ -81,10 +81,10 @@ model Group {
 }
 
 model GroupMember {
-  id       String          @id @default(cuid())
+  id       String   @id @default(cuid())
   groupId  String
   userId   String
-  joinedAt DateTime        @default(now())
+  joinedAt DateTime @default(now())
 
   //relations
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -104,7 +104,8 @@ model Expense {
   date        DateTime
   paidById    String // User who paid the expense
   groupId     String?
-  spliType    SplitType @default(EQUAL)
+  splitType   SplitType @default(EQUAL)
+  scenario    String?
   createdById String //User who created the expense entry
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -143,14 +144,14 @@ model ExpenseSplit {
 }
 
 model Activity {
-  id           String       @id @default(cuid())
+  id           String   @id @default(cuid())
   note         String
   userId       String // User who performed the action
   groupId      String?
   expenseId    String?
   settlementId String?
   metadata     Json? // Additional data (old values, new values, etc.)
-  createdAt    DateTime     @default(now())
+  createdAt    DateTime @default(now())
 
   // Relations
   actor      User        @relation("ActivityActor", fields: [userId], references: [id], onDelete: Cascade)
