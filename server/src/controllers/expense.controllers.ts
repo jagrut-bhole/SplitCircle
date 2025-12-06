@@ -216,7 +216,7 @@ export const updateFriendExpenseController = asyncHandler(async(req:Request,res:
         );
 
         return res.status(200).json({
-            message: "Expense Detail feched SuccessFully!!",
+            message: "Expense Updated SuccessFully!!",
             success : true,
             data : expense
         })
@@ -255,11 +255,67 @@ export const updateFriendExpenseController = asyncHandler(async(req:Request,res:
     }
 })
 
-/*
-        // if (scenario && !validScenarios.includes(scenario)) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: 'Invalid scenario'
-        //     });
-        // }
-*/
+export const deleteFriendExpenseController = asyncHandler(async(req:Request,res:Response)  => {
+    try {
+
+        const { expenseId } = req.params;
+
+        const currentUserId = req.user?.id as string;
+
+        if (!currentUserId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized'
+            });
+        }
+
+        const expense = await expenseServices.deleteFriendExpense(
+            currentUserId,
+            expenseId,
+        );
+
+        return res.status(200).json({
+            message: "Expense Deleted SuccessFully!!",
+            success : true,
+            data : expense
+        })
+    } catch (error:any) {
+        console.log("Error: ",error.message);
+
+        if (error.message === "Balance record not found") {
+            return res.status(403).json({
+                message: error.message,
+                success:false
+            })
+        }
+        if (error.message === "Cannot delete group expense with this endpoint") {
+            return res.status(400).json({
+                message: error.message,
+                success:false
+            })
+        }
+        if (error.message === "Expense not found") {
+            return res.status(400).json({
+                message: error.message,
+                success:false
+            })
+        }
+        if (error.message === "You can\'t delete this expense") {
+            return res.status(400).json({
+                message: error.message,
+                success:false
+            })
+        }
+        if (error.message === "Balance Not Found!!") {
+            return res.status(400).json({
+                message: error.message,
+                success:false
+            })
+        }
+
+        return res.status(500).json({
+            message: "Can't fetched the Expense Detail, Server Error",
+            success:false
+        })
+    }
+})

@@ -381,6 +381,119 @@ export class ExpenseServices {
         }
     }
 
+    async deleteFriendExpense(currentUserId:string , expenseId : string) {
+        const expense = await prisma.expense.findUnique({
+            where : {
+                id : expenseId 
+            },
+            include : {
+                splits : true,
+                paidBy :true
+            }
+        });
+
+        if (!expense) {
+             throw new Error("Expense not found");
+        }
+
+        if (expense.groupId !== null) {
+            throw new Error('Cannot delete group expense with this endpoint');
+        }
+
+        const userThere = expense?.splits.find(s => s.userId === currentUserId);
+
+        if (!userThere) {
+            throw new Error("you can\'t delete this expense")
+        }
+
+        const [split1,split2] = expense?.splits;
+
+        const user1Id = split1.userId;
+        const user2Id = split2.userId;
+
+        const friendId = user1Id === currentUserId ? user2Id : user1Id;
+
+        const currentUserOwes  = expense.splits.find(s => s.userId === currentUserId)!.amount;
+        const friendOwes = expense.splits.find(s => s.userId === friendId)!.amount
+
+        const oldBalanceChange = calculateBalanceChange(
+            currentUserId,
+            friendId,
+            currentUserOwes ,
+            friendOwes
+        )
+
+        const deletedExpenseDetails = {
+            note : expense.note,
+            amount : expense.amount,
+            title: expense.title,
+            paidBy : expense.paidBy,
+            paidById : expense.paidById,
+            splitType : expense.splitType,
+            currentUserOwed: currentUserOwes,
+            friendOwed: friendOwes
+        }
+
+        const result = await prisma.$transaction(async (tx) => {
+
+            const {user1Id,user2Id} = normalizeFriendshipIds(currentUserId,friendId)
+
+            const balance = await tx.balance.findUnique({
+                where: {
+                    user1Id_user2Id : {
+                        user1Id,
+                        user2Id
+                    }
+                }
+            });
+
+            if (!balance) {
+                throw new Error('Balance record not found');
+            }
+
+            await tx.balance.update({
+                where: {
+                    id : balance.id
+                } ,
+                data : {
+                    amount : balance.amount - oldBalanceChange
+                }
+            })
+
+            // deleting the expense
+            await tx.expenseSplit.deleteMany({
+                where : {
+                expenseId : expenseId
+                }
+            })
+
+            // delete the expense
+            await tx.expense.delete({
+                where : {
+                    id: expenseId
+                }
+            })
+
+            await tx.activity.create({
+                data : {
+                    note : `Deleted expense: ${deletedExpenseDetails}`,
+                    userId : currentUserId,
+                    metadata : {
+                        deletedExpense : deletedExpenseDetails
+                    }
+                }
+            })
+            return {
+                success: true,
+                deletedExpense : deletedExpenseDetails
+            }
+        })
+
+        return {
+            expense
+        }
+    }
+
 // methods
 
     private calculateSplits(
@@ -488,5 +601,5 @@ export class ExpenseServices {
             }
         })
     }
-    
+   
 }

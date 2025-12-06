@@ -9,8 +9,38 @@ export class UserService {
                 username
             }
         });
+        if (!user) {
+            throw new Error(`User with username "${username}" not found`);
+        }
 
         return user?.id;
+    }
+
+    async getUserIdUsernames(usernames:string[]):Promise<Map<string,string>> {
+        const users = await prisma.user.findMany({
+            where : {
+                username : {
+                    in : usernames
+                }
+            },
+            select : {
+                id : true,
+                username : true
+            }
+        });
+
+        const usernameToIdMap = new Map<string , string>();
+        users.forEach(user => {
+            usernameToIdMap.set(user.username, user.id);
+        });
+
+        const notFound = usernames.filter(username => !usernameToIdMap.has(username));
+        if (notFound.length > 0) {
+            throw new Error(`Users not found: ${notFound.join(', ')}`);
+        }
+
+        return usernameToIdMap;
+        
     }
 
     async searchUserByUsername(
