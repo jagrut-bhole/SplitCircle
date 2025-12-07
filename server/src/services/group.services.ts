@@ -3,6 +3,9 @@ import { normalizeFriendshipIds } from '../utils/friendships.utils.js';
 import { UserService } from './user.services.js';
 const userService = new UserService();
 
+import { EmailServices } from './email.services.js';
+
+
 export class GroupService {
 
     async createGroup(

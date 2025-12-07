@@ -7,6 +7,7 @@ import { authRouter } from './routes/auth.routes.js';
 import { userRouter } from './routes/user.routes.js';
 import { groupRouter } from './routes/group.routes.js';
 import { expenseRouter } from './routes/expense.routes.js';
+import {settlementRouter} from './routes/settlement.routes.js';
 //
 
 const app:Express = express();
@@ -40,6 +41,7 @@ app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/group',groupRouter);
 app.use('/api/v1/expense',expenseRouter);
+app.use('/api/v1/settlement',settlementRouter);
 //
 
 export default app;

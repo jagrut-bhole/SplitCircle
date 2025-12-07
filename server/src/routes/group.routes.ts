@@ -8,7 +8,7 @@ import {
     getGroupDetailController, 
     getGroupUsersController, 
     updateGroupExpenseController,
-    deleteGroupController
+    deleteGroupController,
 } from "../controllers/group.controllers.js";
 
 const groupRouter:Router = Router();
