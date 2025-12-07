@@ -7,6 +7,11 @@ const groupService = new GroupService();
 import { UserService } from "../services/user.services.js";
 const userService = new UserService();
 
+import { EmailServices } from "../services/email.services.js";
+const emailService = new EmailServices();
+
+import {prisma} from '../index.js'
+
 export const createGroupController = asyncHandler(async(req:Request,res:Response) => {
     try {
         const {name,description,memberUsernames} = req.body as {
@@ -146,6 +151,24 @@ export const addMemberController = asyncHandler(async(req:Request,res:Response) 
         const userId = req.user?.id as string;
 
         const result = await groupService.addMembers(username , groupId, userId);
+
+        const group = await prisma.group.findUnique({
+            where : {
+                id : groupId
+            }
+        })
+
+        const currentUser = await userService.getUserDetails(userId);
+
+        const currentFriend = await userService.getUserDetails(result.data.userToBeAdded);
+
+        await emailService.sendGroupInviteEmail(
+            currentFriend.user.name,
+            currentFriend.user.email,
+            group?.name as string,
+            currentUser.user.name,
+            currentUser.user.username
+        );
 
         return res.status(200).json({
             message: "Ding Ding !!",

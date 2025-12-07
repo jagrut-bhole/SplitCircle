@@ -286,7 +286,7 @@ export class GroupService {
         })
         return {
             message: "Member added successfully!!",
-            data: result
+            data: {result,userToBeAdded}
         }
     }
 

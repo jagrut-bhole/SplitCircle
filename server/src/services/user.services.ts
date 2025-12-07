@@ -111,7 +111,11 @@ export class UserService {
         const users = await prisma.user.findMany({
             where: {
                 id: {
-                    in:[currentUserId,friendUserId]
+                    in:
+                    [
+                        currentUserId,
+                        friendUserId
+                    ]
                 }
             }
         });
@@ -250,5 +254,19 @@ export class UserService {
         })
 
         return user?.name;
+    }
+
+    async getUserDetails(userId : string) {
+        const user = await prisma.user.findUnique({
+            where : {
+                id : userId
+            }
+        });
+
+        if (!user) {
+            throw new Error("User not found!!");
+        }
+
+        return {user};
     }
 }

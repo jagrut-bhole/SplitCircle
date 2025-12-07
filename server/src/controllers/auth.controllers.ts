@@ -5,10 +5,13 @@ import jwt from "jsonwebtoken"
 import { generateAccessToken, generateRefreshToken, hashedPassword, isPasswordCorrect } from "../services/auth.services.js";
 import { JWTpayload } from "../types/auth.types.js";
 
-        const options = {
-            httpOnly:true,
-            secure:true
-        }
+const options = {
+    httpOnly:true,
+    secure:true
+}
+
+import { EmailServices } from "../services/email.services.js";
+const emailService = new EmailServices();
 
 export const registerController = asyncHandler(async(req:Request,res:Response) => {
 
@@ -54,6 +57,12 @@ export const registerController = asyncHandler(async(req:Request,res:Response) =
                     password: passwordHashed
                 }
             });
+
+            await emailService.sendWelcomeEmail(
+                user.name,
+                user.email,
+                user.username
+            )
     
             const accessToken = generateAccessToken(user.id,email)
             const refreshToken = generateRefreshToken(user.id,email)
@@ -270,7 +279,12 @@ export const changePasswordController = asyncHandler(async(req:Request,res:Respo
             data: {
                 password: newPasswordHashed
             }
-        })
+        });
+
+        await emailService.sendPasswordChangeConfirmation(
+            user.name,
+            user.email
+        )
 
         return res.status(201).json({
             message: "Password Changed Successfully!!"
@@ -318,7 +332,7 @@ export const changeEmailController = asyncHandler(async(req:Request,res:Response
             });
         }
 
-        const emailUpdate = await prisma.user.update({
+        const emailUpdated = await prisma.user.update({
             where: {
                 id:user.id
             },
@@ -326,6 +340,12 @@ export const changeEmailController = asyncHandler(async(req:Request,res:Response
                 email: newEmail
             }
         });
+
+        await emailService.sendEmailChangeNotification(
+            emailUpdated.name,
+            user.email,
+            emailUpdated.email
+        )
         
         const userResponse = {
             id:user.id,
