@@ -13,7 +13,7 @@ import {settlementRouter} from './routes/settlement.routes.js';
 const app:Express = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    // origin: process.env.CORS_ORIGIN || '*',
     // credentials:true
 }));
 
@@ -35,6 +35,10 @@ app.use('/health',(req:Request,res:Response) => {
         status: 200
     })
 });
+
+app.use('/' , (req :  Request,res:Response) => {
+    res.send("Welcome to SplitCircle");
+} )
 
 //Routes setup
 app.use('/api/v1/auth',authRouter);
