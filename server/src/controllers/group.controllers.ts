@@ -34,7 +34,7 @@ export const createGroupController = asyncHandler(async(req:Request,res:Response
             message : "Group Created Successfully!!",
             success : true,
             data : result,
-            statusCode : 201
+            status : 201
         })
     } catch ( error : any ) {
         console.log("Error: ",error.message);

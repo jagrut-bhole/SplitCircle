@@ -105,7 +105,7 @@ export const loginController = asyncHandler(async (req, res) => {
         res.cookie('access_token', accessToken, options);
         res.status(200).json({
             message: "User Login Successfully!!",
-            statusCode: 200,
+            status: 200,
             user: userResponse
         });
     }
@@ -114,7 +114,7 @@ export const loginController = asyncHandler(async (req, res) => {
         return res.status(500).json({
             message: "Error while user LoggedIn",
             error: error.message,
-            statusCode: 500
+            status: 500
         });
     }
 });

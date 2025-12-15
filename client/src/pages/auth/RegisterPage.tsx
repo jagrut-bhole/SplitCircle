@@ -163,7 +163,7 @@ export const RegisterPage = () => {
                         {isLoading ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Creating account...
+                                Please wait...
                             </>
                         ) : (
                             "Register"

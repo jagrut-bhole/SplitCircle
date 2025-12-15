@@ -1,9 +1,11 @@
-import React from "react";
+import { NavBar } from "@/components/NavBar"
+
 
 export const Dashboard = () => {
     return (
-        <div className="text-center">
-            <h2>DashBoard</h2>
+        <div >
+            <NavBar />
+            
         </div>
     )
 }

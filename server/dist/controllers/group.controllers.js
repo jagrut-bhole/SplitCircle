@@ -20,7 +20,7 @@ export const createGroupController = asyncHandler(async (req, res) => {
             message: "Group Created Successfully!!",
             success: true,
             data: result,
-            statusCode: 201
+            status: 201
         });
     }
     catch (error) {

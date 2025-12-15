@@ -138,7 +138,7 @@ export const loginController = asyncHandler( async(req:Request,res:Response) => 
 
         res.status(200).json({
             message:"User Login Successfully!!",
-            statusCode:200,
+            status:200,
             user:userResponse
         });
     } catch (error: any) {
@@ -146,7 +146,7 @@ export const loginController = asyncHandler( async(req:Request,res:Response) => 
         return res.status(500).json({
             message: "Error while user LoggedIn",
             error: error.message,
-            statusCode: 500
+            status: 500
         });
     }
 });
