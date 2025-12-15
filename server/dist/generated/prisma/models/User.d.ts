@@ -14,7 +14,7 @@ export type UserMinAggregateOutputType = {
     id: string | null;
     username: string | null;
     email: string | null;
-    passwordHashed: string | null;
+    password: string | null;
     name: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -23,7 +23,7 @@ export type UserMaxAggregateOutputType = {
     id: string | null;
     username: string | null;
     email: string | null;
-    passwordHashed: string | null;
+    password: string | null;
     name: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -32,7 +32,7 @@ export type UserCountAggregateOutputType = {
     id: number;
     username: number;
     email: number;
-    passwordHashed: number;
+    password: number;
     name: number;
     createdAt: number;
     updatedAt: number;
@@ -42,7 +42,7 @@ export type UserMinAggregateInputType = {
     id?: true;
     username?: true;
     email?: true;
-    passwordHashed?: true;
+    password?: true;
     name?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -51,7 +51,7 @@ export type UserMaxAggregateInputType = {
     id?: true;
     username?: true;
     email?: true;
-    passwordHashed?: true;
+    password?: true;
     name?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -60,7 +60,7 @@ export type UserCountAggregateInputType = {
     id?: true;
     username?: true;
     email?: true;
-    passwordHashed?: true;
+    password?: true;
     name?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -132,7 +132,7 @@ export type UserGroupByOutputType = {
     id: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt: Date;
     updatedAt: Date;
@@ -150,21 +150,41 @@ export type UserWhereInput = {
     id?: Prisma.StringFilter<"User"> | string;
     username?: Prisma.StringFilter<"User"> | string;
     email?: Prisma.StringFilter<"User"> | string;
-    passwordHashed?: Prisma.StringFilter<"User"> | string;
+    password?: Prisma.StringFilter<"User"> | string;
     name?: Prisma.StringFilter<"User"> | string;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     expensesPaid?: Prisma.ExpenseListRelationFilter;
+    expensesSplits?: Prisma.ExpenseSplitListRelationFilter;
+    friendships1?: Prisma.FriendshipListRelationFilter;
+    friendships2?: Prisma.FriendshipListRelationFilter;
+    balancesAsUser1?: Prisma.BalanceListRelationFilter;
+    balancesAsUser2?: Prisma.BalanceListRelationFilter;
+    groupMemberships?: Prisma.GroupMemberListRelationFilter;
+    groupsCreated?: Prisma.GroupListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
+    settlementsGiven?: Prisma.SettlementListRelationFilter;
+    settlementsReceived?: Prisma.SettlementListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     username?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    passwordHashed?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     expensesPaid?: Prisma.ExpenseOrderByRelationAggregateInput;
+    expensesSplits?: Prisma.ExpenseSplitOrderByRelationAggregateInput;
+    friendships1?: Prisma.FriendshipOrderByRelationAggregateInput;
+    friendships2?: Prisma.FriendshipOrderByRelationAggregateInput;
+    balancesAsUser1?: Prisma.BalanceOrderByRelationAggregateInput;
+    balancesAsUser2?: Prisma.BalanceOrderByRelationAggregateInput;
+    groupMemberships?: Prisma.GroupMemberOrderByRelationAggregateInput;
+    groupsCreated?: Prisma.GroupOrderByRelationAggregateInput;
+    activities?: Prisma.ActivityOrderByRelationAggregateInput;
+    settlementsGiven?: Prisma.SettlementOrderByRelationAggregateInput;
+    settlementsReceived?: Prisma.SettlementOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -173,17 +193,27 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
     OR?: Prisma.UserWhereInput[];
     NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
-    passwordHashed?: Prisma.StringFilter<"User"> | string;
+    password?: Prisma.StringFilter<"User"> | string;
     name?: Prisma.StringFilter<"User"> | string;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     expensesPaid?: Prisma.ExpenseListRelationFilter;
+    expensesSplits?: Prisma.ExpenseSplitListRelationFilter;
+    friendships1?: Prisma.FriendshipListRelationFilter;
+    friendships2?: Prisma.FriendshipListRelationFilter;
+    balancesAsUser1?: Prisma.BalanceListRelationFilter;
+    balancesAsUser2?: Prisma.BalanceListRelationFilter;
+    groupMemberships?: Prisma.GroupMemberListRelationFilter;
+    groupsCreated?: Prisma.GroupListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
+    settlementsGiven?: Prisma.SettlementListRelationFilter;
+    settlementsReceived?: Prisma.SettlementListRelationFilter;
 }, "id" | "username" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     username?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    passwordHashed?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -198,7 +228,7 @@ export type UserScalarWhereWithAggregatesInput = {
     id?: Prisma.StringWithAggregatesFilter<"User"> | string;
     username?: Prisma.StringWithAggregatesFilter<"User"> | string;
     email?: Prisma.StringWithAggregatesFilter<"User"> | string;
-    passwordHashed?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    password?: Prisma.StringWithAggregatesFilter<"User"> | string;
     name?: Prisma.StringWithAggregatesFilter<"User"> | string;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
@@ -207,47 +237,87 @@ export type UserCreateInput = {
     id?: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -256,7 +326,7 @@ export type UserUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -265,7 +335,7 @@ export type UserUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -274,7 +344,7 @@ export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     username?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    passwordHashed?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -283,7 +353,7 @@ export type UserMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     username?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    passwordHashed?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -292,7 +362,7 @@ export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     username?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    passwordHashed?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -307,6 +377,78 @@ export type StringFieldUpdateOperationsInput = {
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
 };
+export type UserCreateNestedOneWithoutFriendships1Input = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutFriendships1Input, Prisma.UserUncheckedCreateWithoutFriendships1Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendships1Input;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutFriendships2Input = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutFriendships2Input, Prisma.UserUncheckedCreateWithoutFriendships2Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendships2Input;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutFriendships1NestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutFriendships1Input, Prisma.UserUncheckedCreateWithoutFriendships1Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendships1Input;
+    upsert?: Prisma.UserUpsertWithoutFriendships1Input;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFriendships1Input, Prisma.UserUpdateWithoutFriendships1Input>, Prisma.UserUncheckedUpdateWithoutFriendships1Input>;
+};
+export type UserUpdateOneRequiredWithoutFriendships2NestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutFriendships2Input, Prisma.UserUncheckedCreateWithoutFriendships2Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendships2Input;
+    upsert?: Prisma.UserUpsertWithoutFriendships2Input;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFriendships2Input, Prisma.UserUpdateWithoutFriendships2Input>, Prisma.UserUncheckedUpdateWithoutFriendships2Input>;
+};
+export type UserCreateNestedOneWithoutBalancesAsUser1Input = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser1Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser1Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesAsUser1Input;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutBalancesAsUser2Input = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser2Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser2Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesAsUser2Input;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutBalancesAsUser1NestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser1Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser1Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesAsUser1Input;
+    upsert?: Prisma.UserUpsertWithoutBalancesAsUser1Input;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBalancesAsUser1Input, Prisma.UserUpdateWithoutBalancesAsUser1Input>, Prisma.UserUncheckedUpdateWithoutBalancesAsUser1Input>;
+};
+export type UserUpdateOneRequiredWithoutBalancesAsUser2NestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser2Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser2Input>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesAsUser2Input;
+    upsert?: Prisma.UserUpsertWithoutBalancesAsUser2Input;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBalancesAsUser2Input, Prisma.UserUpdateWithoutBalancesAsUser2Input>, Prisma.UserUncheckedUpdateWithoutBalancesAsUser2Input>;
+};
+export type UserCreateNestedOneWithoutGroupsCreatedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutGroupsCreatedInput, Prisma.UserUncheckedCreateWithoutGroupsCreatedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupsCreatedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutGroupsCreatedNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutGroupsCreatedInput, Prisma.UserUncheckedCreateWithoutGroupsCreatedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupsCreatedInput;
+    upsert?: Prisma.UserUpsertWithoutGroupsCreatedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGroupsCreatedInput, Prisma.UserUpdateWithoutGroupsCreatedInput>, Prisma.UserUncheckedUpdateWithoutGroupsCreatedInput>;
+};
+export type UserCreateNestedOneWithoutGroupMembershipsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutGroupMembershipsInput, Prisma.UserUncheckedCreateWithoutGroupMembershipsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupMembershipsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutGroupMembershipsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutGroupMembershipsInput, Prisma.UserUncheckedCreateWithoutGroupMembershipsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupMembershipsInput;
+    upsert?: Prisma.UserUpsertWithoutGroupMembershipsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGroupMembershipsInput, Prisma.UserUpdateWithoutGroupMembershipsInput>, Prisma.UserUncheckedUpdateWithoutGroupMembershipsInput>;
+};
 export type UserCreateNestedOneWithoutExpensesPaidInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesPaidInput, Prisma.UserUncheckedCreateWithoutExpensesPaidInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesPaidInput;
@@ -319,23 +461,625 @@ export type UserUpdateOneRequiredWithoutExpensesPaidNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExpensesPaidInput, Prisma.UserUpdateWithoutExpensesPaidInput>, Prisma.UserUncheckedUpdateWithoutExpensesPaidInput>;
 };
+export type UserCreateNestedOneWithoutExpensesSplitsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesSplitsInput, Prisma.UserUncheckedCreateWithoutExpensesSplitsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesSplitsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutExpensesSplitsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesSplitsInput, Prisma.UserUncheckedCreateWithoutExpensesSplitsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesSplitsInput;
+    upsert?: Prisma.UserUpsertWithoutExpensesSplitsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExpensesSplitsInput, Prisma.UserUpdateWithoutExpensesSplitsInput>, Prisma.UserUncheckedUpdateWithoutExpensesSplitsInput>;
+};
+export type UserCreateNestedOneWithoutActivitiesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActivitiesInput, Prisma.UserUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActivitiesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutActivitiesInput, Prisma.UserUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutActivitiesInput;
+    upsert?: Prisma.UserUpsertWithoutActivitiesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActivitiesInput, Prisma.UserUpdateWithoutActivitiesInput>, Prisma.UserUncheckedUpdateWithoutActivitiesInput>;
+};
+export type UserCreateNestedOneWithoutSettlementsGivenInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSettlementsGivenInput, Prisma.UserUncheckedCreateWithoutSettlementsGivenInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettlementsGivenInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutSettlementsReceivedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSettlementsReceivedInput, Prisma.UserUncheckedCreateWithoutSettlementsReceivedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettlementsReceivedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutSettlementsGivenNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSettlementsGivenInput, Prisma.UserUncheckedCreateWithoutSettlementsGivenInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettlementsGivenInput;
+    upsert?: Prisma.UserUpsertWithoutSettlementsGivenInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSettlementsGivenInput, Prisma.UserUpdateWithoutSettlementsGivenInput>, Prisma.UserUncheckedUpdateWithoutSettlementsGivenInput>;
+};
+export type UserUpdateOneRequiredWithoutSettlementsReceivedNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSettlementsReceivedInput, Prisma.UserUncheckedCreateWithoutSettlementsReceivedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettlementsReceivedInput;
+    upsert?: Prisma.UserUpsertWithoutSettlementsReceivedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSettlementsReceivedInput, Prisma.UserUpdateWithoutSettlementsReceivedInput>, Prisma.UserUncheckedUpdateWithoutSettlementsReceivedInput>;
+};
+export type UserCreateWithoutFriendships1Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutFriendships1Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutFriendships1Input = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutFriendships1Input, Prisma.UserUncheckedCreateWithoutFriendships1Input>;
+};
+export type UserCreateWithoutFriendships2Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutFriendships2Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutFriendships2Input = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutFriendships2Input, Prisma.UserUncheckedCreateWithoutFriendships2Input>;
+};
+export type UserUpsertWithoutFriendships1Input = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutFriendships1Input, Prisma.UserUncheckedUpdateWithoutFriendships1Input>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutFriendships1Input, Prisma.UserUncheckedCreateWithoutFriendships1Input>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutFriendships1Input = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutFriendships1Input, Prisma.UserUncheckedUpdateWithoutFriendships1Input>;
+};
+export type UserUpdateWithoutFriendships1Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutFriendships1Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUpsertWithoutFriendships2Input = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutFriendships2Input, Prisma.UserUncheckedUpdateWithoutFriendships2Input>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutFriendships2Input, Prisma.UserUncheckedCreateWithoutFriendships2Input>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutFriendships2Input = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutFriendships2Input, Prisma.UserUncheckedUpdateWithoutFriendships2Input>;
+};
+export type UserUpdateWithoutFriendships2Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutFriendships2Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutBalancesAsUser1Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutBalancesAsUser1Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutBalancesAsUser1Input = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser1Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser1Input>;
+};
+export type UserCreateWithoutBalancesAsUser2Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutBalancesAsUser2Input = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutBalancesAsUser2Input = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser2Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser2Input>;
+};
+export type UserUpsertWithoutBalancesAsUser1Input = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutBalancesAsUser1Input, Prisma.UserUncheckedUpdateWithoutBalancesAsUser1Input>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser1Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser1Input>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutBalancesAsUser1Input = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutBalancesAsUser1Input, Prisma.UserUncheckedUpdateWithoutBalancesAsUser1Input>;
+};
+export type UserUpdateWithoutBalancesAsUser1Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutBalancesAsUser1Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUpsertWithoutBalancesAsUser2Input = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutBalancesAsUser2Input, Prisma.UserUncheckedUpdateWithoutBalancesAsUser2Input>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBalancesAsUser2Input, Prisma.UserUncheckedCreateWithoutBalancesAsUser2Input>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutBalancesAsUser2Input = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutBalancesAsUser2Input, Prisma.UserUncheckedUpdateWithoutBalancesAsUser2Input>;
+};
+export type UserUpdateWithoutBalancesAsUser2Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutBalancesAsUser2Input = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutGroupsCreatedInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutGroupsCreatedInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutGroupsCreatedInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutGroupsCreatedInput, Prisma.UserUncheckedCreateWithoutGroupsCreatedInput>;
+};
+export type UserUpsertWithoutGroupsCreatedInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutGroupsCreatedInput, Prisma.UserUncheckedUpdateWithoutGroupsCreatedInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutGroupsCreatedInput, Prisma.UserUncheckedCreateWithoutGroupsCreatedInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutGroupsCreatedInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutGroupsCreatedInput, Prisma.UserUncheckedUpdateWithoutGroupsCreatedInput>;
+};
+export type UserUpdateWithoutGroupsCreatedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutGroupsCreatedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutGroupMembershipsInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutGroupMembershipsInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutGroupMembershipsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutGroupMembershipsInput, Prisma.UserUncheckedCreateWithoutGroupMembershipsInput>;
+};
+export type UserUpsertWithoutGroupMembershipsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutGroupMembershipsInput, Prisma.UserUncheckedUpdateWithoutGroupMembershipsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutGroupMembershipsInput, Prisma.UserUncheckedCreateWithoutGroupMembershipsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutGroupMembershipsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutGroupMembershipsInput, Prisma.UserUncheckedUpdateWithoutGroupMembershipsInput>;
+};
+export type UserUpdateWithoutGroupMembershipsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutGroupMembershipsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
 export type UserCreateWithoutExpensesPaidInput = {
     id?: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
 };
 export type UserUncheckedCreateWithoutExpensesPaidInput = {
     id?: string;
     username: string;
     email: string;
-    passwordHashed: string;
+    password: string;
     name: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
 };
 export type UserCreateOrConnectWithoutExpensesPaidInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -354,28 +1098,424 @@ export type UserUpdateWithoutExpensesPaidInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
 };
 export type UserUncheckedUpdateWithoutExpensesPaidInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     username?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHashed?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutExpensesSplitsInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutExpensesSplitsInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutExpensesSplitsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutExpensesSplitsInput, Prisma.UserUncheckedCreateWithoutExpensesSplitsInput>;
+};
+export type UserUpsertWithoutExpensesSplitsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutExpensesSplitsInput, Prisma.UserUncheckedUpdateWithoutExpensesSplitsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutExpensesSplitsInput, Prisma.UserUncheckedCreateWithoutExpensesSplitsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutExpensesSplitsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutExpensesSplitsInput, Prisma.UserUncheckedUpdateWithoutExpensesSplitsInput>;
+};
+export type UserUpdateWithoutExpensesSplitsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutExpensesSplitsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutActivitiesInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutActivitiesInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutActivitiesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutActivitiesInput, Prisma.UserUncheckedCreateWithoutActivitiesInput>;
+};
+export type UserUpsertWithoutActivitiesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutActivitiesInput, Prisma.UserUncheckedUpdateWithoutActivitiesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutActivitiesInput, Prisma.UserUncheckedCreateWithoutActivitiesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutActivitiesInput, Prisma.UserUncheckedUpdateWithoutActivitiesInput>;
+};
+export type UserUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserCreateWithoutSettlementsGivenInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsReceived?: Prisma.SettlementCreateNestedManyWithoutPaidToInput;
+};
+export type UserUncheckedCreateWithoutSettlementsGivenInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsReceived?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidToInput;
+};
+export type UserCreateOrConnectWithoutSettlementsGivenInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSettlementsGivenInput, Prisma.UserUncheckedCreateWithoutSettlementsGivenInput>;
+};
+export type UserCreateWithoutSettlementsReceivedInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementCreateNestedManyWithoutPaidByInput;
+};
+export type UserUncheckedCreateWithoutSettlementsReceivedInput = {
+    id?: string;
+    username: string;
+    email: string;
+    password: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPaidByInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutUserInput;
+    friendships1?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser1Input;
+    friendships2?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUser2Input;
+    balancesAsUser1?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser1Input;
+    balancesAsUser2?: Prisma.BalanceUncheckedCreateNestedManyWithoutUser2Input;
+    groupMemberships?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput;
+    groupsCreated?: Prisma.GroupUncheckedCreateNestedManyWithoutCreatedByInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutActorInput;
+    settlementsGiven?: Prisma.SettlementUncheckedCreateNestedManyWithoutPaidByInput;
+};
+export type UserCreateOrConnectWithoutSettlementsReceivedInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSettlementsReceivedInput, Prisma.UserUncheckedCreateWithoutSettlementsReceivedInput>;
+};
+export type UserUpsertWithoutSettlementsGivenInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutSettlementsGivenInput, Prisma.UserUncheckedUpdateWithoutSettlementsGivenInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSettlementsGivenInput, Prisma.UserUncheckedCreateWithoutSettlementsGivenInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutSettlementsGivenInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutSettlementsGivenInput, Prisma.UserUncheckedUpdateWithoutSettlementsGivenInput>;
+};
+export type UserUpdateWithoutSettlementsGivenInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsReceived?: Prisma.SettlementUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUncheckedUpdateWithoutSettlementsGivenInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsReceived?: Prisma.SettlementUncheckedUpdateManyWithoutPaidToNestedInput;
+};
+export type UserUpsertWithoutSettlementsReceivedInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutSettlementsReceivedInput, Prisma.UserUncheckedUpdateWithoutSettlementsReceivedInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSettlementsReceivedInput, Prisma.UserUncheckedCreateWithoutSettlementsReceivedInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutSettlementsReceivedInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutSettlementsReceivedInput, Prisma.UserUncheckedUpdateWithoutSettlementsReceivedInput>;
+};
+export type UserUpdateWithoutSettlementsReceivedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUpdateManyWithoutPaidByNestedInput;
+};
+export type UserUncheckedUpdateWithoutSettlementsReceivedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    username?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expensesPaid?: Prisma.ExpenseUncheckedUpdateManyWithoutPaidByNestedInput;
+    expensesSplits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutUserNestedInput;
+    friendships1?: Prisma.FriendshipUncheckedUpdateManyWithoutUser1NestedInput;
+    friendships2?: Prisma.FriendshipUncheckedUpdateManyWithoutUser2NestedInput;
+    balancesAsUser1?: Prisma.BalanceUncheckedUpdateManyWithoutUser1NestedInput;
+    balancesAsUser2?: Prisma.BalanceUncheckedUpdateManyWithoutUser2NestedInput;
+    groupMemberships?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput;
+    groupsCreated?: Prisma.GroupUncheckedUpdateManyWithoutCreatedByNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutActorNestedInput;
+    settlementsGiven?: Prisma.SettlementUncheckedUpdateManyWithoutPaidByNestedInput;
 };
 /**
  * Count Type UserCountOutputType
  */
 export type UserCountOutputType = {
     expensesPaid: number;
+    expensesSplits: number;
+    friendships1: number;
+    friendships2: number;
+    balancesAsUser1: number;
+    balancesAsUser2: number;
+    groupMemberships: number;
+    groupsCreated: number;
+    activities: number;
+    settlementsGiven: number;
+    settlementsReceived: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     expensesPaid?: boolean | UserCountOutputTypeCountExpensesPaidArgs;
+    expensesSplits?: boolean | UserCountOutputTypeCountExpensesSplitsArgs;
+    friendships1?: boolean | UserCountOutputTypeCountFriendships1Args;
+    friendships2?: boolean | UserCountOutputTypeCountFriendships2Args;
+    balancesAsUser1?: boolean | UserCountOutputTypeCountBalancesAsUser1Args;
+    balancesAsUser2?: boolean | UserCountOutputTypeCountBalancesAsUser2Args;
+    groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs;
+    groupsCreated?: boolean | UserCountOutputTypeCountGroupsCreatedArgs;
+    activities?: boolean | UserCountOutputTypeCountActivitiesArgs;
+    settlementsGiven?: boolean | UserCountOutputTypeCountSettlementsGivenArgs;
+    settlementsReceived?: boolean | UserCountOutputTypeCountSettlementsReceivedArgs;
 };
 /**
  * UserCountOutputType without action
@@ -392,22 +1532,92 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 export type UserCountOutputTypeCountExpensesPaidArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.ExpenseWhereInput;
 };
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExpensesSplitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ExpenseSplitWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFriendships1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.FriendshipWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFriendships2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.FriendshipWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBalancesAsUser1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BalanceWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBalancesAsUser2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BalanceWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGroupMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GroupMemberWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGroupsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GroupWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ActivityWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSettlementsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.SettlementWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSettlementsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.SettlementWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     username?: boolean;
     email?: boolean;
-    passwordHashed?: boolean;
+    password?: boolean;
     name?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     expensesPaid?: boolean | Prisma.User$expensesPaidArgs<ExtArgs>;
+    expensesSplits?: boolean | Prisma.User$expensesSplitsArgs<ExtArgs>;
+    friendships1?: boolean | Prisma.User$friendships1Args<ExtArgs>;
+    friendships2?: boolean | Prisma.User$friendships2Args<ExtArgs>;
+    balancesAsUser1?: boolean | Prisma.User$balancesAsUser1Args<ExtArgs>;
+    balancesAsUser2?: boolean | Prisma.User$balancesAsUser2Args<ExtArgs>;
+    groupMemberships?: boolean | Prisma.User$groupMembershipsArgs<ExtArgs>;
+    groupsCreated?: boolean | Prisma.User$groupsCreatedArgs<ExtArgs>;
+    activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>;
+    settlementsGiven?: boolean | Prisma.User$settlementsGivenArgs<ExtArgs>;
+    settlementsReceived?: boolean | Prisma.User$settlementsReceivedArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     username?: boolean;
     email?: boolean;
-    passwordHashed?: boolean;
+    password?: boolean;
     name?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -416,7 +1626,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     id?: boolean;
     username?: boolean;
     email?: boolean;
-    passwordHashed?: boolean;
+    password?: boolean;
     name?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -425,14 +1635,24 @@ export type UserSelectScalar = {
     id?: boolean;
     username?: boolean;
     email?: boolean;
-    passwordHashed?: boolean;
+    password?: boolean;
     name?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHashed" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     expensesPaid?: boolean | Prisma.User$expensesPaidArgs<ExtArgs>;
+    expensesSplits?: boolean | Prisma.User$expensesSplitsArgs<ExtArgs>;
+    friendships1?: boolean | Prisma.User$friendships1Args<ExtArgs>;
+    friendships2?: boolean | Prisma.User$friendships2Args<ExtArgs>;
+    balancesAsUser1?: boolean | Prisma.User$balancesAsUser1Args<ExtArgs>;
+    balancesAsUser2?: boolean | Prisma.User$balancesAsUser2Args<ExtArgs>;
+    groupMemberships?: boolean | Prisma.User$groupMembershipsArgs<ExtArgs>;
+    groupsCreated?: boolean | Prisma.User$groupsCreatedArgs<ExtArgs>;
+    activities?: boolean | Prisma.User$activitiesArgs<ExtArgs>;
+    settlementsGiven?: boolean | Prisma.User$settlementsGivenArgs<ExtArgs>;
+    settlementsReceived?: boolean | Prisma.User$settlementsReceivedArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -441,12 +1661,22 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: "User";
     objects: {
         expensesPaid: Prisma.$ExpensePayload<ExtArgs>[];
+        expensesSplits: Prisma.$ExpenseSplitPayload<ExtArgs>[];
+        friendships1: Prisma.$FriendshipPayload<ExtArgs>[];
+        friendships2: Prisma.$FriendshipPayload<ExtArgs>[];
+        balancesAsUser1: Prisma.$BalancePayload<ExtArgs>[];
+        balancesAsUser2: Prisma.$BalancePayload<ExtArgs>[];
+        groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[];
+        groupsCreated: Prisma.$GroupPayload<ExtArgs>[];
+        activities: Prisma.$ActivityPayload<ExtArgs>[];
+        settlementsGiven: Prisma.$SettlementPayload<ExtArgs>[];
+        settlementsReceived: Prisma.$SettlementPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         username: string;
         email: string;
-        passwordHashed: string;
+        password: string;
         name: string;
         createdAt: Date;
         updatedAt: Date;
@@ -780,6 +2010,16 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     expensesPaid<T extends Prisma.User$expensesPaidArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$expensesPaidArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    expensesSplits<T extends Prisma.User$expensesSplitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$expensesSplitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpenseSplitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    friendships1<T extends Prisma.User$friendships1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$friendships1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    friendships2<T extends Prisma.User$friendships2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$friendships2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    balancesAsUser1<T extends Prisma.User$balancesAsUser1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balancesAsUser1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    balancesAsUser2<T extends Prisma.User$balancesAsUser2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balancesAsUser2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    groupMemberships<T extends Prisma.User$groupMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    groupsCreated<T extends Prisma.User$groupsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    activities<T extends Prisma.User$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    settlementsGiven<T extends Prisma.User$settlementsGivenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$settlementsGivenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SettlementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    settlementsReceived<T extends Prisma.User$settlementsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$settlementsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SettlementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -808,7 +2048,7 @@ export interface UserFieldRefs {
     readonly id: Prisma.FieldRef<"User", 'String'>;
     readonly username: Prisma.FieldRef<"User", 'String'>;
     readonly email: Prisma.FieldRef<"User", 'String'>;
-    readonly passwordHashed: Prisma.FieldRef<"User", 'String'>;
+    readonly password: Prisma.FieldRef<"User", 'String'>;
     readonly name: Prisma.FieldRef<"User", 'String'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
@@ -1204,6 +2444,236 @@ export type User$expensesPaidArgs<ExtArgs extends runtime.Types.Extensions.Inter
     take?: number;
     skip?: number;
     distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[];
+};
+/**
+ * User.expensesSplits
+ */
+export type User$expensesSplitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExpenseSplit
+     */
+    select?: Prisma.ExpenseSplitSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ExpenseSplit
+     */
+    omit?: Prisma.ExpenseSplitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ExpenseSplitInclude<ExtArgs> | null;
+    where?: Prisma.ExpenseSplitWhereInput;
+    orderBy?: Prisma.ExpenseSplitOrderByWithRelationInput | Prisma.ExpenseSplitOrderByWithRelationInput[];
+    cursor?: Prisma.ExpenseSplitWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ExpenseSplitScalarFieldEnum | Prisma.ExpenseSplitScalarFieldEnum[];
+};
+/**
+ * User.friendships1
+ */
+export type User$friendships1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friendship
+     */
+    select?: Prisma.FriendshipSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Friendship
+     */
+    omit?: Prisma.FriendshipOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.FriendshipInclude<ExtArgs> | null;
+    where?: Prisma.FriendshipWhereInput;
+    orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[];
+    cursor?: Prisma.FriendshipWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[];
+};
+/**
+ * User.friendships2
+ */
+export type User$friendships2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friendship
+     */
+    select?: Prisma.FriendshipSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Friendship
+     */
+    omit?: Prisma.FriendshipOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.FriendshipInclude<ExtArgs> | null;
+    where?: Prisma.FriendshipWhereInput;
+    orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[];
+    cursor?: Prisma.FriendshipWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[];
+};
+/**
+ * User.balancesAsUser1
+ */
+export type User$balancesAsUser1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Balance
+     */
+    select?: Prisma.BalanceSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Balance
+     */
+    omit?: Prisma.BalanceOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BalanceInclude<ExtArgs> | null;
+    where?: Prisma.BalanceWhereInput;
+    orderBy?: Prisma.BalanceOrderByWithRelationInput | Prisma.BalanceOrderByWithRelationInput[];
+    cursor?: Prisma.BalanceWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BalanceScalarFieldEnum | Prisma.BalanceScalarFieldEnum[];
+};
+/**
+ * User.balancesAsUser2
+ */
+export type User$balancesAsUser2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Balance
+     */
+    select?: Prisma.BalanceSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Balance
+     */
+    omit?: Prisma.BalanceOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BalanceInclude<ExtArgs> | null;
+    where?: Prisma.BalanceWhereInput;
+    orderBy?: Prisma.BalanceOrderByWithRelationInput | Prisma.BalanceOrderByWithRelationInput[];
+    cursor?: Prisma.BalanceWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BalanceScalarFieldEnum | Prisma.BalanceScalarFieldEnum[];
+};
+/**
+ * User.groupMemberships
+ */
+export type User$groupMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: Prisma.GroupMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: Prisma.GroupMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupMemberInclude<ExtArgs> | null;
+    where?: Prisma.GroupMemberWhereInput;
+    orderBy?: Prisma.GroupMemberOrderByWithRelationInput | Prisma.GroupMemberOrderByWithRelationInput[];
+    cursor?: Prisma.GroupMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GroupMemberScalarFieldEnum | Prisma.GroupMemberScalarFieldEnum[];
+};
+/**
+ * User.groupsCreated
+ */
+export type User$groupsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: Prisma.GroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    where?: Prisma.GroupWhereInput;
+    orderBy?: Prisma.GroupOrderByWithRelationInput | Prisma.GroupOrderByWithRelationInput[];
+    cursor?: Prisma.GroupWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GroupScalarFieldEnum | Prisma.GroupScalarFieldEnum[];
+};
+/**
+ * User.activities
+ */
+export type User$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    where?: Prisma.ActivityWhereInput;
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
+};
+/**
+ * User.settlementsGiven
+ */
+export type User$settlementsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Settlement
+     */
+    select?: Prisma.SettlementSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Settlement
+     */
+    omit?: Prisma.SettlementOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.SettlementInclude<ExtArgs> | null;
+    where?: Prisma.SettlementWhereInput;
+    orderBy?: Prisma.SettlementOrderByWithRelationInput | Prisma.SettlementOrderByWithRelationInput[];
+    cursor?: Prisma.SettlementWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.SettlementScalarFieldEnum | Prisma.SettlementScalarFieldEnum[];
+};
+/**
+ * User.settlementsReceived
+ */
+export type User$settlementsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Settlement
+     */
+    select?: Prisma.SettlementSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Settlement
+     */
+    omit?: Prisma.SettlementOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.SettlementInclude<ExtArgs> | null;
+    where?: Prisma.SettlementWhereInput;
+    orderBy?: Prisma.SettlementOrderByWithRelationInput | Prisma.SettlementOrderByWithRelationInput[];
+    cursor?: Prisma.SettlementWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.SettlementScalarFieldEnum | Prisma.SettlementScalarFieldEnum[];
 };
 /**
  * User without action

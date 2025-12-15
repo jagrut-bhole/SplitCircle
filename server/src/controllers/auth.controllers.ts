@@ -29,7 +29,7 @@ export const registerController = asyncHandler(async(req:Request,res:Response) =
                 name?:string,
                 password?:string
             };
-    
+
             if (!username || !email || !name || !password) {
                 throw new Error("All fields are required!");
             }
@@ -72,7 +72,9 @@ export const registerController = asyncHandler(async(req:Request,res:Response) =
                 name:user.name,
                 username: user.username,
                 email:user.email,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                accessToken : accessToken,
+                refreshToken : refreshToken
             }
     
     
@@ -195,11 +197,15 @@ export const refreshAccesssToken = asyncHandler(async(req:Request,res:Response) 
     const newAccessToken = generateAccessToken(user.id,user.email);
     const newRefreshToken = generateRefreshToken(user.id,user.email);
 
+    // Set tokens as httpOnly cookies
+    res.cookie('refresh_token', newRefreshToken, options);
+    res.cookie('access_token', newAccessToken, options);
+
     res.status(200).json(
         {
             message: "Tokens Refreshed Successfully!!",
             access_token: newAccessToken,
-            refresh_token:newRefreshToken
+            refresh_token: newRefreshToken
         }
     )
 

@@ -1,7 +1,110 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-export const loginController = asyncHandler(async (req, res) => {
-    res.json({
-        message: "Login Controller working fine!!!"
-    });
+import { UserService } from "../services/user.services.js";
+const userService = new UserService();
+import { EmailServices } from "../services/email.services.js";
+import { prisma } from "../index.js";
+const emailService = new EmailServices();
+export const userSearchControler = asyncHandler(async (req, res) => {
+    try {
+        const friendUsername = req.query.username;
+        const currentUserId = req.user?.id;
+        if (!friendUsername || friendUsername.trim().length === 0) {
+            return res.status(400).json({
+                message: "Please enter the username!!",
+                success: false
+            });
+        }
+        const result = await userService.searchUserByUsername(friendUsername, currentUserId);
+        if (!result) {
+            return res.status(404).json({
+                message: "User not found!!"
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: "Server error while searching user"
+        });
+    }
+});
+export const addFriendController = asyncHandler(async (req, res) => {
+    try {
+        // const {friendUserId} = req.body;
+        const { username } = req.body;
+        if (!username || username.length === 0) {
+            return res.status(400).json({
+                message: "Username not provided!!"
+            });
+        }
+        const friendUserId = await userService.extractCurrentUserId(username);
+        if (!friendUserId || friendUserId.length === 0) {
+            return res.status(400).json({
+                message: "Please provide the valid friend"
+            });
+        }
+        const userId = req.user?.id;
+        if (!userId) {
+            return res.status(404).json({
+                message: "Tokens not get!!"
+            });
+        }
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+        const friend = await prisma.user.findUnique({
+            where: {
+                id: friendUserId
+            }
+        });
+        const addFriend = await userService.addFriend(userId, friendUserId);
+        await emailService.sendFriendAddedEmail(friend?.name, friend?.email, user?.name, user?.username);
+        return res.json({
+            message: "Friend added Successfully!!",
+            success: true,
+            data: addFriend
+        }).status(201);
+    }
+    catch (error) {
+        console.log("Error Message: ", error.message);
+        if (error.message === "Both are already friends" || error.message === "You cannot add yourself as Friend") {
+            return res.status(400).json({
+                message: error.message,
+                success: false
+            });
+        }
+        if (error.message === "One or both users do not exists") {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            });
+        }
+        return res.status(500).json({
+            message: "Can't add friends !! Please try again later!!",
+            success: false
+        });
+    }
+});
+export const getAllFriendsController = asyncHandler(async (req, res) => {
+    try {
+        const id = req.user?.id;
+        const result = await userService.getAllFriends(id);
+        return res.status(200).json({
+            message: "Feched the friends successfully!!",
+            success: true,
+            data: result
+        });
+    }
+    catch (error) {
+        console.log("Error: ", error.message);
+        return res.status(500).json({
+            message: "Can't find the friends, Please try again later!!"
+        });
+    }
 });
 //# sourceMappingURL=user.controllers.js.map

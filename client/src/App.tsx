@@ -1,21 +1,43 @@
-import { useQuery } from "@tanstack/react-query";
-import UserProfile from "./components/UserProfile";
+import { BrowserRouter, Routes, Route , Navigate } from "react-router-dom"
+
+// auth Pages 
+import { RegisterPage } from "./pages/auth/RegisterPage"
+import { LoginPage } from "./pages/auth/LoginPage"
+
+// dashboard Pages
+import { Dashboard } from "./pages/dashboard/DashBoard"
+import { ProtectedRouter } from "./components/ProtectedRoute"
+
+// landing page
+import { Landing } from "./pages/Landing"
+
+
 function App() {
 
-  const {data,isLoading} = useQuery({
-    queryKey: ['splitCircle'],
-    queryFn: async () => {
-
-    }
-  });
-
   return (
-    <>
-      <div className="bg-black/90 min-h-screen">
-        <h1 className="text-white/90 text-center flex justify-center hover:text-red-500 hover:cursor-pointer">{isLoading ? "isLoading..." : "Jagrut Bhole - SplitCircle"}</h1>
-      </div>
-      <UserProfile />
-    </>
+
+      <BrowserRouter>
+        <Routes>
+          // public routes
+          <Route path="/" element={<Landing />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage/>}/>
+
+          // protected routes
+          <Route path="/dashboard" element={
+                                            <ProtectedRouter>
+                                              <Dashboard />
+                                            </ProtectedRouter>
+                                            }
+          />
+                    {/* Redirect root to dashboard */}
+          <Route path="/" element={<Navigate to='/dashboard' replace />}  />
+
+                    {/* 404 pages */}
+          <Route path="*" element={<div>Page Not Found</div>}/>
+        </Routes>
+      </BrowserRouter>
+
   )
 }
 

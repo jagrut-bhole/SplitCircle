@@ -13,6 +13,7 @@ export type AggregateGroup = {
 export type GroupMinAggregateOutputType = {
     id: string | null;
     name: string | null;
+    description: string | null;
     createdById: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -20,6 +21,7 @@ export type GroupMinAggregateOutputType = {
 export type GroupMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
+    description: string | null;
     createdById: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -27,6 +29,7 @@ export type GroupMaxAggregateOutputType = {
 export type GroupCountAggregateOutputType = {
     id: number;
     name: number;
+    description: number;
     createdById: number;
     createdAt: number;
     updatedAt: number;
@@ -35,6 +38,7 @@ export type GroupCountAggregateOutputType = {
 export type GroupMinAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     createdById?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -42,6 +46,7 @@ export type GroupMinAggregateInputType = {
 export type GroupMaxAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     createdById?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -49,6 +54,7 @@ export type GroupMaxAggregateInputType = {
 export type GroupCountAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     createdById?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -119,6 +125,7 @@ export type GroupGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type GroupGroupByOutputType = {
     id: string;
     name: string;
+    description: string | null;
     createdById: string;
     createdAt: Date;
     updatedAt: Date;
@@ -135,16 +142,28 @@ export type GroupWhereInput = {
     NOT?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[];
     id?: Prisma.StringFilter<"Group"> | string;
     name?: Prisma.StringFilter<"Group"> | string;
+    description?: Prisma.StringNullableFilter<"Group"> | string | null;
     createdById?: Prisma.StringFilter<"Group"> | string;
     createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
+    createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    members?: Prisma.GroupMemberListRelationFilter;
+    expenses?: Prisma.ExpenseListRelationFilter;
+    settlements?: Prisma.SettlementListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
 };
 export type GroupOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    description?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    createdBy?: Prisma.UserOrderByWithRelationInput;
+    members?: Prisma.GroupMemberOrderByRelationAggregateInput;
+    expenses?: Prisma.ExpenseOrderByRelationAggregateInput;
+    settlements?: Prisma.SettlementOrderByRelationAggregateInput;
+    activities?: Prisma.ActivityOrderByRelationAggregateInput;
 };
 export type GroupWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -152,13 +171,20 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.GroupWhereInput[];
     NOT?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[];
     name?: Prisma.StringFilter<"Group"> | string;
+    description?: Prisma.StringNullableFilter<"Group"> | string | null;
     createdById?: Prisma.StringFilter<"Group"> | string;
     createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
+    createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    members?: Prisma.GroupMemberListRelationFilter;
+    expenses?: Prisma.ExpenseListRelationFilter;
+    settlements?: Prisma.SettlementListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
 }, "id">;
 export type GroupOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    description?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -172,6 +198,7 @@ export type GroupScalarWhereWithAggregatesInput = {
     NOT?: Prisma.GroupScalarWhereWithAggregatesInput | Prisma.GroupScalarWhereWithAggregatesInput[];
     id?: Prisma.StringWithAggregatesFilter<"Group"> | string;
     name?: Prisma.StringWithAggregatesFilter<"Group"> | string;
+    description?: Prisma.StringNullableWithAggregatesFilter<"Group"> | string | null;
     createdById?: Prisma.StringWithAggregatesFilter<"Group"> | string;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Group"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Group"> | Date | string;
@@ -179,34 +206,55 @@ export type GroupScalarWhereWithAggregatesInput = {
 export type GroupCreateInput = {
     id?: string;
     name: string;
-    createdById: string;
+    description?: string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    createdBy: Prisma.UserCreateNestedOneWithoutGroupsCreatedInput;
+    members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutGroupInput;
 };
 export type GroupUncheckedCreateInput = {
     id?: string;
     name: string;
+    description?: string | null;
     createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementUncheckedCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutGroupInput;
 };
 export type GroupUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    createdBy?: Prisma.UserUpdateOneRequiredWithoutGroupsCreatedNestedInput;
+    members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutGroupNestedInput;
 };
 export type GroupUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUncheckedUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutGroupNestedInput;
 };
 export type GroupCreateManyInput = {
     id?: string;
     name: string;
+    description?: string | null;
     createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -214,20 +262,30 @@ export type GroupCreateManyInput = {
 export type GroupUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type GroupUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
+export type GroupListRelationFilter = {
+    every?: Prisma.GroupWhereInput;
+    some?: Prisma.GroupWhereInput;
+    none?: Prisma.GroupWhereInput;
+};
+export type GroupOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
 export type GroupCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
     createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -235,6 +293,7 @@ export type GroupCountOrderByAggregateInput = {
 export type GroupMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
     createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -242,45 +301,546 @@ export type GroupMaxOrderByAggregateInput = {
 export type GroupMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
     createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
+export type GroupScalarRelationFilter = {
+    is?: Prisma.GroupWhereInput;
+    isNot?: Prisma.GroupWhereInput;
+};
+export type GroupNullableScalarRelationFilter = {
+    is?: Prisma.GroupWhereInput | null;
+    isNot?: Prisma.GroupWhereInput | null;
+};
+export type GroupCreateNestedManyWithoutCreatedByInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[];
+    createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope;
+    connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+};
+export type GroupUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[];
+    createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope;
+    connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+};
+export type GroupUpdateManyWithoutCreatedByNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[];
+    upsert?: Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput[];
+    createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope;
+    set?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    disconnect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    delete?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    update?: Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput[];
+    updateMany?: Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput | Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput[];
+    deleteMany?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[];
+};
+export type GroupUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[];
+    upsert?: Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput[];
+    createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope;
+    set?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    disconnect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    delete?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[];
+    update?: Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput[];
+    updateMany?: Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput | Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput[];
+    deleteMany?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[];
+};
+export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null;
+};
+export type GroupCreateNestedOneWithoutMembersInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutMembersInput, Prisma.GroupUncheckedCreateWithoutMembersInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutMembersInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+};
+export type GroupUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutMembersInput, Prisma.GroupUncheckedCreateWithoutMembersInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutMembersInput;
+    upsert?: Prisma.GroupUpsertWithoutMembersInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutMembersInput, Prisma.GroupUpdateWithoutMembersInput>, Prisma.GroupUncheckedUpdateWithoutMembersInput>;
+};
+export type GroupCreateNestedOneWithoutExpensesInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutExpensesInput, Prisma.GroupUncheckedCreateWithoutExpensesInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutExpensesInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+};
+export type GroupUpdateOneWithoutExpensesNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutExpensesInput, Prisma.GroupUncheckedCreateWithoutExpensesInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutExpensesInput;
+    upsert?: Prisma.GroupUpsertWithoutExpensesInput;
+    disconnect?: Prisma.GroupWhereInput | boolean;
+    delete?: Prisma.GroupWhereInput | boolean;
+    connect?: Prisma.GroupWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutExpensesInput, Prisma.GroupUpdateWithoutExpensesInput>, Prisma.GroupUncheckedUpdateWithoutExpensesInput>;
+};
+export type GroupCreateNestedOneWithoutActivitiesInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutActivitiesInput, Prisma.GroupUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutActivitiesInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+};
+export type GroupUpdateOneWithoutActivitiesNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutActivitiesInput, Prisma.GroupUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutActivitiesInput;
+    upsert?: Prisma.GroupUpsertWithoutActivitiesInput;
+    disconnect?: Prisma.GroupWhereInput | boolean;
+    delete?: Prisma.GroupWhereInput | boolean;
+    connect?: Prisma.GroupWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutActivitiesInput, Prisma.GroupUpdateWithoutActivitiesInput>, Prisma.GroupUncheckedUpdateWithoutActivitiesInput>;
+};
+export type GroupCreateNestedOneWithoutSettlementsInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutSettlementsInput, Prisma.GroupUncheckedCreateWithoutSettlementsInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutSettlementsInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+};
+export type GroupUpdateOneRequiredWithoutSettlementsNestedInput = {
+    create?: Prisma.XOR<Prisma.GroupCreateWithoutSettlementsInput, Prisma.GroupUncheckedCreateWithoutSettlementsInput>;
+    connectOrCreate?: Prisma.GroupCreateOrConnectWithoutSettlementsInput;
+    upsert?: Prisma.GroupUpsertWithoutSettlementsInput;
+    connect?: Prisma.GroupWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutSettlementsInput, Prisma.GroupUpdateWithoutSettlementsInput>, Prisma.GroupUncheckedUpdateWithoutSettlementsInput>;
+};
+export type GroupCreateWithoutCreatedByInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutGroupInput;
+};
+export type GroupUncheckedCreateWithoutCreatedByInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementUncheckedCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutGroupInput;
+};
+export type GroupCreateOrConnectWithoutCreatedByInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput>;
+};
+export type GroupCreateManyCreatedByInputEnvelope = {
+    data: Prisma.GroupCreateManyCreatedByInput | Prisma.GroupCreateManyCreatedByInput[];
+    skipDuplicates?: boolean;
+};
+export type GroupUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    update: Prisma.XOR<Prisma.GroupUpdateWithoutCreatedByInput, Prisma.GroupUncheckedUpdateWithoutCreatedByInput>;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput>;
+};
+export type GroupUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    data: Prisma.XOR<Prisma.GroupUpdateWithoutCreatedByInput, Prisma.GroupUncheckedUpdateWithoutCreatedByInput>;
+};
+export type GroupUpdateManyWithWhereWithoutCreatedByInput = {
+    where: Prisma.GroupScalarWhereInput;
+    data: Prisma.XOR<Prisma.GroupUpdateManyMutationInput, Prisma.GroupUncheckedUpdateManyWithoutCreatedByInput>;
+};
+export type GroupScalarWhereInput = {
+    AND?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[];
+    OR?: Prisma.GroupScalarWhereInput[];
+    NOT?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[];
+    id?: Prisma.StringFilter<"Group"> | string;
+    name?: Prisma.StringFilter<"Group"> | string;
+    description?: Prisma.StringNullableFilter<"Group"> | string | null;
+    createdById?: Prisma.StringFilter<"Group"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string;
+};
+export type GroupCreateWithoutMembersInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    createdBy: Prisma.UserCreateNestedOneWithoutGroupsCreatedInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutGroupInput;
+};
+export type GroupUncheckedCreateWithoutMembersInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementUncheckedCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutGroupInput;
+};
+export type GroupCreateOrConnectWithoutMembersInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutMembersInput, Prisma.GroupUncheckedCreateWithoutMembersInput>;
+};
+export type GroupUpsertWithoutMembersInput = {
+    update: Prisma.XOR<Prisma.GroupUpdateWithoutMembersInput, Prisma.GroupUncheckedUpdateWithoutMembersInput>;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutMembersInput, Prisma.GroupUncheckedCreateWithoutMembersInput>;
+    where?: Prisma.GroupWhereInput;
+};
+export type GroupUpdateToOneWithWhereWithoutMembersInput = {
+    where?: Prisma.GroupWhereInput;
+    data: Prisma.XOR<Prisma.GroupUpdateWithoutMembersInput, Prisma.GroupUncheckedUpdateWithoutMembersInput>;
+};
+export type GroupUpdateWithoutMembersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    createdBy?: Prisma.UserUpdateOneRequiredWithoutGroupsCreatedNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateWithoutMembersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUncheckedUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutGroupNestedInput;
+};
+export type GroupCreateWithoutExpensesInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    createdBy: Prisma.UserCreateNestedOneWithoutGroupsCreatedInput;
+    members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutGroupInput;
+};
+export type GroupUncheckedCreateWithoutExpensesInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementUncheckedCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutGroupInput;
+};
+export type GroupCreateOrConnectWithoutExpensesInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutExpensesInput, Prisma.GroupUncheckedCreateWithoutExpensesInput>;
+};
+export type GroupUpsertWithoutExpensesInput = {
+    update: Prisma.XOR<Prisma.GroupUpdateWithoutExpensesInput, Prisma.GroupUncheckedUpdateWithoutExpensesInput>;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutExpensesInput, Prisma.GroupUncheckedCreateWithoutExpensesInput>;
+    where?: Prisma.GroupWhereInput;
+};
+export type GroupUpdateToOneWithWhereWithoutExpensesInput = {
+    where?: Prisma.GroupWhereInput;
+    data: Prisma.XOR<Prisma.GroupUpdateWithoutExpensesInput, Prisma.GroupUncheckedUpdateWithoutExpensesInput>;
+};
+export type GroupUpdateWithoutExpensesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    createdBy?: Prisma.UserUpdateOneRequiredWithoutGroupsCreatedNestedInput;
+    members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateWithoutExpensesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUncheckedUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutGroupNestedInput;
+};
+export type GroupCreateWithoutActivitiesInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    createdBy: Prisma.UserCreateNestedOneWithoutGroupsCreatedInput;
+    members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementCreateNestedManyWithoutGroupInput;
+};
+export type GroupUncheckedCreateWithoutActivitiesInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput;
+    settlements?: Prisma.SettlementUncheckedCreateNestedManyWithoutGroupInput;
+};
+export type GroupCreateOrConnectWithoutActivitiesInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutActivitiesInput, Prisma.GroupUncheckedCreateWithoutActivitiesInput>;
+};
+export type GroupUpsertWithoutActivitiesInput = {
+    update: Prisma.XOR<Prisma.GroupUpdateWithoutActivitiesInput, Prisma.GroupUncheckedUpdateWithoutActivitiesInput>;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutActivitiesInput, Prisma.GroupUncheckedCreateWithoutActivitiesInput>;
+    where?: Prisma.GroupWhereInput;
+};
+export type GroupUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: Prisma.GroupWhereInput;
+    data: Prisma.XOR<Prisma.GroupUpdateWithoutActivitiesInput, Prisma.GroupUncheckedUpdateWithoutActivitiesInput>;
+};
+export type GroupUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    createdBy?: Prisma.UserUpdateOneRequiredWithoutGroupsCreatedNestedInput;
+    members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUncheckedUpdateManyWithoutGroupNestedInput;
+};
+export type GroupCreateWithoutSettlementsInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    createdBy: Prisma.UserCreateNestedOneWithoutGroupsCreatedInput;
+    members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutGroupInput;
+};
+export type GroupUncheckedCreateWithoutSettlementsInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput;
+    expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutGroupInput;
+};
+export type GroupCreateOrConnectWithoutSettlementsInput = {
+    where: Prisma.GroupWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutSettlementsInput, Prisma.GroupUncheckedCreateWithoutSettlementsInput>;
+};
+export type GroupUpsertWithoutSettlementsInput = {
+    update: Prisma.XOR<Prisma.GroupUpdateWithoutSettlementsInput, Prisma.GroupUncheckedUpdateWithoutSettlementsInput>;
+    create: Prisma.XOR<Prisma.GroupCreateWithoutSettlementsInput, Prisma.GroupUncheckedCreateWithoutSettlementsInput>;
+    where?: Prisma.GroupWhereInput;
+};
+export type GroupUpdateToOneWithWhereWithoutSettlementsInput = {
+    where?: Prisma.GroupWhereInput;
+    data: Prisma.XOR<Prisma.GroupUpdateWithoutSettlementsInput, Prisma.GroupUncheckedUpdateWithoutSettlementsInput>;
+};
+export type GroupUpdateWithoutSettlementsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    createdBy?: Prisma.UserUpdateOneRequiredWithoutGroupsCreatedNestedInput;
+    members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateWithoutSettlementsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutGroupNestedInput;
+};
+export type GroupCreateManyCreatedByInput = {
+    id?: string;
+    name: string;
+    description?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type GroupUpdateWithoutCreatedByInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateWithoutCreatedByInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput;
+    expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput;
+    settlements?: Prisma.SettlementUncheckedUpdateManyWithoutGroupNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutGroupNestedInput;
+};
+export type GroupUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type GroupCountOutputType
+ */
+export type GroupCountOutputType = {
+    members: number;
+    expenses: number;
+    settlements: number;
+    activities: number;
+};
+export type GroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    members?: boolean | GroupCountOutputTypeCountMembersArgs;
+    expenses?: boolean | GroupCountOutputTypeCountExpensesArgs;
+    settlements?: boolean | GroupCountOutputTypeCountSettlementsArgs;
+    activities?: boolean | GroupCountOutputTypeCountActivitiesArgs;
+};
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupCountOutputType
+     */
+    select?: Prisma.GroupCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GroupMemberWhereInput;
+};
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ExpenseWhereInput;
+};
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeCountSettlementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.SettlementWhereInput;
+};
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ActivityWhereInput;
+};
 export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    description?: boolean;
     createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    members?: boolean | Prisma.Group$membersArgs<ExtArgs>;
+    expenses?: boolean | Prisma.Group$expensesArgs<ExtArgs>;
+    settlements?: boolean | Prisma.Group$settlementsArgs<ExtArgs>;
+    activities?: boolean | Prisma.Group$activitiesArgs<ExtArgs>;
+    _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["group"]>;
 export type GroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    description?: boolean;
     createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["group"]>;
 export type GroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    description?: boolean;
     createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["group"]>;
 export type GroupSelectScalar = {
     id?: boolean;
     name?: boolean;
+    description?: boolean;
     createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["group"]>;
+export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["group"]>;
+export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    members?: boolean | Prisma.Group$membersArgs<ExtArgs>;
+    expenses?: boolean | Prisma.Group$expensesArgs<ExtArgs>;
+    settlements?: boolean | Prisma.Group$settlementsArgs<ExtArgs>;
+    activities?: boolean | Prisma.Group$activitiesArgs<ExtArgs>;
+    _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type GroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
 export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Group";
-    objects: {};
+    objects: {
+        createdBy: Prisma.$UserPayload<ExtArgs>;
+        members: Prisma.$GroupMemberPayload<ExtArgs>[];
+        expenses: Prisma.$ExpensePayload<ExtArgs>[];
+        settlements: Prisma.$SettlementPayload<ExtArgs>[];
+        activities: Prisma.$ActivityPayload<ExtArgs>[];
+    };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         name: string;
+        description: string | null;
         createdById: string;
         createdAt: Date;
         updatedAt: Date;
@@ -613,6 +1173,11 @@ export interface GroupDelegate<ExtArgs extends runtime.Types.Extensions.Internal
  */
 export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
+    createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    members<T extends Prisma.Group$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    expenses<T extends Prisma.Group$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    settlements<T extends Prisma.Group$settlementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$settlementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SettlementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    activities<T extends Prisma.Group$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -640,6 +1205,7 @@ export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface GroupFieldRefs {
     readonly id: Prisma.FieldRef<"Group", 'String'>;
     readonly name: Prisma.FieldRef<"Group", 'String'>;
+    readonly description: Prisma.FieldRef<"Group", 'String'>;
     readonly createdById: Prisma.FieldRef<"Group", 'String'>;
     readonly createdAt: Prisma.FieldRef<"Group", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Group", 'DateTime'>;
@@ -656,6 +1222,10 @@ export type GroupFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
      * Omit specific fields from the Group
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
     /**
      * Filter, which Group to fetch.
      */
@@ -674,6 +1244,10 @@ export type GroupFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    /**
      * Filter, which Group to fetch.
      */
     where: Prisma.GroupWhereUniqueInput;
@@ -690,6 +1264,10 @@ export type GroupFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Internal
      * Omit specific fields from the Group
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
     /**
      * Filter, which Group to fetch.
      */
@@ -738,6 +1316,10 @@ export type GroupFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    /**
      * Filter, which Group to fetch.
      */
     where?: Prisma.GroupWhereInput;
@@ -785,6 +1367,10 @@ export type GroupFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    /**
      * Filter, which Groups to fetch.
      */
     where?: Prisma.GroupWhereInput;
@@ -827,6 +1413,10 @@ export type GroupCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    /**
      * The data needed to create a Group.
      */
     data: Prisma.XOR<Prisma.GroupCreateInput, Prisma.GroupUncheckedCreateInput>;
@@ -858,6 +1448,10 @@ export type GroupCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
      */
     data: Prisma.GroupCreateManyInput | Prisma.GroupCreateManyInput[];
     skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Group update
@@ -871,6 +1465,10 @@ export type GroupUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
      * Omit specific fields from the Group
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
     /**
      * The data needed to update a Group.
      */
@@ -921,6 +1519,10 @@ export type GroupUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
      * Limit how many Groups to update.
      */
     limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Group upsert
@@ -934,6 +1536,10 @@ export type GroupUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
      * Omit specific fields from the Group
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
     /**
      * The filter to search for the Group to update in case it exists.
      */
@@ -960,6 +1566,10 @@ export type GroupDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    /**
      * Filter which Group to delete.
      */
     where: Prisma.GroupWhereUniqueInput;
@@ -978,6 +1588,98 @@ export type GroupDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
     limit?: number;
 };
 /**
+ * Group.members
+ */
+export type Group$membersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: Prisma.GroupMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: Prisma.GroupMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupMemberInclude<ExtArgs> | null;
+    where?: Prisma.GroupMemberWhereInput;
+    orderBy?: Prisma.GroupMemberOrderByWithRelationInput | Prisma.GroupMemberOrderByWithRelationInput[];
+    cursor?: Prisma.GroupMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GroupMemberScalarFieldEnum | Prisma.GroupMemberScalarFieldEnum[];
+};
+/**
+ * Group.expenses
+ */
+export type Group$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: Prisma.ExpenseSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: Prisma.ExpenseOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ExpenseInclude<ExtArgs> | null;
+    where?: Prisma.ExpenseWhereInput;
+    orderBy?: Prisma.ExpenseOrderByWithRelationInput | Prisma.ExpenseOrderByWithRelationInput[];
+    cursor?: Prisma.ExpenseWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[];
+};
+/**
+ * Group.settlements
+ */
+export type Group$settlementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Settlement
+     */
+    select?: Prisma.SettlementSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Settlement
+     */
+    omit?: Prisma.SettlementOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.SettlementInclude<ExtArgs> | null;
+    where?: Prisma.SettlementWhereInput;
+    orderBy?: Prisma.SettlementOrderByWithRelationInput | Prisma.SettlementOrderByWithRelationInput[];
+    cursor?: Prisma.SettlementWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.SettlementScalarFieldEnum | Prisma.SettlementScalarFieldEnum[];
+};
+/**
+ * Group.activities
+ */
+export type Group$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    where?: Prisma.ActivityWhereInput;
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
+};
+/**
  * Group without action
  */
 export type GroupDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -989,6 +1691,10 @@ export type GroupDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
      * Omit specific fields from the Group
      */
     omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
 };
 export {};
 //# sourceMappingURL=Group.d.ts.map

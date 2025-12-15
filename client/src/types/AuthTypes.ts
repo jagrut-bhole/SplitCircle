@@ -13,6 +13,7 @@ export interface LoginData {
 export interface User {
     id : string,
     name : string,
+    email : string,
     username : string,
     password : string
 }
@@ -20,7 +21,8 @@ export interface User {
 export interface AuthResponse {
     success : boolean,
     message : string,
-    user : User
+    user : User,
+    accessToken : string
 }
 
 export interface ChangeEmailData {

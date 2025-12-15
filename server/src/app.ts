@@ -12,10 +12,26 @@ import {settlementRouter} from './routes/settlement.routes.js';
 
 const app:Express = express();
 
+const allowedOrigins  : string[] = [
+    'http://localhost:5173'
+]
+
+
+
 app.use(cors({
-    // origin: process.env.CORS_ORIGIN || '*',
-    // credentials:true
-}));
+    origin : function (origin , callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, origin || allowedOrigins[0])
+        } else {
+            callback(new Error('Not allowed by CORS!!'));
+        }
+    },
+    credentials : true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Set-Cookie']
+}))
+
 
 app.use(express.json({
     limit: '20kb'
@@ -36,16 +52,17 @@ app.use('/health',(req:Request,res:Response) => {
     })
 });
 
-app.use('/' , (req :  Request,res:Response) => {
-    res.send("Welcome to SplitCircle");
-} )
-
-//Routes setup
+//Routes setup - MUST come before the generic root route
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/group',groupRouter);
 app.use('/api/v1/expense',expenseRouter);
 app.use('/api/v1/settlement',settlementRouter);
 //
+
+
+app.get('/' , (req :  Request,res:Response) => {
+    res.send("Welcome to SplitCircle");
+} )
 
 export default app;

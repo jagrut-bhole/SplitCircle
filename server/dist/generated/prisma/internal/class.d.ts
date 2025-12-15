@@ -13,7 +13,7 @@ export interface PrismaClientConstructor {
    * const users = await prisma.user.findMany()
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
     new <Options extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions, LogOpts extends LogOptions<Options> = LogOptions<Options>, OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends {
         omit: infer U;
@@ -30,7 +30,7 @@ export interface PrismaClientConstructor {
  * const users = await prisma.user.findMany()
  * ```
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined, in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> {
     [K: symbol]: {
@@ -52,7 +52,7 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
        * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
        * ```
        *
-       * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+       * Read more in our [docs](https://pris.ly/d/raw-queries).
        */
     $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
     /**
@@ -63,7 +63,7 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
      * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
      * ```
      *
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+     * Read more in our [docs](https://pris.ly/d/raw-queries).
      */
     $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
     /**
@@ -73,7 +73,7 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
      * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
      * ```
      *
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+     * Read more in our [docs](https://pris.ly/d/raw-queries).
      */
     $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
     /**
@@ -84,7 +84,7 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
      * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
      * ```
      *
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+     * Read more in our [docs](https://pris.ly/d/raw-queries).
      */
     $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
     /**
@@ -123,14 +123,25 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
-     * `prisma.expense`: Exposes CRUD operations for the **Expense** model.
+     * `prisma.friendship`: Exposes CRUD operations for the **Friendship** model.
       * Example usage:
       * ```ts
-      * // Fetch zero or more Expenses
-      * const expenses = await prisma.expense.findMany()
+      * // Fetch zero or more Friendships
+      * const friendships = await prisma.friendship.findMany()
       * ```
       */
-    get expense(): Prisma.ExpenseDelegate<ExtArgs, {
+    get friendship(): Prisma.FriendshipDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.balance`: Exposes CRUD operations for the **Balance** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Balances
+      * const balances = await prisma.balance.findMany()
+      * ```
+      */
+    get balance(): Prisma.BalanceDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
     /**
@@ -142,6 +153,61 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
       * ```
       */
     get group(): Prisma.GroupDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.groupMember`: Exposes CRUD operations for the **GroupMember** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more GroupMembers
+      * const groupMembers = await prisma.groupMember.findMany()
+      * ```
+      */
+    get groupMember(): Prisma.GroupMemberDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.expense`: Exposes CRUD operations for the **Expense** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Expenses
+      * const expenses = await prisma.expense.findMany()
+      * ```
+      */
+    get expense(): Prisma.ExpenseDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.expenseSplit`: Exposes CRUD operations for the **ExpenseSplit** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more ExpenseSplits
+      * const expenseSplits = await prisma.expenseSplit.findMany()
+      * ```
+      */
+    get expenseSplit(): Prisma.ExpenseSplitDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.activity`: Exposes CRUD operations for the **Activity** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Activities
+      * const activities = await prisma.activity.findMany()
+      * ```
+      */
+    get activity(): Prisma.ActivityDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.settlement`: Exposes CRUD operations for the **Settlement** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Settlements
+      * const settlements = await prisma.settlement.findMany()
+      * ```
+      */
+    get settlement(): Prisma.SettlementDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
 }

@@ -40,8 +40,14 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     User: 'User',
+    Friendship: 'Friendship',
+    Balance: 'Balance',
+    Group: 'Group',
+    GroupMember: 'GroupMember',
     Expense: 'Expense',
-    Group: 'Group'
+    ExpenseSplit: 'ExpenseSplit',
+    Activity: 'Activity',
+    Settlement: 'Settlement'
 };
 /*
  * Enums
@@ -56,31 +62,86 @@ export const UserScalarFieldEnum = {
     id: 'id',
     username: 'username',
     email: 'email',
-    passwordHashed: 'passwordHashed',
+    password: 'password',
     name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
-export const ExpenseScalarFieldEnum = {
+export const FriendshipScalarFieldEnum = {
     id: 'id',
-    title: 'title',
+    user1Id: 'user1Id',
+    user2Id: 'user2Id',
+    createdAt: 'createdAt'
+};
+export const BalanceScalarFieldEnum = {
+    id: 'id',
+    user1Id: 'user1Id',
+    user2Id: 'user2Id',
     amount: 'amount',
-    date: 'date',
-    paidById: 'paidById',
-    groupId: 'groupId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    lastUpdated: 'lastUpdated'
 };
 export const GroupScalarFieldEnum = {
     id: 'id',
     name: 'name',
+    description: 'description',
     createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
+export const GroupMemberScalarFieldEnum = {
+    id: 'id',
+    groupId: 'groupId',
+    userId: 'userId',
+    joinedAt: 'joinedAt'
+};
+export const ExpenseScalarFieldEnum = {
+    id: 'id',
+    title: 'title',
+    note: 'note',
+    currency: 'currency',
+    amount: 'amount',
+    date: 'date',
+    paidById: 'paidById',
+    groupId: 'groupId',
+    splitType: 'splitType',
+    scenario: 'scenario',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const ExpenseSplitScalarFieldEnum = {
+    id: 'id',
+    expenseId: 'expenseId',
+    userId: 'userId',
+    amount: 'amount',
+    percentage: 'percentage'
+};
+export const ActivityScalarFieldEnum = {
+    id: 'id',
+    note: 'note',
+    userId: 'userId',
+    groupId: 'groupId',
+    expenseId: 'expenseId',
+    settlementId: 'settlementId',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+};
+export const SettlementScalarFieldEnum = {
+    id: 'id',
+    groupId: 'groupId',
+    paidById: 'paidById',
+    paidToId: 'paidToId',
+    amount: 'amount',
+    note: 'note',
+    createdAt: 'createdAt'
+};
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc'
+};
+export const NullableJsonNullValueInput = {
+    DbNull: 'DbNull',
+    JsonNull: 'JsonNull'
 };
 export const QueryMode = {
     default: 'default',
@@ -89,5 +150,10 @@ export const QueryMode = {
 export const NullsOrder = {
     first: 'first',
     last: 'last'
+};
+export const JsonNullValueFilter = {
+    DbNull: 'DbNull',
+    JsonNull: 'JsonNull',
+    AnyNull: 'AnyNull'
 };
 //# sourceMappingURL=prismaNamespaceBrowser.js.map

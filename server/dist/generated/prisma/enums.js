@@ -7,5 +7,10 @@
 *
 * 🟢 You can import this file directly.
 */
-export {};
+export const SplitType = {
+    EQUAL: 'EQUAL',
+    UNEQUAL: 'UNEQUAL',
+    PERCENTAGE: 'PERCENTAGE',
+    SETTLEMENT: 'SETTLEMENT'
+};
 //# sourceMappingURL=enums.js.map

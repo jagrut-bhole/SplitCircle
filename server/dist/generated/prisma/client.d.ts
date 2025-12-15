@@ -14,7 +14,7 @@ export * from "./enums.js";
  * const users = await prisma.user.findMany()
  * ```
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export declare const PrismaClient: $Class.PrismaClientConstructor;
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>;
@@ -25,13 +25,43 @@ export { Prisma };
  */
 export type User = Prisma.UserModel;
 /**
- * Model Expense
+ * Model Friendship
  *
  */
-export type Expense = Prisma.ExpenseModel;
+export type Friendship = Prisma.FriendshipModel;
+/**
+ * Model Balance
+ *
+ */
+export type Balance = Prisma.BalanceModel;
 /**
  * Model Group
  *
  */
 export type Group = Prisma.GroupModel;
+/**
+ * Model GroupMember
+ *
+ */
+export type GroupMember = Prisma.GroupMemberModel;
+/**
+ * Model Expense
+ *
+ */
+export type Expense = Prisma.ExpenseModel;
+/**
+ * Model ExpenseSplit
+ *
+ */
+export type ExpenseSplit = Prisma.ExpenseSplitModel;
+/**
+ * Model Activity
+ *
+ */
+export type Activity = Prisma.ActivityModel;
+/**
+ * Model Settlement
+ *
+ */
+export type Settlement = Prisma.SettlementModel;
 //# sourceMappingURL=client.d.ts.map

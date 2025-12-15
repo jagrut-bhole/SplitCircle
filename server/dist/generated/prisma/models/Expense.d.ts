@@ -1,4 +1,5 @@
 import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums.js";
 import type * as Prisma from "../internal/prismaNamespace.js";
 /**
  * Model Expense
@@ -21,30 +22,45 @@ export type ExpenseSumAggregateOutputType = {
 export type ExpenseMinAggregateOutputType = {
     id: string | null;
     title: string | null;
+    note: string | null;
+    currency: string | null;
     amount: number | null;
     date: Date | null;
     paidById: string | null;
     groupId: string | null;
+    splitType: $Enums.SplitType | null;
+    scenario: string | null;
+    createdById: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
 export type ExpenseMaxAggregateOutputType = {
     id: string | null;
     title: string | null;
+    note: string | null;
+    currency: string | null;
     amount: number | null;
     date: Date | null;
     paidById: string | null;
     groupId: string | null;
+    splitType: $Enums.SplitType | null;
+    scenario: string | null;
+    createdById: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
 export type ExpenseCountAggregateOutputType = {
     id: number;
     title: number;
+    note: number;
+    currency: number;
     amount: number;
     date: number;
     paidById: number;
     groupId: number;
+    splitType: number;
+    scenario: number;
+    createdById: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -58,30 +74,45 @@ export type ExpenseSumAggregateInputType = {
 export type ExpenseMinAggregateInputType = {
     id?: true;
     title?: true;
+    note?: true;
+    currency?: true;
     amount?: true;
     date?: true;
     paidById?: true;
     groupId?: true;
+    splitType?: true;
+    scenario?: true;
+    createdById?: true;
     createdAt?: true;
     updatedAt?: true;
 };
 export type ExpenseMaxAggregateInputType = {
     id?: true;
     title?: true;
+    note?: true;
+    currency?: true;
     amount?: true;
     date?: true;
     paidById?: true;
     groupId?: true;
+    splitType?: true;
+    scenario?: true;
+    createdById?: true;
     createdAt?: true;
     updatedAt?: true;
 };
 export type ExpenseCountAggregateInputType = {
     id?: true;
     title?: true;
+    note?: true;
+    currency?: true;
     amount?: true;
     date?: true;
     paidById?: true;
     groupId?: true;
+    splitType?: true;
+    scenario?: true;
+    createdById?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -165,10 +196,15 @@ export type ExpenseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ExpenseGroupByOutputType = {
     id: string;
     title: string;
+    note: string;
+    currency: string;
     amount: number;
     date: Date;
     paidById: string;
     groupId: string | null;
+    splitType: $Enums.SplitType;
+    scenario: string | null;
+    createdById: string;
     createdAt: Date;
     updatedAt: Date;
     _count: ExpenseCountAggregateOutputType | null;
@@ -186,24 +222,40 @@ export type ExpenseWhereInput = {
     NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[];
     id?: Prisma.StringFilter<"Expense"> | string;
     title?: Prisma.StringFilter<"Expense"> | string;
+    note?: Prisma.StringFilter<"Expense"> | string;
+    currency?: Prisma.StringFilter<"Expense"> | string;
     amount?: Prisma.FloatFilter<"Expense"> | number;
     date?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     paidById?: Prisma.StringFilter<"Expense"> | string;
     groupId?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType;
+    scenario?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    createdById?: Prisma.StringFilter<"Expense"> | string;
     createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     paidBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    splits?: Prisma.ExpenseSplitListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
 };
 export type ExpenseOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    currency?: Prisma.SortOrder;
     amount?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     paidById?: Prisma.SortOrder;
     groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    splitType?: Prisma.SortOrder;
+    scenario?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     paidBy?: Prisma.UserOrderByWithRelationInput;
+    group?: Prisma.GroupOrderByWithRelationInput;
+    splits?: Prisma.ExpenseSplitOrderByRelationAggregateInput;
+    activities?: Prisma.ActivityOrderByRelationAggregateInput;
 };
 export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -211,21 +263,34 @@ export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.ExpenseWhereInput[];
     NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[];
     title?: Prisma.StringFilter<"Expense"> | string;
+    note?: Prisma.StringFilter<"Expense"> | string;
+    currency?: Prisma.StringFilter<"Expense"> | string;
     amount?: Prisma.FloatFilter<"Expense"> | number;
     date?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     paidById?: Prisma.StringFilter<"Expense"> | string;
     groupId?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType;
+    scenario?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    createdById?: Prisma.StringFilter<"Expense"> | string;
     createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     paidBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    splits?: Prisma.ExpenseSplitListRelationFilter;
+    activities?: Prisma.ActivityListRelationFilter;
 }, "id">;
 export type ExpenseOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    currency?: Prisma.SortOrder;
     amount?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     paidById?: Prisma.SortOrder;
     groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    splitType?: Prisma.SortOrder;
+    scenario?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.ExpenseCountOrderByAggregateInput;
@@ -240,79 +305,126 @@ export type ExpenseScalarWhereWithAggregatesInput = {
     NOT?: Prisma.ExpenseScalarWhereWithAggregatesInput | Prisma.ExpenseScalarWhereWithAggregatesInput[];
     id?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
     title?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
+    note?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
+    currency?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
     amount?: Prisma.FloatWithAggregatesFilter<"Expense"> | number;
     date?: Prisma.DateTimeWithAggregatesFilter<"Expense"> | Date | string;
     paidById?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
     groupId?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null;
+    splitType?: Prisma.EnumSplitTypeWithAggregatesFilter<"Expense"> | $Enums.SplitType;
+    scenario?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null;
+    createdById?: Prisma.StringWithAggregatesFilter<"Expense"> | string;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Expense"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Expense"> | Date | string;
 };
 export type ExpenseCreateInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
-    groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     paidBy: Prisma.UserCreateNestedOneWithoutExpensesPaidInput;
+    group?: Prisma.GroupCreateNestedOneWithoutExpensesInput;
+    splits?: Prisma.ExpenseSplitCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutExpenseInput;
 };
 export type ExpenseUncheckedCreateInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
     paidById: string;
     groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutExpenseInput;
 };
 export type ExpenseUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     paidBy?: Prisma.UserUpdateOneRequiredWithoutExpensesPaidNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutExpensesNestedInput;
+    splits?: Prisma.ExpenseSplitUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutExpenseNestedInput;
 };
 export type ExpenseUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     paidById?: Prisma.StringFieldUpdateOperationsInput | string;
     groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutExpenseNestedInput;
 };
 export type ExpenseCreateManyInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
     paidById: string;
     groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
 export type ExpenseUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ExpenseUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     paidById?: Prisma.StringFieldUpdateOperationsInput | string;
     groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -327,10 +439,15 @@ export type ExpenseOrderByRelationAggregateInput = {
 export type ExpenseCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    currency?: Prisma.SortOrder;
     amount?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     paidById?: Prisma.SortOrder;
     groupId?: Prisma.SortOrder;
+    splitType?: Prisma.SortOrder;
+    scenario?: Prisma.SortOrder;
+    createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -340,25 +457,43 @@ export type ExpenseAvgOrderByAggregateInput = {
 export type ExpenseMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    currency?: Prisma.SortOrder;
     amount?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     paidById?: Prisma.SortOrder;
     groupId?: Prisma.SortOrder;
+    splitType?: Prisma.SortOrder;
+    scenario?: Prisma.SortOrder;
+    createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
 export type ExpenseMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    currency?: Prisma.SortOrder;
     amount?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     paidById?: Prisma.SortOrder;
     groupId?: Prisma.SortOrder;
+    splitType?: Prisma.SortOrder;
+    scenario?: Prisma.SortOrder;
+    createdById?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
 export type ExpenseSumOrderByAggregateInput = {
     amount?: Prisma.SortOrder;
+};
+export type ExpenseScalarRelationFilter = {
+    is?: Prisma.ExpenseWhereInput;
+    isNot?: Prisma.ExpenseWhereInput;
+};
+export type ExpenseNullableScalarRelationFilter = {
+    is?: Prisma.ExpenseWhereInput | null;
+    isNot?: Prisma.ExpenseWhereInput | null;
 };
 export type ExpenseCreateNestedManyWithoutPaidByInput = {
     create?: Prisma.XOR<Prisma.ExpenseCreateWithoutPaidByInput, Prisma.ExpenseUncheckedCreateWithoutPaidByInput> | Prisma.ExpenseCreateWithoutPaidByInput[] | Prisma.ExpenseUncheckedCreateWithoutPaidByInput[];
@@ -398,33 +533,104 @@ export type ExpenseUncheckedUpdateManyWithoutPaidByNestedInput = {
     updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutPaidByInput | Prisma.ExpenseUpdateManyWithWhereWithoutPaidByInput[];
     deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[];
 };
-export type FloatFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
+export type ExpenseCreateNestedManyWithoutGroupInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput> | Prisma.ExpenseCreateWithoutGroupInput[] | Prisma.ExpenseUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutGroupInput | Prisma.ExpenseCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.ExpenseCreateManyGroupInputEnvelope;
+    connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
 };
-export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null;
+export type ExpenseUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput> | Prisma.ExpenseCreateWithoutGroupInput[] | Prisma.ExpenseUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutGroupInput | Prisma.ExpenseCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.ExpenseCreateManyGroupInputEnvelope;
+    connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+};
+export type ExpenseUpdateManyWithoutGroupNestedInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput> | Prisma.ExpenseCreateWithoutGroupInput[] | Prisma.ExpenseUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutGroupInput | Prisma.ExpenseCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutGroupInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.ExpenseCreateManyGroupInputEnvelope;
+    set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutGroupInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutGroupInput | Prisma.ExpenseUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[];
+};
+export type ExpenseUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput> | Prisma.ExpenseCreateWithoutGroupInput[] | Prisma.ExpenseUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutGroupInput | Prisma.ExpenseCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutGroupInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.ExpenseCreateManyGroupInputEnvelope;
+    set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[];
+    update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutGroupInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutGroupInput | Prisma.ExpenseUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[];
+};
+export type EnumSplitTypeFieldUpdateOperationsInput = {
+    set?: $Enums.SplitType;
+};
+export type ExpenseCreateNestedOneWithoutSplitsInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutSplitsInput, Prisma.ExpenseUncheckedCreateWithoutSplitsInput>;
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutSplitsInput;
+    connect?: Prisma.ExpenseWhereUniqueInput;
+};
+export type ExpenseUpdateOneRequiredWithoutSplitsNestedInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutSplitsInput, Prisma.ExpenseUncheckedCreateWithoutSplitsInput>;
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutSplitsInput;
+    upsert?: Prisma.ExpenseUpsertWithoutSplitsInput;
+    connect?: Prisma.ExpenseWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ExpenseUpdateToOneWithWhereWithoutSplitsInput, Prisma.ExpenseUpdateWithoutSplitsInput>, Prisma.ExpenseUncheckedUpdateWithoutSplitsInput>;
+};
+export type ExpenseCreateNestedOneWithoutActivitiesInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutActivitiesInput, Prisma.ExpenseUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutActivitiesInput;
+    connect?: Prisma.ExpenseWhereUniqueInput;
+};
+export type ExpenseUpdateOneWithoutActivitiesNestedInput = {
+    create?: Prisma.XOR<Prisma.ExpenseCreateWithoutActivitiesInput, Prisma.ExpenseUncheckedCreateWithoutActivitiesInput>;
+    connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutActivitiesInput;
+    upsert?: Prisma.ExpenseUpsertWithoutActivitiesInput;
+    disconnect?: Prisma.ExpenseWhereInput | boolean;
+    delete?: Prisma.ExpenseWhereInput | boolean;
+    connect?: Prisma.ExpenseWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ExpenseUpdateToOneWithWhereWithoutActivitiesInput, Prisma.ExpenseUpdateWithoutActivitiesInput>, Prisma.ExpenseUncheckedUpdateWithoutActivitiesInput>;
 };
 export type ExpenseCreateWithoutPaidByInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
-    groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    group?: Prisma.GroupCreateNestedOneWithoutExpensesInput;
+    splits?: Prisma.ExpenseSplitCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutExpenseInput;
 };
 export type ExpenseUncheckedCreateWithoutPaidByInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
     groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutExpenseInput;
 };
 export type ExpenseCreateOrConnectWithoutPaidByInput = {
     where: Prisma.ExpenseWhereUniqueInput;
@@ -453,114 +659,482 @@ export type ExpenseScalarWhereInput = {
     NOT?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[];
     id?: Prisma.StringFilter<"Expense"> | string;
     title?: Prisma.StringFilter<"Expense"> | string;
+    note?: Prisma.StringFilter<"Expense"> | string;
+    currency?: Prisma.StringFilter<"Expense"> | string;
     amount?: Prisma.FloatFilter<"Expense"> | number;
     date?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     paidById?: Prisma.StringFilter<"Expense"> | string;
     groupId?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType;
+    scenario?: Prisma.StringNullableFilter<"Expense"> | string | null;
+    createdById?: Prisma.StringFilter<"Expense"> | string;
     createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Expense"> | Date | string;
+};
+export type ExpenseCreateWithoutGroupInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    paidBy: Prisma.UserCreateNestedOneWithoutExpensesPaidInput;
+    splits?: Prisma.ExpenseSplitCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseUncheckedCreateWithoutGroupInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    paidById: string;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutExpenseInput;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseCreateOrConnectWithoutGroupInput = {
+    where: Prisma.ExpenseWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput>;
+};
+export type ExpenseCreateManyGroupInputEnvelope = {
+    data: Prisma.ExpenseCreateManyGroupInput | Prisma.ExpenseCreateManyGroupInput[];
+    skipDuplicates?: boolean;
+};
+export type ExpenseUpsertWithWhereUniqueWithoutGroupInput = {
+    where: Prisma.ExpenseWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ExpenseUpdateWithoutGroupInput, Prisma.ExpenseUncheckedUpdateWithoutGroupInput>;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutGroupInput, Prisma.ExpenseUncheckedCreateWithoutGroupInput>;
+};
+export type ExpenseUpdateWithWhereUniqueWithoutGroupInput = {
+    where: Prisma.ExpenseWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ExpenseUpdateWithoutGroupInput, Prisma.ExpenseUncheckedUpdateWithoutGroupInput>;
+};
+export type ExpenseUpdateManyWithWhereWithoutGroupInput = {
+    where: Prisma.ExpenseScalarWhereInput;
+    data: Prisma.XOR<Prisma.ExpenseUpdateManyMutationInput, Prisma.ExpenseUncheckedUpdateManyWithoutGroupInput>;
+};
+export type ExpenseCreateWithoutSplitsInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    paidBy: Prisma.UserCreateNestedOneWithoutExpensesPaidInput;
+    group?: Prisma.GroupCreateNestedOneWithoutExpensesInput;
+    activities?: Prisma.ActivityCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseUncheckedCreateWithoutSplitsInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    paidById: string;
+    groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseCreateOrConnectWithoutSplitsInput = {
+    where: Prisma.ExpenseWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutSplitsInput, Prisma.ExpenseUncheckedCreateWithoutSplitsInput>;
+};
+export type ExpenseUpsertWithoutSplitsInput = {
+    update: Prisma.XOR<Prisma.ExpenseUpdateWithoutSplitsInput, Prisma.ExpenseUncheckedUpdateWithoutSplitsInput>;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutSplitsInput, Prisma.ExpenseUncheckedCreateWithoutSplitsInput>;
+    where?: Prisma.ExpenseWhereInput;
+};
+export type ExpenseUpdateToOneWithWhereWithoutSplitsInput = {
+    where?: Prisma.ExpenseWhereInput;
+    data: Prisma.XOR<Prisma.ExpenseUpdateWithoutSplitsInput, Prisma.ExpenseUncheckedUpdateWithoutSplitsInput>;
+};
+export type ExpenseUpdateWithoutSplitsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidBy?: Prisma.UserUpdateOneRequiredWithoutExpensesPaidNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutExpensesNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutExpenseNestedInput;
+};
+export type ExpenseUncheckedUpdateWithoutSplitsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidById?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutExpenseNestedInput;
+};
+export type ExpenseCreateWithoutActivitiesInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    paidBy: Prisma.UserCreateNestedOneWithoutExpensesPaidInput;
+    group?: Prisma.GroupCreateNestedOneWithoutExpensesInput;
+    splits?: Prisma.ExpenseSplitCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseUncheckedCreateWithoutActivitiesInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    paidById: string;
+    groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedCreateNestedManyWithoutExpenseInput;
+};
+export type ExpenseCreateOrConnectWithoutActivitiesInput = {
+    where: Prisma.ExpenseWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutActivitiesInput, Prisma.ExpenseUncheckedCreateWithoutActivitiesInput>;
+};
+export type ExpenseUpsertWithoutActivitiesInput = {
+    update: Prisma.XOR<Prisma.ExpenseUpdateWithoutActivitiesInput, Prisma.ExpenseUncheckedUpdateWithoutActivitiesInput>;
+    create: Prisma.XOR<Prisma.ExpenseCreateWithoutActivitiesInput, Prisma.ExpenseUncheckedCreateWithoutActivitiesInput>;
+    where?: Prisma.ExpenseWhereInput;
+};
+export type ExpenseUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: Prisma.ExpenseWhereInput;
+    data: Prisma.XOR<Prisma.ExpenseUpdateWithoutActivitiesInput, Prisma.ExpenseUncheckedUpdateWithoutActivitiesInput>;
+};
+export type ExpenseUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidBy?: Prisma.UserUpdateOneRequiredWithoutExpensesPaidNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutExpensesNestedInput;
+    splits?: Prisma.ExpenseSplitUpdateManyWithoutExpenseNestedInput;
+};
+export type ExpenseUncheckedUpdateWithoutActivitiesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidById?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutExpenseNestedInput;
 };
 export type ExpenseCreateManyPaidByInput = {
     id?: string;
     title: string;
+    note: string;
+    currency?: string;
     amount: number;
     date: Date | string;
     groupId?: string | null;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
 export type ExpenseUpdateWithoutPaidByInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    group?: Prisma.GroupUpdateOneWithoutExpensesNestedInput;
+    splits?: Prisma.ExpenseSplitUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutExpenseNestedInput;
 };
 export type ExpenseUncheckedUpdateWithoutPaidByInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutExpenseNestedInput;
 };
 export type ExpenseUncheckedUpdateManyWithoutPaidByInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
     amount?: Prisma.FloatFieldUpdateOperationsInput | number;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type ExpenseCreateManyGroupInput = {
+    id?: string;
+    title: string;
+    note: string;
+    currency?: string;
+    amount: number;
+    date: Date | string;
+    paidById: string;
+    splitType?: $Enums.SplitType;
+    scenario?: string | null;
+    createdById: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type ExpenseUpdateWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidBy?: Prisma.UserUpdateOneRequiredWithoutExpensesPaidNestedInput;
+    splits?: Prisma.ExpenseSplitUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUpdateManyWithoutExpenseNestedInput;
+};
+export type ExpenseUncheckedUpdateWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidById?: Prisma.StringFieldUpdateOperationsInput | string;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    splits?: Prisma.ExpenseSplitUncheckedUpdateManyWithoutExpenseNestedInput;
+    activities?: Prisma.ActivityUncheckedUpdateManyWithoutExpenseNestedInput;
+};
+export type ExpenseUncheckedUpdateManyWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    currency?: Prisma.StringFieldUpdateOperationsInput | string;
+    amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    paidById?: Prisma.StringFieldUpdateOperationsInput | string;
+    splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType;
+    scenario?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdById?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type ExpenseCountOutputType
+ */
+export type ExpenseCountOutputType = {
+    splits: number;
+    activities: number;
+};
+export type ExpenseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    splits?: boolean | ExpenseCountOutputTypeCountSplitsArgs;
+    activities?: boolean | ExpenseCountOutputTypeCountActivitiesArgs;
+};
+/**
+ * ExpenseCountOutputType without action
+ */
+export type ExpenseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExpenseCountOutputType
+     */
+    select?: Prisma.ExpenseCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * ExpenseCountOutputType without action
+ */
+export type ExpenseCountOutputTypeCountSplitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ExpenseSplitWhereInput;
+};
+/**
+ * ExpenseCountOutputType without action
+ */
+export type ExpenseCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ActivityWhereInput;
 };
 export type ExpenseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     title?: boolean;
+    note?: boolean;
+    currency?: boolean;
     amount?: boolean;
     date?: boolean;
     paidById?: boolean;
     groupId?: boolean;
+    splitType?: boolean;
+    scenario?: boolean;
+    createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
+    splits?: boolean | Prisma.Expense$splitsArgs<ExtArgs>;
+    activities?: boolean | Prisma.Expense$activitiesArgs<ExtArgs>;
+    _count?: boolean | Prisma.ExpenseCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["expense"]>;
 export type ExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     title?: boolean;
+    note?: boolean;
+    currency?: boolean;
     amount?: boolean;
     date?: boolean;
     paidById?: boolean;
     groupId?: boolean;
+    splitType?: boolean;
+    scenario?: boolean;
+    createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
 }, ExtArgs["result"]["expense"]>;
 export type ExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     title?: boolean;
+    note?: boolean;
+    currency?: boolean;
     amount?: boolean;
     date?: boolean;
     paidById?: boolean;
     groupId?: boolean;
+    splitType?: boolean;
+    scenario?: boolean;
+    createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
 }, ExtArgs["result"]["expense"]>;
 export type ExpenseSelectScalar = {
     id?: boolean;
     title?: boolean;
+    note?: boolean;
+    currency?: boolean;
     amount?: boolean;
     date?: boolean;
     paidById?: boolean;
     groupId?: boolean;
+    splitType?: boolean;
+    scenario?: boolean;
+    createdById?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "amount" | "date" | "paidById" | "groupId" | "createdAt" | "updatedAt", ExtArgs["result"]["expense"]>;
+export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "note" | "currency" | "amount" | "date" | "paidById" | "groupId" | "splitType" | "scenario" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["expense"]>;
 export type ExpenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
+    splits?: boolean | Prisma.Expense$splitsArgs<ExtArgs>;
+    activities?: boolean | Prisma.Expense$activitiesArgs<ExtArgs>;
+    _count?: boolean | Prisma.ExpenseCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ExpenseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
 };
 export type ExpenseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     paidBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Expense$groupArgs<ExtArgs>;
 };
 export type $ExpensePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Expense";
     objects: {
         paidBy: Prisma.$UserPayload<ExtArgs>;
+        group: Prisma.$GroupPayload<ExtArgs> | null;
+        splits: Prisma.$ExpenseSplitPayload<ExtArgs>[];
+        activities: Prisma.$ActivityPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         title: string;
+        note: string;
+        currency: string;
         amount: number;
         date: Date;
         paidById: string;
         groupId: string | null;
+        splitType: $Enums.SplitType;
+        scenario: string | null;
+        createdById: string;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["expense"]>;
@@ -893,6 +1467,9 @@ export interface ExpenseDelegate<ExtArgs extends runtime.Types.Extensions.Intern
 export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     paidBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    group<T extends Prisma.Expense$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Expense$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    splits<T extends Prisma.Expense$splitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Expense$splitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpenseSplitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    activities<T extends Prisma.Expense$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Expense$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -920,10 +1497,15 @@ export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.
 export interface ExpenseFieldRefs {
     readonly id: Prisma.FieldRef<"Expense", 'String'>;
     readonly title: Prisma.FieldRef<"Expense", 'String'>;
+    readonly note: Prisma.FieldRef<"Expense", 'String'>;
+    readonly currency: Prisma.FieldRef<"Expense", 'String'>;
     readonly amount: Prisma.FieldRef<"Expense", 'Float'>;
     readonly date: Prisma.FieldRef<"Expense", 'DateTime'>;
     readonly paidById: Prisma.FieldRef<"Expense", 'String'>;
     readonly groupId: Prisma.FieldRef<"Expense", 'String'>;
+    readonly splitType: Prisma.FieldRef<"Expense", 'SplitType'>;
+    readonly scenario: Prisma.FieldRef<"Expense", 'String'>;
+    readonly createdById: Prisma.FieldRef<"Expense", 'String'>;
     readonly createdAt: Prisma.FieldRef<"Expense", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Expense", 'DateTime'>;
 }
@@ -1303,6 +1885,70 @@ export type ExpenseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
      * Limit how many Expenses to delete.
      */
     limit?: number;
+};
+/**
+ * Expense.group
+ */
+export type Expense$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: Prisma.GroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    where?: Prisma.GroupWhereInput;
+};
+/**
+ * Expense.splits
+ */
+export type Expense$splitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExpenseSplit
+     */
+    select?: Prisma.ExpenseSplitSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ExpenseSplit
+     */
+    omit?: Prisma.ExpenseSplitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ExpenseSplitInclude<ExtArgs> | null;
+    where?: Prisma.ExpenseSplitWhereInput;
+    orderBy?: Prisma.ExpenseSplitOrderByWithRelationInput | Prisma.ExpenseSplitOrderByWithRelationInput[];
+    cursor?: Prisma.ExpenseSplitWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ExpenseSplitScalarFieldEnum | Prisma.ExpenseSplitScalarFieldEnum[];
+};
+/**
+ * Expense.activities
+ */
+export type Expense$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    where?: Prisma.ActivityWhereInput;
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
 };
 /**
  * Expense without action
