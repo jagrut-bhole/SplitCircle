@@ -38,8 +38,9 @@ export const UserProfile = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [isPasswordLoading, setIsPasswordLoading] = useState(false);
 
-    function handleLogout() {
+    async function handleLogout() {
         logout();
+        await authService.logout();
         navigate("/");  
     }
 

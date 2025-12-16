@@ -6,6 +6,7 @@ import type {
     GetGroupDetailsResponse,
     AddMemberResponse,
     DeleteGroupResponse,
+    GetUserGroupsResponse
 } from "@/types/GroupTypes";
 
 export const groupsService = {
@@ -33,4 +34,9 @@ export const groupsService = {
         const response = await api.delete(`/group/groups/${groupId}`);
         return response as unknown as DeleteGroupResponse;
     },
+
+    getUserGroups : async() : Promise<GetUserGroupsResponse> => {
+        const response = await api.get('/user/groups');
+        return response as unknown as GetUserGroupsResponse;
+    }
 };

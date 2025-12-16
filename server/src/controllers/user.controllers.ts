@@ -1,5 +1,5 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 
 import { UserService } from "../services/user.services.js";
 const userService = new UserService();
@@ -137,3 +137,56 @@ export const getAllFriendsController  = asyncHandler(async(req:Request,res:Respo
         })
     }
 });
+
+export const getUserTotalOwedController = asyncHandler(async(req:Request,res:Response) => {
+    try {
+        const userId = req.user?.id as string;
+
+        if (!userId) {
+            return res.status(404).json({
+                message : "User not found!!",
+                success : false
+            })
+        }
+
+        const result = await userService.calulateUserOwedAmounts(userId);
+
+        return res.status(200).json({
+            message : "Fetched user's owed data successfully!!",
+            success : true,
+            data : result
+        })
+    } catch (error) {
+        console.log("Error while fetching user owed data: ",error);
+        return res.status(500).json({
+            message : "Failed to fetch the user's owed data. Please try again later!!",
+            success : false,
+        }).status(500);
+    }
+})
+
+export const getUserTotalGroupsController = asyncHandler(async(req:Request , res:Response) => {
+    try {
+        const userId = req.user?.id as string;
+
+        if (!userId) {
+            return res.status(404).json({
+                message : "User not found!!",
+                success : false
+            })
+        }
+
+        const result = await userService.getAllUserGroups(userId);
+        return res.status(200).json({
+            message : "Fetched user's groups successfully!!",
+            success : true,
+            data : result
+        })
+    } catch (error) {
+        console.log("Error while fetching users groups : ",error);
+        return res.status(500).json({
+            message : "Failed to fetch the user's groups. Please try again later!!",
+            success : false,
+        }).status(500);
+    }
+})

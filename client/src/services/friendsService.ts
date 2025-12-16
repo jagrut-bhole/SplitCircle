@@ -3,6 +3,7 @@ import type {
     SearchUserResponse,
     AddFriendResponse,
     GetFriendsResponse,
+    UserOwedAmountResponse,
 } from "@/types/FriendsTypes";
 
 export const friendsService = {
@@ -21,5 +22,10 @@ export const friendsService = {
         const response = await api.get('/user/friends');
         return response as unknown as GetFriendsResponse;
     },
+
+    userOwedAmount : async() : Promise<UserOwedAmountResponse> => {
+        const response = await api.get('/user/total-balance');
+        return response as unknown as UserOwedAmountResponse;
+    }
 
 };

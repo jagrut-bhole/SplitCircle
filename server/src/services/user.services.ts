@@ -269,4 +269,55 @@ export class UserService {
 
         return {user};
     }
+
+    async calulateUserOwedAmounts(userId : string) {
+        const balances = await prisma.balance.findMany({
+            where : {
+                id : userId
+            }
+        })
+
+        if(balances.length === 0) {
+            return {
+                totalOwedToUser : 0,
+                totalUserOwes : 0
+            }
+        }
+
+        let totalOwedToUser = 0;
+        let totalUserOwes = 0;
+        
+        for (const balance of balances) {
+            let finalAmount = 0;
+            if (balance.user1Id === userId) {
+                finalAmount = balance.amount;
+            } else {
+                finalAmount = -balance.amount;
+            }   
+            if (finalAmount > 0) {
+                totalOwedToUser += finalAmount;
+            } else {
+                totalUserOwes += Math.abs(finalAmount);
+            }
+        }
+
+        return {
+            totalOwedToUser,
+            totalUserOwes
+        };
+    }
+
+    async getAllUserGroups(userId: string) {
+        const groups = await prisma.groupMember.findMany({
+            where : {
+                userId : userId
+            }, 
+            include : {
+                group : true
+            }
+
+        });
+        return groups;
+        
+    }
 }

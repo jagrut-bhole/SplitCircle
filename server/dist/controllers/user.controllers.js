@@ -107,4 +107,28 @@ export const getAllFriendsController = asyncHandler(async (req, res) => {
         });
     }
 });
+export const getUserTotalOwedController = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.user?.id;
+        if (!userId) {
+            return res.status(404).json({
+                message: "User not found!!",
+                success: false
+            });
+        }
+        const result = await userService.calulateUserOwedAmounts(userId);
+        return res.status(200).json({
+            message: "Fetched user's owed data successfully!!",
+            success: true,
+            data: result
+        });
+    }
+    catch (error) {
+        console.log("Error while fetching user owed data: ", error);
+        return res.status(500).json({
+            message: "Failed to fetch the user's owed data. Please try again later!!",
+            success: false,
+        }).status(500);
+    }
+});
 //# sourceMappingURL=user.controllers.js.map

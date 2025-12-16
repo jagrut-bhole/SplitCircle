@@ -17,10 +17,6 @@ export const registerController = asyncHandler(async (req, res) => {
     // 6. Send response
     try {
         const { username, email, name, password } = req.body;
-        console.log("Name:", name);
-        console.log("Username:", username);
-        console.log("Email:", email);
-        console.log("Password:", password);
         if (!username || !email || !name || !password) {
             throw new Error("All fields are required!");
         }
@@ -151,12 +147,12 @@ export const refreshAccesssToken = asyncHandler(async (req, res) => {
         const newAccessToken = generateAccessToken(user.id, user.email);
         const newRefreshToken = generateRefreshToken(user.id, user.email);
         // Set tokens as httpOnly cookies
-        res.cookie('refreshToken', newRefreshToken, options);
-        res.cookie('accessToken', newAccessToken, options);
+        res.cookie('refresh_token', newRefreshToken, options);
+        res.cookie('access_token', newAccessToken, options);
         res.status(200).json({
             message: "Tokens Refreshed Successfully!!",
-            accessToken: newAccessToken,
-            refreshToken: newRefreshToken
+            access_token: newAccessToken,
+            refresh_token: newRefreshToken
         });
     }
     catch (error) {

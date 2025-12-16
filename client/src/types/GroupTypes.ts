@@ -106,3 +106,17 @@ export interface DeleteGroupResponse {
         };
     };
 }
+
+export interface UserGroup {
+    id : string;
+    groupId : string;
+    userId : string;
+    joinedAt : string;
+    group : Group[]
+}
+
+export interface GetUserGroupsResponse {
+    message : string;
+    success : boolean;
+    data : UserGroup[]
+}

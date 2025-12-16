@@ -52,3 +52,11 @@ export interface GetFriendsResponse {
         summary: FriendsSummary;
     };
 }
+export interface UserOwedAmountResponse {
+    message : string;
+    success : boolean;
+    data : {
+        totalOwedToUser : number;
+        totalUserOwes : number;
+    }
+}

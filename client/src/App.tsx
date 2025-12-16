@@ -15,6 +15,7 @@ import { UserProfile } from "./pages/UserProfile"
 
 // landing page
 import { Landing } from "./pages/Landing"
+import { ActivitySection } from "./components/ActivitySection"
 
 
 function App() {
@@ -42,6 +43,12 @@ function App() {
                                             </ProtectedRouter>
                                           }
           />
+
+          <Route path="/activity-logs" element={
+                                            <ProtectedRouter>
+                                              <ActivitySection />
+                                            </ProtectedRouter>
+          } />
 
                     {/* Redirect root to dashboard */}
           {/* <Route path="/" element={<Navigate to='/dashboard' replace />}  /> */}

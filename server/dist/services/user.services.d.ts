@@ -57,5 +57,9 @@ export declare class UserService {
             updatedAt: Date;
         };
     }>;
+    calulateUserOwedAmounts(userId: string): Promise<{
+        totalOwedToUser: number;
+        totalUserOwes: number;
+    }>;
 }
 //# sourceMappingURL=user.services.d.ts.map
