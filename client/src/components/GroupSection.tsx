@@ -3,15 +3,16 @@ import { groupsService } from "@/services/groupsService";
 import type { GetUserGroupsResponse, UserGroup } from "@/types/GroupTypes";
 import { toast } from "sonner";
 import { Users, Plus } from "lucide-react";
-import { Button } from "./ui/button";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { CreateGroup } from "./CreatGroup";
 
 export const GroupSection = () => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [groupDetails, setGroupDetails] = useState<UserGroup[]>([]);
+    const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
 
     const calculateGroupBalance = (group: Group) => {
         // TODO: Calculate actual balance from group expenses
@@ -58,11 +59,13 @@ export const GroupSection = () => {
                             </p>
                         </div>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors shadow-sm text-sm font-medium">
+                    <button onClick={() => setIsCreateOpen(true)} className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors shadow-sm text-sm font-medium">
                         <Plus className="w-4 h-4" />
                         <span>Create</span>
                     </button>
                 </div>
+
+                <CreateGroup isOpen={isCreateOpen} onOpenChange={setIsCreateOpen} onSuccess={fetchUserGroups} />
 
                 {/* Groups */}
                 <div className="flex-1 overflow-y-auto custom-scroll pr-2 -mr-2">
@@ -80,7 +83,7 @@ export const GroupSection = () => {
                                 const group = Array.isArray(userGroup.group) ? userGroup.group[0] : userGroup.group;
                                 const balance = calculateGroupBalance(group);
                                 const memberCount = group?.members?.length || 0;
-                                const lastActive = group?.updatedAt ? new Date(group.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Just now';
+                                // const lastActive = group?.updatedAt ? new Date(group.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Just now';
 
                                 return (
                                     <div 
@@ -88,7 +91,7 @@ export const GroupSection = () => {
                                         onClick={() => handleGroupClick(userGroup.groupId)}
                                         className="group relative bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex items-center gap-4 hover:bg-slate-50 hover:border-slate-300"
                                     >
-                                        <div className="w-12 h-12 object-cover rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-sm">
+                                        <div className="w-12 h-12 object-cover rounded-lg bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-sm">
                                             <span className="text-white font-bold text-lg">
                                                 {group?.name?.charAt(0).toUpperCase() || 'G'}
                                             </span>
@@ -96,7 +99,7 @@ export const GroupSection = () => {
                                         
                                         <div className="flex-1">
                                             <h3 className="font-semibold text-slate-800 text-base">{group?.name || 'Unnamed Group'}</h3>
-                                            <p className="text-xs text-slate-500">{memberCount} members • {lastActive}</p>
+                                            <p className="text-xs text-slate-500">{memberCount} members {/*•  {lastActive} */}</p>
                                         </div>
 
                                         <div className="text-right">

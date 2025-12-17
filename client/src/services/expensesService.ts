@@ -1,3 +1,4 @@
+import type { GetFriendDetails } from "@/types/FriendsTypes";
 import { api } from "./api";
 import type {
     CreateFriendExpenseData,
@@ -29,6 +30,11 @@ export const expensesService = {
     getFriendExpenses: async (friendId: string): Promise<GetFriendExpensesResponse> => {
         const response = await api.get(`/expense/friend/${friendId}`);
         return response as unknown as GetFriendExpensesResponse;
+    },
+
+    getFriendDetails : async (friendId : string) : Promise<GetFriendDetails> => {
+        const response = await api.get(`user/friend-details/${friendId}`);
+        return response as unknown as GetFriendDetails;
     },
 
     getExpenseDetail: async (

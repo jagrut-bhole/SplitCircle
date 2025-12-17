@@ -16,6 +16,8 @@ import { UserProfile } from "./pages/UserProfile"
 // landing page
 import { Landing } from "./pages/Landing"
 import { ActivitySection } from "./components/ActivitySection"
+import { GroupExpense } from "./components/GroupExpense"
+import { FriendExpense } from "./components/FriendExpense"
 
 
 function App() {
@@ -49,6 +51,20 @@ function App() {
                                               <ActivitySection />
                                             </ProtectedRouter>
           } />
+
+          <Route path="/groups/:groupId" element={
+                                            <ProtectedRouter>
+                                              <GroupExpense />
+                                            </ProtectedRouter>
+                                          }
+          />
+
+          <Route path="/friends/:friendId" element={
+                                            <ProtectedRouter>
+                                              <FriendExpense />
+                                            </ProtectedRouter>
+                                          }
+          />
 
                     {/* Redirect root to dashboard */}
           {/* <Route path="/" element={<Navigate to='/dashboard' replace />}  /> */}

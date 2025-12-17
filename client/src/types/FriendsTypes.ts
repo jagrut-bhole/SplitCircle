@@ -60,3 +60,43 @@ export interface UserOwedAmountResponse {
         totalUserOwes : number;
     }
 }
+
+export interface Split {
+  id: string;
+  expenseId: string;
+  userId: string;
+  amount: number;
+  percentage: number | null;
+  user: User;
+}
+
+export type SplitType = 'EQUAL' | 'UNEQUAL' | 'PERCENTAGE';
+
+export interface FriendExpense {
+  id: string;
+  title: string;
+  note: string | null;
+  currency: string;
+  amount: number;
+  date: string;
+  paidById: string;
+  groupId: string | null;
+  splitType: SplitType;
+  scenario: string | null;
+  createdById: string;
+  createdAt: string;
+  updatedAt: string;
+  paidBy: User;
+  splits: Split[];
+}
+
+export interface GetFriendDetails {
+    success : boolean;
+    message : string;
+    data : {
+        friend : User,
+        expenses : FriendExpense[],
+        balance : number,
+        expenseCount : number
+    };
+}

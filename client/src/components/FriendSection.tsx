@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { friendsService } from "@/services/friendsService";
-import type { GetFriendsResponse, Friend, FriendsSummary } from "@/types/FriendsTypes";
+import type { GetFriendsResponse, Friend } from "@/types/FriendsTypes";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { User, UserPlus, CheckCircle2 } from "lucide-react";
+import { AddFriend } from "./AddFriend";
 
 export const FriendSection = () => {
     const navigate = useNavigate();
@@ -12,11 +13,13 @@ export const FriendSection = () => {
 
     const [allFriends, setAllFriends] = useState<Friend[]>([]);
 
-    const [friendSummary, setFriendSummary] = useState<FriendsSummary>({
-        totalFriends: 0,
-        youOwe: 0,
-        youAreOwed: 0,
-    });
+    const [isAddFriendOpen, setIsAddFriendOpen] = useState<boolean>(false);
+
+    // const [friendSummary, setFriendSummary] = useState<FriendsSummary>({
+    //     totalFriends: 0,
+    //     youOwe: 0,
+    //     youAreOwed: 0,
+    // });
 
     // Count how many people owe you money
     const getPeopleOwingYouCount = () => {
@@ -30,7 +33,7 @@ export const FriendSection = () => {
 
             if (response.success) {
                 setAllFriends(response.data.friends)
-                setFriendSummary(response.data.summary);
+                // setFriendSummary(response.data.summary);
             }
         } catch (error) {
             console.log("Error fetching friends:", error);
@@ -58,12 +61,15 @@ export const FriendSection = () => {
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-slate-800">Friends</h2>
+                                {/* <p className="text-xs text-slate-500 font-medium">
+                                    Total Friends: {friendSummary.totalFriends}
+                                </p> */}
                             <p className="text-xs text-slate-500 font-medium">
                                 {getPeopleOwingYouCount()} {getPeopleOwingYouCount() === 1 ? 'person owes' : 'people owe'} you money
                             </p>
                         </div>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-sm font-medium">
+                    <button onClick={() =>  setIsAddFriendOpen(true)} className="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-sm font-medium">
                         <UserPlus className="w-4 h-4" />
                         <span>Add</span>
                     </button>
@@ -97,7 +103,7 @@ export const FriendSection = () => {
                                     >
                                         <div className="flex items-center gap-3">
                                             <div className="relative">
-                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-sm">
+                                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-sm">
                                                     <span className="text-white font-bold text-sm">
                                                         {friend.name.charAt(0).toUpperCase()}
                                                     </span>
@@ -112,14 +118,14 @@ export const FriendSection = () => {
                                         <div className="text-right">
                                             {status === 'owed' && (
                                                 <>
-                                                    <div className="text-brand-600 font-bold text-sm">Owning</div>
-                                                    <div className="text-brand-600 font-bold text-base">${amount.toFixed(2)}</div>
+                                                    <div className="text-[#059669] font-bold text-sm">Owning</div>
+                                                    <div className="text-[#059669] font-bold text-base">${amount.toFixed(2)}</div>
                                                 </>
                                             )}
                                             {status === 'owes' && (
                                                 <>
-                                                    <div className="text-orange-500 font-bold text-sm">Owes</div>
-                                                    <div className="text-slate-800 font-bold text-base">${amount.toFixed(2)}</div>
+                                                    <div className="text-red-500 font-bold text-sm">Owes</div>
+                                                    <div className="text-red-500 font-bold text-base">${amount.toFixed(2)}</div>
                                                 </>
                                             )}
                                             {status === 'settled' && (
@@ -135,6 +141,9 @@ export const FriendSection = () => {
                         </div>
                     )}
                 </div>
+                {
+                    <AddFriend isOpen={isAddFriendOpen} onOpenChange={setIsAddFriendOpen} onSuccess={fetchAllFriends} />
+                }
             </div>
         </>
     )

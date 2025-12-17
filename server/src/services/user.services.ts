@@ -273,7 +273,10 @@ export class UserService {
     async calulateUserOwedAmounts(userId : string) {
         const balances = await prisma.balance.findMany({
             where : {
-                id : userId
+                OR: [
+                    { user1Id: userId },
+                    { user2Id: userId }
+                ]
             }
         })
 
@@ -313,11 +316,101 @@ export class UserService {
                 userId : userId
             }, 
             include : {
-                group : true
+                group : {
+                    include: {
+                        members: true
+                    }
+                }
             }
 
         });
         return groups;
         
+    }
+
+    async friendDetails(friendId: string, currentUserId : string) {
+        // Get friend information
+        const friend = await prisma.user.findUnique({
+            where: {
+                id : friendId
+            },
+            select : {
+                id: true,
+                name: true,
+                username: true,
+                email: true
+            }
+        })
+
+        if (!friend) {
+            throw new Error("Friend not found!!");
+        }
+
+        // Get all expenses between current user and friend
+        const expenses = await prisma.expense.findMany({
+            where: {
+                groupId : null,
+                splits : {
+                    some : {
+                        userId : currentUserId
+                    }
+                },
+                AND : {
+                    splits : {
+                        some : {
+                            userId : friendId
+                        }
+                    }
+                }
+            },
+            orderBy : {
+                date : 'desc'
+            },
+            include : {
+                paidBy : {
+                    select : {
+                        id : true,
+                        username : true,
+                        name : true, 
+                    }
+                },
+                splits : {
+                    include : {
+                        user : {
+                            select : {
+                                id : true,
+                                username : true,
+                                name : true
+                            }
+                        }
+                    }
+                }
+            },
+        });
+
+        // Get balance between current user and friend
+        const {user1Id, user2Id} = normalizeFriendshipIds(currentUserId, friendId);
+        
+        const balance = await prisma.balance.findUnique({
+            where: {
+                user1Id_user2Id: {
+                    user1Id,
+                    user2Id
+                }
+            }
+        });
+
+        // Calculate final balance from perspective of current user
+        let finalBalance = 0;
+        if (balance) {
+            finalBalance = balance.user1Id === currentUserId ? balance.amount : -balance.amount;
+        }
+
+        return {
+            friend,
+            expenses,
+            balance: finalBalance,
+            expenseCount: expenses.length
+        };
     }
 }

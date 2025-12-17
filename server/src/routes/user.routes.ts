@@ -5,7 +5,8 @@ import {
     getAllFriendsController, 
     getUserTotalOwedController,
     getUserTotalGroupsController, 
-    userSearchControler 
+    userSearchControler,
+    getFriendController
 } from "../controllers/user.controllers.js";
 
 const userRouter:Router = Router();
@@ -15,5 +16,7 @@ userRouter.post('/add-friend',jwtVerify,addFriendController);
 userRouter.get('/total-balance',jwtVerify,getUserTotalOwedController)
 userRouter.get('/friends',jwtVerify,getAllFriendsController);
 userRouter.get('/groups',jwtVerify,getUserTotalGroupsController);
+
+userRouter.get('/friend-details/:friendId',jwtVerify,getFriendController);
 
 export {userRouter}

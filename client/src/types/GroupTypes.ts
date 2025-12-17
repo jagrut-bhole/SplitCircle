@@ -112,7 +112,7 @@ export interface UserGroup {
     groupId : string;
     userId : string;
     joinedAt : string;
-    group : Group[]
+    group : Group
 }
 
 export interface GetUserGroupsResponse {

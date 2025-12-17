@@ -4,6 +4,7 @@ import type {
     AddFriendResponse,
     GetFriendsResponse,
     UserOwedAmountResponse,
+    GetFriendDetails,
 } from "@/types/FriendsTypes";
 
 export const friendsService = {
@@ -26,6 +27,11 @@ export const friendsService = {
     userOwedAmount : async() : Promise<UserOwedAmountResponse> => {
         const response = await api.get('/user/total-balance');
         return response as unknown as UserOwedAmountResponse;
+    },
+
+    getFriendDetails : async (friendId : string) : Promise<GetFriendDetails> => {
+        const response = await api.get(`/user/friend-details/${friendId}`);
+        return response as unknown as GetFriendDetails;
     }
 
 };

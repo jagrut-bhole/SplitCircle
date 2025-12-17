@@ -190,3 +190,31 @@ export const getUserTotalGroupsController = asyncHandler(async(req:Request , res
         }).status(500);
     }
 })
+
+export const getFriendController = asyncHandler(async(req:Request,res:Response) => {
+    try {
+    
+        const {friendId} = req.params;
+
+        const userId = req.user?.id as string;
+
+        if (!userId) {
+            return res.status(404).json({
+                message : "User not found!!",
+                success : false
+            })
+        }
+
+        const result = await userService.friendDetails(friendId,userId);
+        return res.status(200).json({
+            success:true,
+            message : "Friend details fetched successfully",
+            data: result
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"Server error while fetching friend details",
+            success: false
+        })        
+    }
+})

@@ -7,12 +7,12 @@ const expenseServices = new ExpenseServices();
 import { UserService } from "../services/user.services.js";
 const userService = new UserService();
 
-export const addFriendExpenseController = asyncHandler(async(req:Request,res:Response) => {
+export const    addFriendExpenseController = asyncHandler(async(req:Request,res:Response) => {
     try {
         const {username , title, amount , description , scenario} = req.body as {
             username : string,
             amount : number,
-            description : string,
+            description: string,
             date : Date,
             scenario : string,
             title : string
