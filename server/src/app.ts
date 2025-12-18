@@ -13,10 +13,10 @@ import {settlementRouter} from './routes/settlement.routes.js';
 const app:Express = express();
 
 const allowedOrigins  : string[] = [
-    'http://localhost:5173'
+    'https://splitcircle.jagrut.me'
 ]
 
-
+console.log("Allowed Origins: ",allowedOrigins);
 
 app.use(cors({
     origin : function (origin , callback) {
