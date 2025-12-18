@@ -20,7 +20,7 @@ export function GroupExpense() {
 
     const [isAddMemberOpen, setIsAddMemberOpen] = useState<boolean>(false);
     const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);
-    const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
+    // const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
     const [isExpenseDetailOpen, setIsExpenseDetailOpen] = useState<boolean>(false);
     const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
 
@@ -102,8 +102,8 @@ export function GroupExpense() {
                             <ArrowLeft className="w-5 h-5" />
                         </button>
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                                {groupDetails?.data.group[0].name.charAt(0) || 'T'}
+                            <div className="w-12 h-12 bg-[#E2E8F0] rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                               <span className="text-[#475569]"> {groupDetails?.data.group[0].name.charAt(0) || "G"}</span>
                             </div>
                             <div>
                                 <h2 className="text-xl font-bold text-slate-800">{groupDetails?.data.group[0].name}</h2>
@@ -129,7 +129,7 @@ export function GroupExpense() {
                             <span className="text-sm">Add Expense</span>
                         </button>
                         <button  
-                            onClick={() => setIsSettleUpOpen(true)}
+                            onClick={() => toast.info("Coming Soon!!!")}
                             className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all"
                         >
                             <CheckCircle className="w-4 h-4 text-slate-500" />
@@ -163,9 +163,7 @@ export function GroupExpense() {
                                 {recentExpenses.map((expense) => {
                                     if ((expense as any).category === 'settlement') {
                                         const paidBy = expense.paidById === currentUserId ? 'You' : expense.paidBy.name;
-                                        // Assuming paidTo is available in the expense object for settlements, or we infer it
-                                        // If the backend doesn't populate paidTo user object, we might have issues displaying the name.
-                                        // We'll try to access it safely.
+
                                         const paidToUser = (expense as any).paidTo; 
                                         const paidTo = (expense as any).paidToId === currentUserId ? 'You' : (paidToUser?.name || 'Unknown');
 
@@ -186,7 +184,7 @@ export function GroupExpense() {
                                                     </div>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="text-sm font-bold text-blue-600">${expense.amount.toFixed(2)}</p>
+                                                    <p className="text-sm font-bold text-blue-600">₹{expense.amount.toFixed(2)}</p>
                                                     <p className="text-[10px] text-slate-400 uppercase tracking-tighter">Settled Up</p>
                                                 </div>
                                             </div>
@@ -220,7 +218,7 @@ export function GroupExpense() {
                                             </div>
                                             <div className="text-right">
                                                 <p className={`text-base font-bold ${isPaidByCurrentUser ? 'text-green-600' : 'text-red-500'}`}>
-                                                    {isPaidByCurrentUser ? '+' : '-'}${yourShare.toFixed(2)}
+                                                    {isPaidByCurrentUser ? '+' : '-'}₹{yourShare.toFixed(2)}
                                                 </p>
                                                 <p className="text-xs text-slate-400">
                                                     {isPaidByCurrentUser ? 'you lent' : 'you borrowed'}

@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
-import { User, LogOut, LayoutDashboard, Bell } from "lucide-react";
+import { User, LogOut, Bell } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -29,7 +29,7 @@ export function NavBar() {
     }
 
     const handleActivityClick = () => {
-        toast.success('This feature coming soon!!');
+        toast.success('Activity Logs feature coming soon!!');
         // setTimeout(() => {
         //     navigate('/activity-logs');
         // }, 2000);
@@ -37,7 +37,7 @@ export function NavBar() {
 
     return (
         <header className={cn(
-            'sticky mt-5 z-50',
+            'sticky top-0 z-50',
             'mx-auto w-full max-w-7xl rounded-2xl border shadow',
             'bg-background/95 supports-backdrop-filter:bg-background/80 backdrop-blur-lg',
         )}>
@@ -90,10 +90,6 @@ export function NavBar() {
                                         </DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
-                                            <DropdownMenuItem onClick={() => navigate('/dashboard')}>
-                                                <LayoutDashboard size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
-                                                <span>Dashboard</span>
-                                            </DropdownMenuItem>
                                             <DropdownMenuItem onClick={() => navigate('/profile')}>
                                                 <User size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
                                                 <span>Profile</span>

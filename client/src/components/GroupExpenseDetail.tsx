@@ -142,7 +142,7 @@ export const GroupExpenseDetail = ({
                                             </div>
                                             <div className="text-right">
                                                 <span className="block font-bold text-slate-800">
-                                                    ${split.amount.toFixed(2)}
+                                                    ₹{split.amount.toFixed(2)}
                                                 </span>
                                                 <span
                                                     className={`text-xs font-medium ${

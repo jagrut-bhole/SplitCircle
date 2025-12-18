@@ -48,8 +48,8 @@ export const GroupSection = () => {
             <div className="h-full flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="bg-violet-100 p-3 rounded-xl">
-                            <Users className="w-6 h-6 text-violet-600" />
+                        <div className="bg-[#E2E8F0] p-3 rounded-xl">
+                            <Users className="w-6 h-6 text-[#475569]" />
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-slate-800">Groups</h2>
@@ -82,7 +82,7 @@ export const GroupSection = () => {
                                 const group = Array.isArray(userGroup.group) ? userGroup.group[0] : userGroup.group;
                                 const balance = calculateGroupBalance(userGroup);
                                 const memberCount = group?.members?.length || 0;
-                                // const lastActive = group?.updatedAt ? new Date(group.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Just now';
+                                const lastActive = group?.updatedAt ? new Date(group.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Just now';
 
                                 return (
                                     <div 
@@ -90,28 +90,28 @@ export const GroupSection = () => {
                                         onClick={() => handleGroupClick(userGroup.groupId)}
                                         className="group relative bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex items-center gap-4 hover:bg-slate-50 hover:border-slate-300"
                                     >
-                                        <div className="w-12 h-12 object-cover rounded-lg bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-sm">
-                                            <span className="text-white font-bold text-lg">
+                                        <div className="w-12 h-12 object-cover rounded-lg bg-[#F1F5F9] flex items-center justify-center shadow-sm">
+                                            <span className="text-[#475569] font-bold text-lg">
                                                 {group?.name?.charAt(0).toUpperCase() || 'G'}
                                             </span>
                                         </div>
                                         
                                         <div className="flex-1">
                                             <h3 className="font-semibold text-slate-800 text-base">{group?.name || 'Unnamed Group'}</h3>
-                                            <p className="text-xs text-slate-500">{memberCount} members {/*•  {lastActive} */}</p>
+                                            <p className="text-xs text-slate-500">{memberCount} members •  {lastActive}</p>
                                         </div>
 
                                         <div className="text-right">
                                             {balance > 0 && (
-                                                <div className="text-brand-600 font-bold flex items-center justify-end gap-1">
+                                                <div className="text-[#059669] font-bold flex items-center justify-end gap-1">
                                                     <ArrowUpRight className="w-4 h-4" />
-                                                    ${balance.toFixed(2)}
+                                                    ₹{balance.toFixed(2)}
                                                 </div>
                                             )}
                                             {balance < 0 && (
                                                 <div className="text-red-500 font-bold flex items-center justify-end gap-1">
                                                     <ArrowDownLeft className="w-4 h-4" />
-                                                    ${Math.abs(balance).toFixed(2)}
+                                                    ₹{Math.abs(balance).toFixed(2)}
                                                 </div>
                                             )}
                                             {balance === 0 && (

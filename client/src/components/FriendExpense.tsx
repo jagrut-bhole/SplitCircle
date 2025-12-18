@@ -78,8 +78,8 @@ export function FriendExpense() {
                         </button>
                         <div className="flex items-center gap-3">
                             <div className="relative">
-                                <div className="w-12 h-12 bg-linear-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                                    {friendUser?.name.charAt(0).toUpperCase() || 'A'}
+                                <div className="w-12 h-12 bg-[#FFEDD5] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                    <span className="text-[#C2410C]">{friendUser?.name.charAt(0).toUpperCase() || 'F'}</span>
                                 </div>
                                 <span className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white ${owesYou ? 'bg-green-500' : 'bg-orange-500'}`}></span>
                             </div>
@@ -107,7 +107,7 @@ export function FriendExpense() {
                             <Receipt className="w-4 h-4" />
                             <span className="text-sm">Add Expense</span>
                         </button>
-                        <button className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all">
+                        <button onClick={() => toast.info("Coming Soon!!!")} className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all">
                             <CheckCircle className="w-4 h-4 text-slate-500" />
                             <span className="text-sm">Settle Up</span>
                         </button>

@@ -50,8 +50,8 @@ export const FriendSection = () => {
             <div className="h-full flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="bg-orange-100 p-3 rounded-xl">
-                            <User className="w-6 h-6 text-orange-600" />
+                        <div className="bg-[#FFEDD5] p-3 rounded-xl">
+                            <User className="w-6 h-6 text-[#C2410C]" />
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-slate-800">Friends</h2>
@@ -100,8 +100,9 @@ export const FriendSection = () => {
                                     >
                                         <div className="flex items-center gap-3">
                                             <div className="relative">
-                                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-sm">
-                                                    <span className="text-white font-bold text-sm">
+                                                {/* <div className="w-10 h-10 rounded-full bg-linear-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-sm"> */}
+                                                <div className="w-10 h-10 rounded-full bg-[#FFF7ED] flex items-center justify-center shadow-sm">
+                                                    <span className="text-[#C2410C] font-bold text-sm">
                                                         {friend.name.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
@@ -116,13 +117,13 @@ export const FriendSection = () => {
                                             {status === 'owed' && (
                                                 <>
                                                     <div className="text-[#059669] font-bold text-sm">Owning</div>
-                                                    <div className="text-[#059669] font-bold text-base">${amount.toFixed(2)}</div>
+                                                    <div className="text-[#059669] font-bold text-base">₹{amount.toFixed(2)}</div>
                                                 </>
                                             )}
                                             {status === 'owes' && (
                                                 <>
                                                     <div className="text-red-500 font-bold text-sm">Owes</div>
-                                                    <div className="text-red-500 font-bold text-base">${amount.toFixed(2)}</div>
+                                                    <div className="text-red-500 font-bold text-base">₹{amount.toFixed(2)}</div>
                                                 </>
                                             )}
                                             {status === 'settled' && (
