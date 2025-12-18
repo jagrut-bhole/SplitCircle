@@ -18,14 +18,14 @@ export declare class SettlementService {
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: import("../generated/prisma/enums.js").SplitType;
             scenario: string | null;
+            createdById: string;
         };
         oldBalance: number;
         newBalance: number;
@@ -58,14 +58,14 @@ export declare class SettlementService {
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: import("../generated/prisma/enums.js").SplitType;
             scenario: string | null;
+            createdById: string;
         };
         paidTo: {
             id: string;

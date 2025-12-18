@@ -24,8 +24,8 @@ export declare class GroupService {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
             createdById: string;
+            description: string | null;
         }) | null;
     }>;
     getGroupUsers(userId: string): Promise<{
@@ -51,8 +51,8 @@ export declare class GroupService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                description: string | null;
                 createdById: string;
+                description: string | null;
             };
         } & {
             userId: string;
@@ -81,8 +81,8 @@ export declare class GroupService {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
             createdById: string;
+            description: string | null;
         })[];
         recentExpenses: ({
             paidBy: {
@@ -90,20 +90,33 @@ export declare class GroupService {
                 id: string;
                 username: string;
             };
+            splits: ({
+                user: {
+                    name: string;
+                    id: string;
+                    username: string;
+                };
+            } & {
+                userId: string;
+                id: string;
+                amount: number;
+                expenseId: string;
+                percentage: number | null;
+            })[];
         } & {
             date: Date;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: import("../generated/prisma/enums.js").SplitType;
             scenario: string | null;
+            createdById: string;
         })[];
     }>;
     addMembers(username: string, groupId: string, addedByUserId: string): Promise<{
@@ -128,8 +141,8 @@ export declare class GroupService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                description: string | null;
                 createdById: string;
+                description: string | null;
             }) | null;
             userToBeAdded: string;
         };
@@ -139,15 +152,15 @@ export declare class GroupService {
         amount?: number;
         percentage?: number;
     }>, participantUsernames: string[]): Promise<({
-        group: {
-            name: string;
-            id: string;
-        } | null;
         paidBy: {
             name: string;
             id: string;
             username: string;
         };
+        group: {
+            name: string;
+            id: string;
+        } | null;
         splits: ({
             user: {
                 name: string;
@@ -167,25 +180,25 @@ export declare class GroupService {
         createdAt: Date;
         updatedAt: Date;
         amount: number;
-        createdById: string;
-        groupId: string | null;
         title: string;
         note: string;
         currency: string;
         paidById: string;
+        groupId: string | null;
         splitType: import("../generated/prisma/enums.js").SplitType;
         scenario: string | null;
+        createdById: string;
     }) | null | undefined>;
     updateGroupExpense(expenseId: string, groupId: string, currentUserId: string, title: string, amount: number, paidByUsername: string, participantUsernames: string[]): Promise<({
-        group: {
-            name: string;
-            id: string;
-        } | null;
         paidBy: {
             name: string;
             id: string;
             username: string;
         };
+        group: {
+            name: string;
+            id: string;
+        } | null;
         splits: ({
             user: {
                 name: string;
@@ -205,14 +218,14 @@ export declare class GroupService {
         createdAt: Date;
         updatedAt: Date;
         amount: number;
-        createdById: string;
-        groupId: string | null;
         title: string;
         note: string;
         currency: string;
         paidById: string;
+        groupId: string | null;
         splitType: import("../generated/prisma/enums.js").SplitType;
         scenario: string | null;
+        createdById: string;
     }) | null>;
     deleteGroupExpense(expenseId: string, groupId: string, currentUserId: string): Promise<{
         success: boolean;
@@ -237,5 +250,6 @@ export declare class GroupService {
             description: string;
         };
     }>;
+    calculateGroupBalanceForUser(groupId: string, userId: string): Promise<number>;
 }
 //# sourceMappingURL=group.services.d.ts.map

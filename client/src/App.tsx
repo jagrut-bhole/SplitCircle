@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 // auth Pages 
 import { RegisterPage } from "./pages/auth/RegisterPage"
@@ -15,9 +15,9 @@ import { UserProfile } from "./pages/UserProfile"
 
 // landing page
 import { Landing } from "./pages/Landing"
-import { ActivitySection } from "./components/ActivitySection"
 import { GroupExpense } from "./components/GroupExpense"
 import { FriendExpense } from "./components/FriendExpense"
+import { NotFoundPage } from "./components/404/PageNotFound"
 
 
 function App() {
@@ -46,11 +46,6 @@ function App() {
                                           }
           />
 
-          <Route path="/activity-logs" element={
-                                            <ProtectedRouter>
-                                              <ActivitySection />
-                                            </ProtectedRouter>
-          } />
 
           <Route path="/groups/:groupId" element={
                                             <ProtectedRouter>
@@ -67,10 +62,10 @@ function App() {
           />
 
                     {/* Redirect root to dashboard */}
-          {/* <Route path="/" element={<Navigate to='/dashboard' replace />}  /> */}
+          <Route path="/" element={<Navigate to='/dashboard' replace />}  />
 
                     {/* 404 pages */}
-          <Route path="*" element={<div>Page Not Found</div>}/>
+          <Route path="*" element={<NotFoundPage />}/>
         </Routes>
       </BrowserRouter>
 

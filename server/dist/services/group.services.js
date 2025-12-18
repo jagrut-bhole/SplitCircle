@@ -170,6 +170,17 @@ export class GroupService {
                         name: true,
                         username: true,
                     }
+                },
+                splits: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                username: true
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -885,6 +896,29 @@ export class GroupService {
             };
         });
         return result;
+    }
+    async calculateGroupBalanceForUser(groupId, userId) {
+        // Get all expenses for this group
+        const expenses = await prisma.expense.findMany({
+            where: {
+                groupId: groupId
+            },
+            include: {
+                splits: true
+            }
+        });
+        let balance = 0;
+        for (const expense of expenses) {
+            // Find current user's split
+            const userSplit = expense.splits.find(s => s.userId === userId);
+            if (!userSplit)
+                continue;
+            const userOwed = userSplit.amount;
+            const userPaid = expense.paidById === userId ? expense.amount : 0;
+            // Net position: positive means user is owed, negative means user owes
+            balance += (userPaid - userOwed);
+        }
+        return balance;
     }
 }
 //# sourceMappingURL=group.services.js.map

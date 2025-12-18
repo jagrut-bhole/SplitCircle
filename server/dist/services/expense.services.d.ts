@@ -6,14 +6,14 @@ export declare class ExpenseServices {
         createdAt: Date;
         updatedAt: Date;
         amount: number;
-        createdById: string;
-        groupId: string | null;
         title: string;
         note: string;
         currency: string;
         paidById: string;
+        groupId: string | null;
         splitType: SplitType;
         scenario: string | null;
+        createdById: string;
     }>;
     friendExpenseList(currentUserId: string, friendId: string): Promise<{
         count: number;
@@ -42,29 +42,29 @@ export declare class ExpenseServices {
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: SplitType;
             scenario: string | null;
+            createdById: string;
         })[];
     }>;
     friendSingleExpenseDetail(expenseId: string, currentUserId: string): Promise<{
         expense: ({
+            paidBy: {
+                name: string;
+                id: string;
+                username: string;
+            };
             group: {
                 name: string;
                 id: string;
                 createdAt: Date;
                 description: string | null;
             } | null;
-            paidBy: {
-                name: string;
-                id: string;
-                username: string;
-            };
             splits: ({
                 user: {
                     email: string;
@@ -84,14 +84,14 @@ export declare class ExpenseServices {
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: SplitType;
             scenario: string | null;
+            createdById: string;
         })[];
     }>;
     updateFriendExpense(currentUserId: string, expenseId: string, updates: {
@@ -107,14 +107,14 @@ export declare class ExpenseServices {
                 createdAt: Date;
                 updatedAt: Date;
                 amount: number;
-                createdById: string;
-                groupId: string | null;
                 title: string;
                 note: string;
                 currency: string;
                 paidById: string;
+                groupId: string | null;
                 splitType: SplitType;
                 scenario: string | null;
+                createdById: string;
             };
         };
     }>;
@@ -142,14 +142,14 @@ export declare class ExpenseServices {
             createdAt: Date;
             updatedAt: Date;
             amount: number;
-            createdById: string;
-            groupId: string | null;
             title: string;
             note: string;
             currency: string;
             paidById: string;
+            groupId: string | null;
             splitType: SplitType;
             scenario: string | null;
+            createdById: string;
         };
     }>;
     private calculateSplits;

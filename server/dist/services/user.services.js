@@ -226,37 +226,173 @@ export class UserService {
         return { user };
     }
     async calulateUserOwedAmounts(userId) {
-        const balances = await prisma.balance.findMany({
+        // Get all expenses where user is involved (both friend and group expenses)
+        const expenses = await prisma.expense.findMany({
             where: {
-                id: userId
+                splits: {
+                    some: {
+                        userId: userId
+                    }
+                }
+            },
+            include: {
+                splits: {
+                    include: {
+                        user: true
+                    }
+                },
+                paidBy: true
             }
         });
-        if (balances.length === 0) {
-            return {
-                totalOwedToUser: 0,
-                totalUserOwes: 0
-            };
-        }
         let totalOwedToUser = 0;
         let totalUserOwes = 0;
-        for (const balance of balances) {
-            let finalAmount = 0;
-            if (balance.user1Id === userId) {
-                finalAmount = balance.amount;
+        for (const expense of expenses) {
+            // Find current user's split
+            const userSplit = expense.splits.find(s => s.userId === userId);
+            if (!userSplit)
+                continue;
+            const userOwed = userSplit.amount;
+            const userPaid = expense.paidById === userId ? expense.amount : 0;
+            // Net position: positive means user is owed, negative means user owes
+            const netPosition = userPaid - userOwed;
+            if (netPosition > 0) {
+                totalOwedToUser += netPosition;
             }
-            else {
-                finalAmount = -balance.amount;
-            }
-            if (finalAmount > 0) {
-                totalOwedToUser += finalAmount;
-            }
-            else {
-                totalUserOwes += Math.abs(finalAmount);
+            else if (netPosition < 0) {
+                totalUserOwes += Math.abs(netPosition);
             }
         }
         return {
             totalOwedToUser,
             totalUserOwes
+        };
+    }
+    async getAllUserGroups(userId) {
+        const groups = await prisma.groupMember.findMany({
+            where: {
+                userId: userId
+            },
+            include: {
+                group: {
+                    include: {
+                        members: true,
+                        expenses: {
+                            include: {
+                                splits: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        // Calculate balance for each group
+        const groupsWithBalance = groups.map(groupMember => {
+            let balance = 0;
+            // Calculate user's balance in this group
+            for (const expense of groupMember.group.expenses) {
+                const userSplit = expense.splits.find(s => s.userId === userId);
+                if (!userSplit)
+                    continue;
+                const userOwed = userSplit.amount;
+                const userPaid = expense.paidById === userId ? expense.amount : 0;
+                balance += (userPaid - userOwed);
+            }
+            return {
+                ...groupMember,
+                balance
+            };
+        });
+        return groupsWithBalance;
+    }
+    async friendDetails(friendId, currentUserId) {
+        // Get friend information
+        const friend = await prisma.user.findUnique({
+            where: {
+                id: friendId
+            },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true
+            }
+        });
+        if (!friend) {
+            throw new Error("Friend not found!!");
+        }
+        // Get all expenses between current user and friend
+        const expenses = await prisma.expense.findMany({
+            where: {
+                groupId: null,
+                splits: {
+                    some: {
+                        userId: currentUserId
+                    }
+                },
+                AND: {
+                    splits: {
+                        some: {
+                            userId: friendId
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                date: 'desc'
+            },
+            include: {
+                paidBy: {
+                    select: {
+                        id: true,
+                        username: true,
+                        name: true,
+                    }
+                },
+                splits: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            },
+        });
+        // Get balance between current user and friend
+        const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, friendId);
+        const balance = await prisma.balance.findUnique({
+            where: {
+                user1Id_user2Id: {
+                    user1Id,
+                    user2Id
+                }
+            }
+        });
+        // Calculate final balance from perspective of current user
+        // The balance.amount represents how much user1 is owed by user2 (positive means user1 lent to user2)
+        let finalBalance = 0;
+        if (balance) {
+            // If current user is user1, balance is from their perspective
+            // If current user is user2, invert the balance
+            finalBalance = balance.user1Id === currentUserId ? balance.amount : -balance.amount;
+        }
+        // console.log('Get friend details balance:', {
+        //     currentUserId,
+        //     friendId,
+        //     user1Id,
+        //     user2Id,
+        //     storedBalance: balance?.amount,
+        //     isCurrentUserUser1: balance?.user1Id === currentUserId,
+        //     finalBalance
+        // });
+        return {
+            friend,
+            expenses,
+            balance: finalBalance,
+            expenseCount: expenses.length
         };
     }
 }

@@ -11,7 +11,15 @@ export class ExpenseServices {
             throw new Error("Not friends with the user!!");
         }
         const { paidById, currentUserOwes, friendOwes, splitType } = this.calculateSplits(friendId, currentUserId, amount, scenario);
-        const balanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes);
+        const balanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes, paidById);
+        console.log('Balance calculation:', {
+            currentUserId,
+            friendId,
+            paidById,
+            currentUserOwes,
+            friendOwes,
+            balanceChange
+        });
         const result = await prisma.$transaction(async (tx) => {
             const expense = await tx.expense.create({
                 data: {
@@ -213,7 +221,7 @@ export class ExpenseServices {
         const friendId = user1Id === currentUserId ? user2Id : user1Id;
         const currentUserOldOwes = expense.splits.find(s => s.userId === currentUserId).amount;
         const friendOldOwes = expense.splits.find(s => s.userId === friendId).amount;
-        const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOldOwes, friendOldOwes);
+        const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOldOwes, friendOldOwes, expense.paidById);
         const newAmount = updates.amount ?? expense.amount;
         const newDescription = updates.description ?? expense.note;
         const newTitle = updates.title ?? expense.title;
@@ -224,7 +232,7 @@ export class ExpenseServices {
         console.log("newScenario: ", newScenario);
         //calculating new split
         const { paidById, currentUserOwes, friendOwes, splitType } = this.calculateSplits(friendId, currentUserId, newAmount, newScenario);
-        const newBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes);
+        const newBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes, paidById);
         const netBalanceChange = -oldBalanceChange + newBalanceChange;
         const result = await prisma.$transaction(async (tx) => {
             const updateExpense = await tx.expense.update({
@@ -334,7 +342,7 @@ export class ExpenseServices {
         const friendId = user1Id === currentUserId ? user2Id : user1Id;
         const currentUserOwes = expense.splits.find(s => s.userId === currentUserId).amount;
         const friendOwes = expense.splits.find(s => s.userId === friendId).amount;
-        const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes);
+        const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes, expense.paidById);
         const deletedExpenseDetails = {
             note: expense.note,
             amount: expense.amount,
@@ -454,17 +462,36 @@ export class ExpenseServices {
                 }
             }
         });
-        if (!balance) {
-            throw new Error("Balance not found!!");
-        }
-        await tx.balance.update({
-            where: {
-                id: balance.id
-            },
-            data: {
-                amount: balance.amount + change
-            }
+        console.log('Update balance:', {
+            userId1,
+            userId2,
+            user1Id,
+            user2Id,
+            change,
+            existingBalance: balance?.amount,
+            newBalance: balance ? balance.amount + change : change
         });
+        if (!balance) {
+            // Create the balance record if it doesn't exist
+            await tx.balance.create({
+                data: {
+                    user1Id,
+                    user2Id,
+                    amount: change
+                }
+            });
+        }
+        else {
+            // Update existing balance
+            await tx.balance.update({
+                where: {
+                    id: balance.id
+                },
+                data: {
+                    amount: balance.amount + change
+                }
+            });
+        }
     }
     async createActivity(tx, expense, userId) {
         await tx.activity.create({
