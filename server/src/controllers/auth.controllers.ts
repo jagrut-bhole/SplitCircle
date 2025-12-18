@@ -7,7 +7,8 @@ import { JWTpayload } from "../types/auth.types.js";
 
 const options = {
     httpOnly:true,
-    secure:true
+    secure:true,
+    sameSite: "none",
 }
 
 import { EmailServices } from "../services/email.services.js";

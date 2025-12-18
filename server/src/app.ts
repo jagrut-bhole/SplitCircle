@@ -16,25 +16,9 @@ import {settlementRouter} from './routes/settlement.routes.js';
 
 const app:Express = express();
 
-// const allowedOrigins  : string[] = [
-//     'https://splitcircle.jagrut.me'
-// ]
-// app.use(cors({
-//     origin : function (origin , callback) {
-//         if (!origin || allowedOrigins.includes(origin)) {
-//             callback(null, origin || allowedOrigins[0])
-//         } else {
-//             callback(new Error('Not allowed by CORS!!'));
-//         }
-//     },
-//     credentials : true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     exposedHeaders: ['Set-Cookie']
-// }))
+app.set("trust proxy", 1);
 
 const corsOrigin = process.env.CORS_ORIGIN;
-console.log("CORS ORIGIN ",corsOrigin);
 
 app.use(cors({
     origin: corsOrigin,
@@ -63,7 +47,7 @@ app.use('/health',(req:Request,res:Response) => {
     })
 });
 
-//Routes setup - MUST come before the generic root route
+//Routes setup 
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/group',groupRouter);
