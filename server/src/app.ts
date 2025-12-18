@@ -1,5 +1,9 @@
 import express,{Express,Request,Response} from 'express'
 import cors from 'cors'
+import dotnev from 'dotenv'
+dotnev.config({
+    path: "./.env"
+});
 import cookieParser from 'cookie-parser';
 
 //routes login
@@ -12,26 +16,33 @@ import {settlementRouter} from './routes/settlement.routes.js';
 
 const app:Express = express();
 
-const allowedOrigins  : string[] = [
-    'https://splitcircle.jagrut.me'
-]
+// const allowedOrigins  : string[] = [
+//     'https://splitcircle.jagrut.me'
+// ]
+// app.use(cors({
+//     origin : function (origin , callback) {
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, origin || allowedOrigins[0])
+//         } else {
+//             callback(new Error('Not allowed by CORS!!'));
+//         }
+//     },
+//     credentials : true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     exposedHeaders: ['Set-Cookie']
+// }))
 
-console.log("Allowed Origins: ",allowedOrigins);
+const corsOrigin = process.env.CORS_ORIGIN;
+console.log("CORS ORIGIN ",corsOrigin);
 
 app.use(cors({
-    origin : function (origin , callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, origin || allowedOrigins[0])
-        } else {
-            callback(new Error('Not allowed by CORS!!'));
-        }
-    },
+    origin: corsOrigin,
     credentials : true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Set-Cookie']
-}))
-
+}));
 
 app.use(express.json({
     limit: '20kb'
