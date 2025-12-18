@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { authService } from "@/services/authService";
+import profileImg from '@/assets/profile.jpg';
 
 export function NavBar() {
     const navigate = useNavigate();
@@ -64,20 +65,18 @@ export function NavBar() {
                                             aria-label="Open account menu"
                                         >
                                             <img
-                                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
+                                                src={profileImg}
                                                 alt="Profile"
-                                                className="w-full h-full object-cover"
+                                                className="w-8 h-8 object-cover"
                                             />
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-56" align="end">
                                         <DropdownMenuLabel className="flex items-start gap-3">
                                             <img
-                                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
-                                                alt="Avatar"
-                                                width={32}
-                                                height={32}
-                                                className="shrink-0 rounded-full"
+                                                src={profileImg}
+                                                alt="Profile"
+                                                className="w-8 h-8 object-cover shrink-0 rounded-full"
                                             />
                                             <div className="flex min-w-0 flex-col">
                                                 <span className="truncate text-sm font-medium text-foreground">
