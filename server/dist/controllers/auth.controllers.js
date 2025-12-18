@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken";
 import { generateAccessToken, generateRefreshToken, hashedPassword, isPasswordCorrect } from "../services/auth.services.js";
 const options = {
     httpOnly: true,
-    secure: true
+    secure: true,
+    sameSite: "none",
 };
 import { EmailServices } from "../services/email.services.js";
 const emailService = new EmailServices();

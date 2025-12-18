@@ -4,8 +4,9 @@ import { prisma } from "../index.js";
 import jwt from "jsonwebtoken"
 import { generateAccessToken, generateRefreshToken, hashedPassword, isPasswordCorrect } from "../services/auth.services.js";
 import { JWTpayload } from "../types/auth.types.js";
+import { CookieOptions } from "express";
 
-const options = {
+const options : CookieOptions = {
     httpOnly:true,
     secure:true,
     sameSite: "none",
