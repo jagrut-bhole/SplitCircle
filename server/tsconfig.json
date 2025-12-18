@@ -1,5 +1,4 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
@@ -8,12 +7,14 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "declaration": true,
     "declarationMap": true,
+
     "sourceMap": true,
     "noEmit": false
   },
