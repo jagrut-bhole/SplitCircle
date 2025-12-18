@@ -15,16 +15,10 @@ export const FriendSection = () => {
 
     const [isAddFriendOpen, setIsAddFriendOpen] = useState<boolean>(false);
 
-    // const [friendSummary, setFriendSummary] = useState<FriendsSummary>({
-    //     totalFriends: 0,
-    //     youOwe: 0,
-    //     youAreOwed: 0,
-    // });
-
     // Count how many people owe you money
-    const getPeopleOwingYouCount = () => {
-        return allFriends.filter(friend => friend.balance > 0).length;
-    };
+    // const getPeopleOwingYouCount = () => {
+    //     return allFriends.filter(friend => friend.balance > 0).length;
+    // };
 
     const fetchAllFriends = async () => {
         setIsLoading(true);
@@ -65,8 +59,11 @@ export const FriendSection = () => {
                                     Total Friends: {friendSummary.totalFriends}
                                 </p> */}
                             <p className="text-xs text-slate-500 font-medium">
-                                {getPeopleOwingYouCount()} {getPeopleOwingYouCount() === 1 ? 'person owes' : 'people owe'} you money
+                                {allFriends.length} {allFriends.length === 1 ? 'friend' : 'friends'}
                             </p>
+                            {/* <p className="text-xs text-slate-500 font-medium">
+                                {getPeopleOwingYouCount()} {getPeopleOwingYouCount() === 1 ? 'person owes' : 'people owe'} you money
+                            </p> */}
                         </div>
                     </div>
                     <button onClick={() =>  setIsAddFriendOpen(true)} className="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-sm font-medium">

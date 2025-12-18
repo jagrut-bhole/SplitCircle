@@ -6,6 +6,7 @@ import type { GetFriendDetails, FriendExpense as FriendExpenseType } from "@/typ
 import { useAuthStore } from "@/store/authStore";
 import { expensesService } from "@/services/expensesService";
 import { FriendAddExpenseModal } from "./FriendAdddExpense";
+import { FriendExpenseDetail } from "./ExpenseDetails/Friend";
 
 export function FriendExpense() {
     
@@ -21,6 +22,8 @@ export function FriendExpense() {
     const currentUserName = useAuthStore((state) => state.user?.name);
     
     const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
+    const [isExpenseDetailOpen, setIsExpenseDetailOpen] = useState<boolean>(false);
+    const [selectedExpense, setSelectedExpense] = useState<FriendExpenseType | null>(null);
 
     const fetchFriendDetails = async () => {
         setIsLoading(true);
@@ -44,11 +47,17 @@ export function FriendExpense() {
         if (friendId) {
             fetchFriendDetails();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [friendId]);
 
     const friendUser = friendDetails?.data.friend;
     const totalBalance = friendDetails?.data.balance || 0;
     const owesYou = totalBalance > 0;
+
+    const handleExpenseClick = (expense: FriendExpenseType) => {
+        setSelectedExpense(expense);
+        setIsExpenseDetailOpen(true);
+    };
 
     // Format date to "MMM DD, YYYY"
     const formatDate = (dateString: string) => {
@@ -138,6 +147,7 @@ export function FriendExpense() {
                                     return (
                                         <div
                                             key={expense.id}
+                                            onClick={() => handleExpenseClick(expense)}
                                             className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-xl transition-all cursor-pointer border border-transparent hover:border-slate-200 hover:shadow-sm"
                                         >
                                             <div className="flex items-center gap-3">
@@ -180,6 +190,18 @@ export function FriendExpense() {
                     friendName={friendUser.name}
                     currentUserName={currentUserName || "You"}
                     onExpenseAdded={fetchFriendDetails}
+                />
+            )}
+
+            {/* Expense Detail Modal */}
+            {friendId && (
+                <FriendExpenseDetail
+                    isOpen={isExpenseDetailOpen}
+                    onOpenChange={setIsExpenseDetailOpen}
+                    expense={selectedExpense}
+                    friendId={friendId}
+                    currentUserId={currentUserId}
+                    onSuccess={fetchFriendDetails}
                 />
             )}
 

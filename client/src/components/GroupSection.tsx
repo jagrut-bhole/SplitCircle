@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Users, Plus } from "lucide-react";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { CreateGroup } from "./CreatGroup";
+import { CreateGroup } from "./CreateGroup";
 
 export const GroupSection = () => {
     const navigate = useNavigate();
@@ -14,10 +14,9 @@ export const GroupSection = () => {
     const [groupDetails, setGroupDetails] = useState<UserGroup[]>([]);
     const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
 
-    const calculateGroupBalance = (group: Group) => {
-        // TODO: Calculate actual balance from group expenses
-        // For now returning 0, this should be calculated from expense splits
-        return 0;
+    const calculateGroupBalance = (userGroup: UserGroup) => {
+        // Use balance from API if available
+        return userGroup.balance || 0;
     };
 
     const fetchUserGroups = async () => {
@@ -81,7 +80,7 @@ export const GroupSection = () => {
                         <div className="grid gap-3 grid-cols-1">
                             {groupDetails.map((userGroup) => {
                                 const group = Array.isArray(userGroup.group) ? userGroup.group[0] : userGroup.group;
-                                const balance = calculateGroupBalance(group);
+                                const balance = calculateGroupBalance(userGroup);
                                 const memberCount = group?.members?.length || 0;
                                 // const lastActive = group?.updatedAt ? new Date(group.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Just now';
 

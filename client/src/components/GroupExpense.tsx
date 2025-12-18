@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Receipt, UserPlus } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { AddUserToGroup } from "@/components/AddUserToGroup";
+import { CreateGroupExpense } from "@/components/CreateGroupExpense";
+import { GroupExpenseDetail } from "@/components/GroupExpenseDetail";
 
 export function GroupExpense() {
     const currentUserId = useAuthStore((state) => state.user?.id);
@@ -17,6 +19,10 @@ export function GroupExpense() {
     const [recentExpenses, setRecentExpenses] = useState<Expense[]>([]);
 
     const [isAddMemberOpen, setIsAddMemberOpen] = useState<boolean>(false);
+    const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);
+    const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
+    const [isExpenseDetailOpen, setIsExpenseDetailOpen] = useState<boolean>(false);
+    const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
 
     const { groupId } = useParams();
 
@@ -44,20 +50,33 @@ export function GroupExpense() {
         }
     }, [groupId]);
 
-    function setSelectedExpense(expense: string) {
-        return expense
+    const handleExpenseClick = (expense: Expense) => {
+        setSelectedExpense(expense);
+        setIsExpenseDetailOpen(true);
     }
 
     const calculateBalance = () => {
         let balance = 0;
         recentExpenses.forEach(expense => {
-            const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
-            if (expense.paidById === currentUserId) {
-                // CurrentUser paid, so you lent money
-                balance += (expense.amount - splitAmount);
+            // Check for settlement
+            if ((expense as any).category === 'settlement') {
+                const isPayer = expense.paidById === currentUserId;
+                const isReceiver = (expense as any).paidToId === currentUserId;
+                
+                if (isPayer) {
+                    balance += expense.amount;
+                } else if (isReceiver) {
+                    balance -= expense.amount;
+                }
             } else {
-                // Someone else paid, so currentUser borrowed money
-                balance -= splitAmount;
+                const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
+                if (expense.paidById === currentUserId) {
+                    // CurrentUser paid, so you lent money
+                    balance += (expense.amount - splitAmount);
+                } else {
+                    // Someone else paid, so currentUser borrowed money
+                    balance -= splitAmount;
+                }
             }
         });
         return balance;
@@ -91,7 +110,7 @@ export function GroupExpense() {
                                 <p className="text-xs text-slate-500 font-medium">
                                     Total Members: {groupDetails?.data.group[0].members.length || 0}
                                 </p>
-                            </div>
+                                    </div>
                         </div>
                         <div className="ml-auto text-right">
                             <p className="text-xs text-slate-500 uppercase font-bold tracking-wider">Total Balance</p>
@@ -103,11 +122,16 @@ export function GroupExpense() {
 
                     {/* Action Bar */}
                     <div className="p-4 grid grid-cols-3 gap-3 border-b border-slate-100 bg-white">
-                        <button className="cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all shadow-sm hover:shadow-md">
+                        <button
+                            onClick={() => setIsAddExpenseOpen(true)}
+                            className="cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all shadow-sm hover:shadow-md">
                             <Receipt className="w-4 h-4" />
                             <span className="text-sm">Add Expense</span>
                         </button>
-                        <button className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all">
+                        <button  
+                            onClick={() => setIsSettleUpOpen(true)}
+                            className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all"
+                        >
                             <CheckCircle className="w-4 h-4 text-slate-500" />
                             <span className="text-sm">Settle Up</span>
                         </button>
@@ -137,6 +161,38 @@ export function GroupExpense() {
                         ) : (
                             <div className="space-y-2">
                                 {recentExpenses.map((expense) => {
+                                    if ((expense as any).category === 'settlement') {
+                                        const paidBy = expense.paidById === currentUserId ? 'You' : expense.paidBy.name;
+                                        // Assuming paidTo is available in the expense object for settlements, or we infer it
+                                        // If the backend doesn't populate paidTo user object, we might have issues displaying the name.
+                                        // We'll try to access it safely.
+                                        const paidToUser = (expense as any).paidTo; 
+                                        const paidTo = (expense as any).paidToId === currentUserId ? 'You' : (paidToUser?.name || 'Unknown');
+
+                                        return (
+                                            <div 
+                                                key={expense.id} 
+                                                className="flex items-center justify-between p-3 bg-blue-50/30 rounded-xl border border-blue-100/50 italic shadow-sm"
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shadow-sm">
+                                                        <CheckCircle className="w-5 h-5 text-blue-600" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-medium text-slate-700">
+                                                            <span className="font-bold text-slate-900">{paidBy}</span> paid <span className="font-bold text-slate-900">{paidTo}</span>
+                                                        </p>
+                                                        <p className="text-[10px] text-slate-400 font-medium tracking-wide">{formatDate(expense.date)}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-sm font-bold text-blue-600">${expense.amount.toFixed(2)}</p>
+                                                    <p className="text-[10px] text-slate-400 uppercase tracking-tighter">Settled Up</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+
                                     const isPaidByCurrentUser = expense.paidById === currentUserId;
                                     const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
                                     const yourShare = isPaidByCurrentUser 
@@ -146,7 +202,7 @@ export function GroupExpense() {
                                     return (
                                         <div
                                             key={expense.id}
-                                            onClick={() => setSelectedExpense(expense.id)}
+                                            onClick={() => handleExpenseClick(expense)}
                                             className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-xl transition-all cursor-pointer border border-transparent hover:border-slate-200 hover:shadow-sm"
                                         >
                                             <div className="flex items-center gap-3">
@@ -185,6 +241,33 @@ export function GroupExpense() {
                     groupId={groupId}
                     isOpen={isAddMemberOpen}
                     onOpenChange={setIsAddMemberOpen}
+                    onSuccess={() => fetchGroupDetails(groupId)}
+                />
+            )}
+
+            {groupId && (
+                <CreateGroupExpense
+                    groupId={groupId}
+                    isOpen={isAddExpenseOpen}
+                    onOpenChange={setIsAddExpenseOpen}
+                    groupMembers={(groupDetails?.data.group[0].members || []).map((m) => ({
+                        id: m.user.id,
+                        name: m.user.name,
+                        username: m.user.username,
+                    }))}
+                    onSuccess={() => fetchGroupDetails(groupId)}
+                />
+            )}
+            
+            {/* Settle up modal removed — component file was not present. */}
+
+            {groupId && (
+                <GroupExpenseDetail
+                    isOpen={isExpenseDetailOpen}
+                    onOpenChange={setIsExpenseDetailOpen}
+                    expense={selectedExpense}
+                    groupId={groupId}
+                    currentUserId={currentUserId}
                     onSuccess={() => fetchGroupDetails(groupId)}
                 />
             )}

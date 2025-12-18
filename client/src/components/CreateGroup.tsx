@@ -8,12 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { groupsService } from "@/services/groupsService";
 import type { CreateGroupData, CreateGroupResponse } from "@/types/GroupTypes";
-import { useEffect } from "react";
 import { friendsService } from "@/services/friendsService";
 import type { GetFriendsResponse } from "@/types/FriendsTypes";
 

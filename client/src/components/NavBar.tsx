@@ -29,10 +29,10 @@ export function NavBar() {
     }
 
     const handleActivityClick = () => {
-        toast.success('This is a notification!');
-        setTimeout(() => {
-            navigate('/activity-logs');
-        }, 2000);
+        toast.success('This feature coming soon!!');
+        // setTimeout(() => {
+        //     navigate('/activity-logs');
+        // }, 2000);
     }
 
     return (

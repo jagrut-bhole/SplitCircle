@@ -4,12 +4,20 @@ import { NavBar } from "@/components/NavBar"
 import { OwedCards } from "@/components/OwedCards"
 
 
+import { useState } from "react";
+
 export const Dashboard = () => {
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const handleRefresh = () => {
+        setRefreshKey(prev => prev + 1);
+    };
+
     return (
         <div >
             <NavBar />
             <div className="mx-auto w-5xl max-w-7xl px-4 py-8">
-                <OwedCards />
+                <OwedCards key={refreshKey} />
             </div>
                 {/* Additional dashboard content can go here */}
                 <div className="flex flex-col h-160 font-sans">

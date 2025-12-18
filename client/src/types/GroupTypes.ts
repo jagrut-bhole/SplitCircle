@@ -56,6 +56,15 @@ export interface GetGroupsResponse {
     };
 }
 
+export interface ExpenseSplit {
+    id: string;
+    expenseId: string;
+    userId: string;
+    amount: number;
+    percentage?: number | null;
+    user: User;
+}
+
 export interface Expense {
     id: string;
     title: string;
@@ -68,6 +77,7 @@ export interface Expense {
     createdAt: string;
     updatedAt: string;
     paidBy: User;
+    splits?: ExpenseSplit[];
 }
 
 export interface GroupDetails {
@@ -112,7 +122,8 @@ export interface UserGroup {
     groupId : string;
     userId : string;
     joinedAt : string;
-    group : Group
+    group : Group;
+    balance?: number;
 }
 
 export interface GetUserGroupsResponse {
