@@ -294,7 +294,7 @@ export class SettlementService {
         let totalYouOwe = 0;
         let totalOwedToYou = 0;
         for (const member of group.members) {
-            if (member.userId === currentUserId) {
+            if (member.userId !== currentUserId) {
                 const otherBalance = memberBalance.get(member.userId) || 0;
                 if (currentUserBalance < 0 && otherBalance > 0) {
                     const proportionalDebt = Math.min(Math.abs(currentUserBalance), otherBalance);
@@ -324,26 +324,26 @@ export class SettlementService {
                     totalOwedToYou += proportionalDebt;
                 }
             }
-            yourDebts.sort((a, b) => {
-                if (a.youOwe && b.youOwe)
-                    return b.youOwe - a.youOwe;
-                if (a.youOwe)
-                    return -1;
-                if (b.youOwe)
-                    return 1;
-                return 0;
-            });
-            return {
-                group: {
-                    id: group.id,
-                    name: group.name
-                },
-                yourDebts,
-                totalYouOwe,
-                totalOwedToYou,
-                netPosition: currentUserBalance
-            };
         }
+        yourDebts.sort((a, b) => {
+            if (a.youOwe && b.youOwe)
+                return b.youOwe - a.youOwe;
+            if (a.youOwe)
+                return -1;
+            if (b.youOwe)
+                return 1;
+            return 0;
+        });
+        return {
+            group: {
+                id: group.id,
+                name: group.name
+            },
+            yourDebts,
+            totalYouOwe,
+            totalOwedToYou,
+            netPosition: currentUserBalance
+        };
     }
     async settleGroupDebt(currentUserId, groupId, recipientId, amount, note) {
         const userService = new UserService();

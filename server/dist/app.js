@@ -11,6 +11,7 @@ import { userRouter } from './routes/user.routes.js';
 import { groupRouter } from './routes/group.routes.js';
 import { expenseRouter } from './routes/expense.routes.js';
 import { settlementRouter } from './routes/settlement.routes.js';
+import { activityRouter } from './routes/activity.routes.js';
 //
 const app = express();
 app.set("trust proxy", 1);
@@ -44,6 +45,7 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/group', groupRouter);
 app.use('/api/v1/expense', expenseRouter);
 app.use('/api/v1/settlement', settlementRouter);
+app.use('/api/v1', activityRouter);
 //
 app.get('/', (req, res) => {
     res.send("Welcome to SplitCircle");

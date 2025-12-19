@@ -50,7 +50,7 @@ export declare class SettlementService {
         totalYouOwe: number;
         totalOwedToYou: number;
         netPosition: number;
-    } | undefined>;
+    }>;
     settleGroupDebt(currentUserId: string, groupId: string, recipientId: string, amount: number, note?: string): Promise<{
         settlement: {
             date: Date;
