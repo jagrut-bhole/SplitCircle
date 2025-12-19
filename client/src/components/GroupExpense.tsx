@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { GetGroupDetailsResponse, Expense } from "@/types/GroupTypes";
 import { groupsService } from "@/services/groupsService";
+import { settlementsService } from "@/services/settlementsService";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Receipt, UserPlus } from "lucide-react";
@@ -8,6 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import { AddUserToGroup } from "@/components/AddUserToGroup";
 import { CreateGroupExpense } from "@/components/CreateGroupExpense";
 import { GroupExpenseDetail } from "@/components/GroupExpenseDetail";
+import { SettleGroupDebt } from "@/components/SettleGroupDebt";
 
 export function GroupExpense() {
     const currentUserId = useAuthStore((state) => state.user?.id);
@@ -20,9 +22,10 @@ export function GroupExpense() {
 
     const [isAddMemberOpen, setIsAddMemberOpen] = useState<boolean>(false);
     const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);
-    // const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
+    const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
     const [isExpenseDetailOpen, setIsExpenseDetailOpen] = useState<boolean>(false);
     const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+    const [memberDebts, setMemberDebts] = useState<Array<{ name: string; youOwe?: number; theyOwe?: number }>>([]);
 
     const { groupId } = useParams();
 
@@ -35,6 +38,8 @@ export function GroupExpense() {
             if (response.success) {
                 setGroupDetails(response);
                 setRecentExpenses(response.data.recentExpenses || [])
+                // Fetch member debts
+                fetchMemberDebts(groupId);
             }
         } catch (error) {
             console.log("Error while fetching group details: ", error);
@@ -44,10 +49,29 @@ export function GroupExpense() {
         }
     }
 
+    const fetchMemberDebts = async (groupId: string) => {
+        try {
+            const response = await settlementsService.getGroupSettlementInfo(groupId);
+            if (response.success && response.data && response.data.members) {
+                const debts = response.data.members
+                    .filter((member) => member.youOwe > 0 || member.theyOwe > 0)
+                    .map((member) => ({
+                        name: member.name,
+                        youOwe: member.youOwe,
+                        theyOwe: member.theyOwe
+                    }));
+                setMemberDebts(debts);
+            }
+        } catch (error) {
+            console.error("Error fetching member debts:", error);
+        }
+    }
+
     useEffect(() => {
         if (groupId) {
             fetchGroupDetails(groupId);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [groupId]);
 
     const handleExpenseClick = (expense: Expense) => {
@@ -58,15 +82,18 @@ export function GroupExpense() {
     const calculateBalance = () => {
         let balance = 0;
         recentExpenses.forEach(expense => {
-            // Check for settlement
-            if ((expense as any).category === 'settlement') {
-                const isPayer = expense.paidById === currentUserId;
-                const isReceiver = (expense as any).paidToId === currentUserId;
+            // Check for settlement using splitType
+            if (expense.splitType === 'SETTLEMENT') {
+                // For settlements, check the expense splits to see who received the money
+                const userSplit = expense.splits?.find(s => s.userId === currentUserId);
+                const otherSplit = expense.splits?.find(s => s.userId !== currentUserId);
                 
-                if (isPayer) {
-                    balance += expense.amount;
-                } else if (isReceiver) {
-                    balance -= expense.amount;
+                if (expense.paidById === currentUserId && otherSplit) {
+                    // You paid someone - reduces your negative balance (you owe less)
+                    balance += otherSplit.amount;
+                } else if (userSplit && userSplit.amount > 0) {
+                    // Someone paid you - reduces your positive balance (they owe you less)
+                    balance -= userSplit.amount;
                 }
             } else {
                 const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
@@ -89,6 +116,19 @@ export function GroupExpense() {
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     };
 
+    if (isLoading && !groupDetails) {
+        return (
+            <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-4 mt-5">
+                <div className="flex items-center justify-center h-96">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                        <p className="text-slate-500 font-medium">Loading group details...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-4 mt-5">
             <div className="max-w-4xl mx-auto">
@@ -110,7 +150,30 @@ export function GroupExpense() {
                                 <p className="text-xs text-slate-500 font-medium">
                                     Total Members: {groupDetails?.data.group[0].members.length || 0}
                                 </p>
+                                {/* Individual member balances */}
+                                {memberDebts.length > 0 && (
+                                    <div className="mt-2 space-y-0.5">
+                                        {memberDebts.slice(0, 3).map((debt, idx) => (
+                                            <div key={idx}>
+                                                {debt.theyOwe && debt.theyOwe > 0 ? (
+                                                    <p className="text-xs text-emerald-600 font-medium">
+                                                        {debt.name} owes you ₹{debt.theyOwe.toFixed(0)}
+                                                    </p>
+                                                ) : debt.youOwe && debt.youOwe > 0 ? (
+                                                    <p className="text-xs text-red-500 font-medium">
+                                                        You owe {debt.name} ₹{debt.youOwe.toFixed(0)}
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                        ))}
+                                        {memberDebts.length > 3 && (
+                                            <p className="text-xs text-slate-400 italic">
+                                                +{memberDebts.length - 3} more...
+                                            </p>
+                                        )}
                                     </div>
+                                )}
+                            </div>
                         </div>
                         <div className="ml-auto text-right">
                             <p className="text-xs text-slate-500 uppercase font-bold tracking-wider">Total Balance</p>
@@ -129,7 +192,7 @@ export function GroupExpense() {
                             <span className="text-sm">Add Expense</span>
                         </button>
                         <button  
-                            onClick={() => toast.info("Coming Soon!!!")}
+                            onClick={() => setIsSettleUpOpen(true)}
                             className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all"
                         >
                             <CheckCircle className="w-4 h-4 text-slate-500" />
@@ -161,11 +224,12 @@ export function GroupExpense() {
                         ) : (
                             <div className="space-y-2">
                                 {recentExpenses.map((expense) => {
-                                    if ((expense as any).category === 'settlement') {
+                                    if (expense.splitType === 'SETTLEMENT') {
                                         const paidBy = expense.paidById === currentUserId ? 'You' : expense.paidBy.name;
 
-                                        const paidToUser = (expense as any).paidTo; 
-                                        const paidTo = (expense as any).paidToId === currentUserId ? 'You' : (paidToUser?.name || 'Unknown');
+                                        // For settlements, find who received the payment from splits
+                                        const recipientSplit = expense.splits?.find(s => s.amount > 0);
+                                        const paidTo = recipientSplit?.userId === currentUserId ? 'You' : (recipientSplit?.user.name || 'Unknown');
 
                                         return (
                                             <div 
@@ -257,7 +321,16 @@ export function GroupExpense() {
                 />
             )}
             
-            {/* Settle up modal removed — component file was not present. */}
+            {/* Settle Up Modal */}
+            {groupId && groupDetails && (
+                <SettleGroupDebt
+                    groupId={groupId}
+                    groupName={groupDetails.data.group[0].name}
+                    isOpen={isSettleUpOpen}
+                    onOpenChange={setIsSettleUpOpen}
+                    onSuccess={() => fetchGroupDetails(groupId)}
+                />
+            )}
 
             {groupId && (
                 <GroupExpenseDetail

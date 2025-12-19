@@ -6,7 +6,11 @@ import { toast } from "sonner";
 import { User, UserPlus, CheckCircle2 } from "lucide-react";
 import { AddFriend } from "./AddFriend";
 
-export const FriendSection = () => {
+interface FriendSectionProps {
+    onDataChange?: () => void;
+}
+
+export const FriendSection = ({ onDataChange }: FriendSectionProps) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,6 +31,7 @@ export const FriendSection = () => {
 
             if (response.success) {
                 setAllFriends(response.data.friends)
+                onDataChange?.(); // Notify parent of data change
                 // setFriendSummary(response.data.summary);
             }
         } catch (error) {

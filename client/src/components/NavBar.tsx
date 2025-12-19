@@ -13,7 +13,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
 import { authService } from "@/services/authService";
 import profileImg from '@/assets/profile.jpg';
 
@@ -30,10 +29,7 @@ export function NavBar() {
     }
 
     const handleActivityClick = () => {
-        toast.success('Activity Logs feature coming soon!!');
-        // setTimeout(() => {
-        //     navigate('/activity-logs');
-        // }, 2000);
+        navigate('/activity');
     }
 
     return (

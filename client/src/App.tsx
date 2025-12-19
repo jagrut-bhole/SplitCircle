@@ -12,6 +12,7 @@ import { ProtectedRouter } from "./components/ProtectedRoute"
 import { PublicRoute } from "./components/PublicRoute"
 
 import { UserProfile } from "./pages/UserProfile"
+import Activity from "./pages/Activity"
 
 // landing page
 import { Landing } from "./pages/Landing"
@@ -46,6 +47,12 @@ function App() {
                                           }
           />
 
+          <Route path='/activity' element={
+                                            <ProtectedRouter>
+                                              <Activity />
+                                            </ProtectedRouter>
+                                          }
+          />
 
           <Route path="/groups/:groupId" element={
                                             <ProtectedRouter>

@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/authStore";
 import { expensesService } from "@/services/expensesService";
 import { FriendAddExpenseModal } from "./FriendAdddExpense";
 import { FriendExpenseDetail } from "./ExpenseDetails/Friend";
+import { SettleGroupPayment } from "./SettleGroupPayment";
 
 export function FriendExpense() {
     
@@ -22,6 +23,7 @@ export function FriendExpense() {
     const currentUserName = useAuthStore((state) => state.user?.name);
     
     const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
+    const [isSettleUpOpen, setIsSettleUpOpen] = useState<boolean>(false);
     const [isExpenseDetailOpen, setIsExpenseDetailOpen] = useState<boolean>(false);
     const [selectedExpense, setSelectedExpense] = useState<FriendExpenseType | null>(null);
 
@@ -107,7 +109,7 @@ export function FriendExpense() {
                             <Receipt className="w-4 h-4" />
                             <span className="text-sm">Add Expense</span>
                         </button>
-                        <button onClick={() => toast.info("Coming Soon!!!")} className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all">
+                        <button onClick={() => setIsSettleUpOpen(true)} className=" cursor-pointer flex items-center justify-center gap-2 py-3 px-4 bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all">
                             <CheckCircle className="w-4 h-4 text-slate-500" />
                             <span className="text-sm">Settle Up</span>
                         </button>
@@ -190,6 +192,17 @@ export function FriendExpense() {
                     friendName={friendUser.name}
                     currentUserName={currentUserName || "You"}
                     onExpenseAdded={fetchFriendDetails}
+                />
+            )}
+
+            {/* Settle Up Modal */}
+            {friendId && friendUser && (
+                <SettleGroupPayment
+                    friendId={friendId}
+                    friendName={friendUser.name}
+                    isOpen={isSettleUpOpen}
+                    onOpenChange={setIsSettleUpOpen}
+                    onSuccess={fetchFriendDetails}
                 />
             )}
 
