@@ -7,7 +7,11 @@ import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CreateGroup } from "./CreateGroup";
 
-export const GroupSection = () => {
+interface GroupSectionProps {
+    onDataChange?: () => void;
+}
+
+export const GroupSection = ({ onDataChange }: GroupSectionProps) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,6 +30,7 @@ export const GroupSection = () => {
 
             if (response.success) {
                 setGroupDetails(response.data);
+                onDataChange?.(); // Notify parent of data change
             }
         } catch (error) {
             console.error("Error fetching user groups:", error);
@@ -41,6 +46,7 @@ export const GroupSection = () => {
 
     useEffect(() => {
         fetchUserGroups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -88,38 +94,40 @@ export const GroupSection = () => {
                                     <div 
                                         key={userGroup.id} 
                                         onClick={() => handleGroupClick(userGroup.groupId)}
-                                        className="group relative bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex items-center gap-4 hover:bg-slate-50 hover:border-slate-300"
+                                        className="group relative bg-white border border-slate-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden hover:bg-slate-50 hover:border-slate-300"
                                     >
-                                        <div className="w-12 h-12 object-cover rounded-lg bg-[#F1F5F9] flex items-center justify-center shadow-sm">
-                                            <span className="text-[#475569] font-bold text-lg">
-                                                {group?.name?.charAt(0).toUpperCase() || 'G'}
-                                            </span>
-                                        </div>
-                                        
-                                        <div className="flex-1">
-                                            <h3 className="font-semibold text-slate-800 text-base">{group?.name || 'Unnamed Group'}</h3>
-                                            <p className="text-xs text-slate-500">{memberCount} members •  {lastActive}</p>
-                                        </div>
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-12 h-12 object-cover rounded-lg bg-[#F1F5F9] flex items-center justify-center shadow-sm shrink-0">
+                                                <span className="text-[#475569] font-bold text-lg">
+                                                    {group?.name?.charAt(0).toUpperCase() || 'G'}
+                                                </span>
+                                            </div>
+                                            
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="font-semibold text-slate-800 text-base">{group?.name || 'Unnamed Group'}</h3>
+                                                <p className="text-xs text-slate-500">{memberCount} members •  {lastActive}</p>
+                                            </div>
 
-                                        <div className="text-right">
-                                            {balance > 0 && (
-                                                <div className="text-[#059669] font-bold flex items-center justify-end gap-1">
-                                                    <ArrowUpRight className="w-4 h-4" />
-                                                    ₹{balance.toFixed(2)}
-                                                </div>
-                                            )}
-                                            {balance < 0 && (
-                                                <div className="text-red-500 font-bold flex items-center justify-end gap-1">
-                                                    <ArrowDownLeft className="w-4 h-4" />
-                                                    ₹{Math.abs(balance).toFixed(2)}
-                                                </div>
-                                            )}
-                                            {balance === 0 && (
-                                                <div className="text-slate-400 font-medium text-sm">Settled</div>
-                                            )}
-                                            <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">
-                                                {balance > 0 ? 'owes you' : balance < 0 ? 'you owe' : ''}
-                                            </p>
+                                            <div className="text-right shrink-0">
+                                                {balance > 0 && (
+                                                    <div className="text-[#059669] font-bold flex items-center justify-end gap-1">
+                                                        <ArrowUpRight className="w-4 h-4" />
+                                                        ₹{balance.toFixed(2)}
+                                                    </div>
+                                                )}
+                                                {balance < 0 && (
+                                                    <div className="text-red-500 font-bold flex items-center justify-end gap-1">
+                                                        <ArrowDownLeft className="w-4 h-4" />
+                                                        ₹{Math.abs(balance).toFixed(2)}
+                                                    </div>
+                                                )}
+                                                {balance === 0 && (
+                                                    <div className="text-slate-400 font-medium text-sm">Settled</div>
+                                                )}
+                                                <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">
+                                                    {balance > 0 ? 'owes you' : balance < 0 ? 'you owe' : ''}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 );

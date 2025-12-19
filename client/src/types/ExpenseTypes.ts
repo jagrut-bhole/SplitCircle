@@ -23,7 +23,7 @@ export interface Expense {
     date: string;
     paidById: string;
     groupId: string | null;
-    spliType: string;
+    splitType: string;
     scenario: string | null;
     createdById: string;
     createdAt: string;

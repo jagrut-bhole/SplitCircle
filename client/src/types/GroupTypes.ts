@@ -74,6 +74,7 @@ export interface Expense {
     date: string;
     paidById: string;
     groupId: string | null;
+    splitType?: string;
     createdAt: string;
     updatedAt: string;
     paidBy: User;
