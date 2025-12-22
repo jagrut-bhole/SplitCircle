@@ -188,7 +188,7 @@ export declare class GroupService {
         splitType: import("../generated/prisma/enums.js").SplitType;
         scenario: string | null;
         createdById: string;
-    }) | null | undefined>;
+    }) | null>;
     updateGroupExpense(expenseId: string, groupId: string, currentUserId: string, title: string, amount: number, paidByUsername: string, participantUsernames: string[]): Promise<({
         paidBy: {
             name: string;

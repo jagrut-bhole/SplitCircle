@@ -2,9 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Link ,useNavigate } from "react-router-dom";
-import type { AxiosError } from "axios";
 import { authService } from "@/services/authService";
-import type { AuthResponse } from "@/types/AuthTypes"; 
 import { useAuthStore } from "@/store/authStore";
 import { Loader2 ,Eye, EyeOff } from "lucide-react";
 
@@ -39,11 +37,10 @@ export const LoginPage = () => {
           navigate('/dashboard');
         }, 1500);
 
-      } catch (error) {
-        console.log("Login Error: ",error);
-        const axiosError = error as AxiosError<AuthResponse>;
-        const errorMessage = axiosError.response?.data.message || " Login Failed. Please try again!!"
-        toast.error(errorMessage);
+            } catch (error : any) {
+                console.log("Login Error: ", error);
+                let errorMessage = error.response?.data?.message || "Login Failed. Please try again!!";
+                toast.error(errorMessage);
       } finally {
         setIsLoading(false);
       }

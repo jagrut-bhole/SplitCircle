@@ -48,7 +48,18 @@ api.interceptors.response.use(
         const errorData = error.response?.data;
 
         // Handle 401 - Try to refresh token
+        // If this is an auth route (login/refresh/register), do not attempt refresh here
+        const isAuthRoute = originalRequest?.url && (
+            originalRequest.url.includes('/auth/login') ||
+            originalRequest.url.includes('/auth/refresh') ||
+            originalRequest.url.includes('/auth/register')
+        );
+
         if (status === 401 && !originalRequest._retry) {
+            if (isAuthRoute) {
+                // Let the request handler (page) handle the 401 for auth routes
+                return Promise.reject(error);
+            }
             if (isRefreshing) {
                 // If already refreshing, queue this request
                 return new Promise((resolve, reject) => {

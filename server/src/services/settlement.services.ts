@@ -206,9 +206,15 @@ export class SettlementService{
 
             const settlementType = isFullSettlement ? 'full' : 'partial';
 
+            // Get user names for better activity messages
+            const [currentUserData, friendUserData] = await Promise.all([
+                tx.user.findUnique({ where: { id: currentUserId }, select: { name: true } }),
+                tx.user.findUnique({ where: { id: friendId }, select: { name: true } })
+            ]);
+
             await tx.activity.create({
                 data : {
-                    note : `Settled ${settlementType} settlement of ₹${amount.toFixed(2)}`,
+                    note : `${currentUserData?.name} paid ${friendUserData?.name} ₹${amount.toFixed(2)}`,
                     userId : currentUserId,
                     expenseId : settlementExpense.id,
                     metadata : {
@@ -216,22 +222,24 @@ export class SettlementService{
                         friendId,
                         note : note,
                         isFullSettlement,
-                        remainingBalance : newActualBalance
+                        remainingBalance : newActualBalance,
+                        settlementType: settlementType
                     }
                 }
             });
 
             await tx.activity.create({
                 data : {
-                    note : `Settled ${settlementType} settlement of ₹${amount.toFixed(2)}`,
+                    note : `${currentUserData?.name} paid ${friendUserData?.name} ₹${amount.toFixed(2)}`,
                     userId : friendId,
                     expenseId : settlementExpense.id,
                     metadata : {
                         amount : amount,
-                        friendId,
+                        friendId: currentUserId,
                         note : note,
                         isFullSettlement,
-                        remainingBalance : -newActualBalance
+                        remainingBalance : -newActualBalance,
+                        settlementType: settlementType
                     }
                 }
             })
@@ -323,6 +331,7 @@ export class SettlementService{
                 }
         
                 // Calculating net balance for each member
+                // Include settlements - they are payments that reduce debt
                 const memberBalance = new Map<string,number>();
         
                 group.members.forEach(m => {
@@ -484,30 +493,18 @@ export class SettlementService{
             ]
             });
 
-            if (areFriends) {
-            const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, recipientId);
-            const friendBalance = await tx.balance.findUnique({
-                where: { user1Id_user2Id: { user1Id, user2Id } }
-            });
-            
-            if (friendBalance) {
-                let balanceChange = 0;
-                if (currentUserId === user1Id) {
-                balanceChange = -amount;
-                } else {
-                balanceChange = amount;
-                }
-                
-                await tx.balance.update({
-                where: { id: friendBalance.id },
-                data: { amount: friendBalance.amount + balanceChange }
-                });
-            }
-            }
+            // Group settlements should NOT update friend-to-friend Balance table
+            // Group balances are calculated separately from friend balances
+
+            // Get user names for better activity messages
+            const [payerData, recipientData] = await Promise.all([
+                tx.user.findUnique({ where: { id: currentUserId }, select: { name: true } }),
+                tx.user.findUnique({ where: { id: recipientId }, select: { name: true } })
+            ]);
 
             await tx.activity.create({
             data: {
-                note: `Group settlement: ₹${amount} to ${debtToUser.user.name}`,
+                note: `${payerData?.name} paid ${recipientData?.name} ₹${amount.toFixed(2)} (Group Settlement)`,
                 userId: currentUserId,
                 expenseId: settlementExpense.id,
                 groupId: groupId,
@@ -522,7 +519,7 @@ export class SettlementService{
             
             await tx.activity.create({
             data: {
-                note: `Received group settlement: ₹${amount}`,
+                note: `${payerData?.name} paid ${recipientData?.name} ₹${amount.toFixed(2)} (Group Settlement)`,
                 userId: recipientId,
                 expenseId: settlementExpense.id,
                 groupId: groupId,

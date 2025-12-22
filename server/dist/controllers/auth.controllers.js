@@ -8,14 +8,7 @@ const options = {
     sameSite: "none",
 };
 import { EmailServices } from "../services/email.services.js";
-const emailService = new EmailServices();
 export const registerController = asyncHandler(async (req, res) => {
-    // 1. Get data from req.body
-    // 2. Validate: check if user already exists
-    // 3. Hash password
-    // 4. Create user in database
-    // 5. Generate tokens
-    // 6. Send response
     try {
         const { username, email, name, password } = req.body;
         if (!username || !email || !name || !password) {
@@ -41,6 +34,7 @@ export const registerController = asyncHandler(async (req, res) => {
                 password: passwordHashed
             }
         });
+        const emailService = new EmailServices();
         await emailService.sendWelcomeEmail(user.name, user.email, user.username);
         const accessToken = generateAccessToken(user.id, email);
         const refreshToken = generateRefreshToken(user.id, email);
@@ -219,6 +213,7 @@ export const changePasswordController = asyncHandler(async (req, res) => {
                 password: newPasswordHashed
             }
         });
+        const emailService = new EmailServices();
         await emailService.sendPasswordChangeConfirmation(user.name, user.email);
         return res.status(201).json({
             message: "Password Changed Successfully!!"
@@ -267,6 +262,7 @@ export const changeEmailController = asyncHandler(async (req, res) => {
                 email: newEmail
             }
         });
+        const emailService = new EmailServices();
         await emailService.sendEmailChangeNotification(emailUpdated.name, user.email, emailUpdated.email);
         const userResponse = {
             id: user.id,

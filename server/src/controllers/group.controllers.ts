@@ -8,7 +8,6 @@ import { UserService } from "../services/user.services.js";
 const userService = new UserService();
 
 import { EmailServices } from "../services/email.services.js";
-const emailService = new EmailServices();
 
 import {prisma} from '../index.js'
 
@@ -133,7 +132,7 @@ export const addMemberController = asyncHandler(async(req:Request,res:Response) 
         };
 
         if (!username) {
-            return res.status(401).json({
+            return res.status(400).json({
                 message: "Please enter the username!!",
                 success: false
             })
@@ -162,6 +161,7 @@ export const addMemberController = asyncHandler(async(req:Request,res:Response) 
 
         const currentFriend = await userService.getUserDetails(result.data.userToBeAdded);
 
+        const emailService = new EmailServices();
         await emailService.sendGroupInviteEmail(
             currentFriend.user.name,
             currentFriend.user.email,
@@ -181,20 +181,20 @@ export const addMemberController = asyncHandler(async(req:Request,res:Response) 
 
         if(error.message === "Group Not Found") {
             return res.status(400).json({
-                message: "Group Not Found!!",
+                message: error.message,
                 success : false
             })
         }
 
         if(error.message === "User is already a member of this group.") {
-            return res.status(401).json({
-                message:"User is already a member of this group!!",
+            return res.status(400).json({
+                message: error.message,
                 success : false
             })
         }
 
         return res.status(500).json({
-            messsage : "Unable to fetch group details",
+            message : "Unable to fetch group details",
             success : false
         })
     }

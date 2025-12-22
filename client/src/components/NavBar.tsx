@@ -25,7 +25,7 @@ export function NavBar() {
     async function handleLogout() {
         logout();
         await authService.logout();
-        navigate('/');
+        // navigate('/');
     }
 
     const handleActivityClick = () => {

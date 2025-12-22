@@ -272,7 +272,7 @@ export function GroupExpense() {
                                                     {expense.currency}
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-slate-800">{expense.note}</p>
+                                                    <p className="font-semibold text-slate-800">{expense.title}</p>
                                                     <p className="text-sm text-slate-500">
                                                         <span className="font-medium text-slate-700">
                                                             {isPaidByCurrentUser ? 'You' : expense.paidBy.name}

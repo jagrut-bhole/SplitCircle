@@ -3,7 +3,6 @@ import { UserService } from "../services/user.services.js";
 const userService = new UserService();
 import { EmailServices } from "../services/email.services.js";
 import { prisma } from "../index.js";
-const emailService = new EmailServices();
 export const userSearchControler = asyncHandler(async (req, res) => {
     try {
         const friendUsername = req.query.username;
@@ -63,6 +62,7 @@ export const addFriendController = asyncHandler(async (req, res) => {
             }
         });
         const addFriend = await userService.addFriend(userId, friendUserId);
+        const emailService = new EmailServices();
         await emailService.sendFriendAddedEmail(friend?.name, friend?.email, user?.name, user?.username);
         return res.json({
             message: "Friend added Successfully!!",

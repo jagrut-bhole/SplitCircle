@@ -13,16 +13,8 @@ const options : CookieOptions = {
 }
 
 import { EmailServices } from "../services/email.services.js";
-const emailService = new EmailServices();
 
 export const registerController = asyncHandler(async(req:Request,res:Response) => {
-
-        // 1. Get data from req.body
-        // 2. Validate: check if user already exists
-        // 3. Hash password
-        // 4. Create user in database
-        // 5. Generate tokens
-        // 6. Send response
         
         try {
             const {username,email,name,password} = req.body as {
@@ -60,6 +52,7 @@ export const registerController = asyncHandler(async(req:Request,res:Response) =
                 }
             });
 
+            const emailService = new EmailServices();
             await emailService.sendWelcomeEmail(
                 user.name,
                 user.email,
@@ -289,6 +282,7 @@ export const changePasswordController = asyncHandler(async(req:Request,res:Respo
             }
         });
 
+        const emailService = new EmailServices();
         await emailService.sendPasswordChangeConfirmation(
             user.name,
             user.email
@@ -348,7 +342,8 @@ export const changeEmailController = asyncHandler(async(req:Request,res:Response
                 email: newEmail
             }
         });
-
+const emailService = new EmailServices();
+        
         await emailService.sendEmailChangeNotification(
             emailUpdated.name,
             user.email,

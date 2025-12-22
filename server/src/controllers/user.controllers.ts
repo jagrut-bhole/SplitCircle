@@ -6,7 +6,6 @@ const userService = new UserService();
 
 import { EmailServices } from "../services/email.services.js";
 import { prisma } from "../index.js";
-const emailService = new EmailServices();
 
 export const userSearchControler = asyncHandler(async(req:Request,res:Response) => {
     try {
@@ -83,6 +82,7 @@ export const addFriendController = asyncHandler(async(req:Request,res:Response) 
 
         const addFriend = await userService.addFriend(userId,friendUserId);
 
+        const emailService = new EmailServices();
         await emailService.sendFriendAddedEmail(
             friend?.name as string,
             friend?.email as string,

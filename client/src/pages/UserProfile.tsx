@@ -16,222 +16,225 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type { AuthResponse } from "@/types/AuthTypes";
+import { OwedCards } from "@/components/OwedCards";
 
 export const UserProfile = () => {
-    const user = useAuthStore((state) => state.user);
-    const setAuth = useAuthStore((state) => state.setAuth);
-    const logout = useAuthStore((state) => state.logout);
-    const navigate = useNavigate();
-    
-    // Email change modal states
-    const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-    const [newEmail, setNewEmail] = useState("");
-    const [emailPassword, setEmailPassword] = useState("");
-    const [showEmailPassword, setShowEmailPassword] = useState(false);
-    const [isEmailLoading, setIsEmailLoading] = useState(false);
-    
-    // Password change modal states
-    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
 
-    async function handleLogout() {
-        logout();
-        await authService.logout();
-        navigate("/");  
+  // Email change modal states
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  const [showEmailPassword, setShowEmailPassword] = useState(false);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+
+  // Password change modal states
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+
+  async function handleLogout() {
+    logout();
+    await authService.logout();
+    navigate("/");
+  }
+
+  function handleOnBack() {
+    navigate('/dashboard');
+  }
+
+  function openEmailModal() {
+    setNewEmail("");
+    setEmailPassword("");
+    setShowEmailPassword(false);
+    setIsEmailModalOpen(true);
+  }
+
+  function openPasswordModal() {
+    setOldPassword("");
+    setNewPassword("");
+    setShowOldPassword(false);
+    setShowNewPassword(false);
+    setIsPasswordModalOpen(true);
+  }
+
+  async function handleEmailChange() {
+    if (!newEmail.trim() || !emailPassword.trim()) {
+      toast.error("Please fill in all fields");
+      return;
     }
 
-    function handleOnBack() {
-        navigate('/dashboard');
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newEmail)) {
+      toast.error("Please enter a valid email address");
+      return;
     }
 
-    function openEmailModal() {
-        setNewEmail("");
-        setEmailPassword("");
-        setShowEmailPassword(false);
-        setIsEmailModalOpen(true);
+    setIsEmailLoading(true);
+
+    try {
+      const updatedUser = await authService.changeEmail({
+        newEmail: newEmail.trim(),
+        password: emailPassword.trim()
+      });
+
+      setAuth(updatedUser);
+
+      toast.success("Email changed successfully!");
+      setIsEmailModalOpen(false);
+      setNewEmail("");
+      setEmailPassword("");
+    } catch (error) {
+      console.error("Error while changing email:", error);
+      const errorMessage = error as AxiosError<AuthResponse>
+      toast.error(errorMessage.response?.data.message || "Failed to change email");
+    } finally {
+      setIsEmailLoading(false);
+    }
+  }
+
+  async function handlePasswordChange() {
+    if (!oldPassword.trim() || !newPassword.trim()) {
+      toast.error("Please fill in all fields");
+      return;
     }
 
-    function openPasswordModal() {
-        setOldPassword("");
-        setNewPassword("");
-        setShowOldPassword(false);
-        setShowNewPassword(false);
-        setIsPasswordModalOpen(true);
+    if (newPassword.length < 8) {
+      toast.error("New password must be at least 8 characters");
+      return;
     }
 
-    async function handleEmailChange() {
-        if (!newEmail.trim() || !emailPassword.trim()) {
-            toast.error("Please fill in all fields");
-            return;
-        }
-
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(newEmail)) {
-            toast.error("Please enter a valid email address");
-            return;
-        }
-
-        setIsEmailLoading(true);
-
-        try {
-            const updatedUser = await authService.changeEmail({
-                newEmail: newEmail.trim(),
-                password: emailPassword.trim()
-            });
-
-            setAuth(updatedUser);
-            
-            toast.success("Email changed successfully!");
-            setIsEmailModalOpen(false);
-            setNewEmail("");
-            setEmailPassword("");
-        } catch (error) {
-            console.error("Error while changing email:", error);
-            const errorMessage = error as AxiosError<AuthResponse>
-            toast.error(errorMessage.response?.data.message || "Failed to change email");
-        } finally {
-            setIsEmailLoading(false);
-        }
+    if (oldPassword === newPassword) {
+      toast.error("New password cannot be the same as old password");
+      return;
     }
 
-    async function handlePasswordChange() {
-        if (!oldPassword.trim() || !newPassword.trim()) {
-            toast.error("Please fill in all fields");
-            return;
-        }
+    setIsPasswordLoading(true);
 
-        if (newPassword.length < 8) {
-            toast.error("New password must be at least 8 characters");
-            return;
-        }
+    try {
+      await authService.changePassword({
+        currentPasssword: oldPassword.trim(),
+        newPassword: newPassword.trim()
+      });
 
-        if (oldPassword === newPassword) {
-            toast.error("New password cannot be the same as old password");
-            return;
-        }
-
-        setIsPasswordLoading(true);
-
-        try {
-            await authService.changePassword({
-                currentPasssword: oldPassword.trim(),
-                newPassword: newPassword.trim()
-            });
-
-            toast.success("Password changed successfully!");
-            setIsPasswordModalOpen(false);
-            setOldPassword("");
-            setNewPassword("");
-        } catch (error) {
-            console.error("Error while changing password:", error);
-            const axiosError = error as AxiosError<AuthResponse>;
-
-            const errorMessage = axiosError.response?.data.message
-            toast.error(errorMessage);
-        } finally {
-            setIsPasswordLoading(false);
-        }
+      toast.success("Password changed successfully!");
+      setIsPasswordModalOpen(false);
+      setOldPassword("");
+      setNewPassword("");
+    } catch (error) {
+      console.error("Error while changing password:", error);
+      const axiosError = error as AxiosError<AuthResponse>;
+      const errorMessage = axiosError.response?.data.message || "Failed to change password";
+      toast.error(errorMessage);
+    } finally {
+      setIsPasswordLoading(false);
     }
+  }
 
-    return (
-        <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in min-h-full">
-       {/* Back Link */}
-       <div className="mb-8">
-         <button 
-           onClick={() => handleOnBack()}
-           className="flex items-center gap-2 text-slate-500 hover:text-black transition-colors font-medium group px-4 py-2 hover:bg-white rounded-lg hover:cursor-pointer"
-         >
-           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-           Back to Dashboard
-         </button>
-       </div>
 
-       <div className="bg-white rounded-4xl border border-slate-100 shadow-xl shadow-slate-200/60 overflow-hidden">
-          
-          <div className="px-8 md:px-12 pb-12 relative">
+  return (
+    <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in min-h-full">
 
-             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10 mt-10">
-                <div>
-                   <h1 className="text-3xl font-bold text-slate-900">{user?.name}</h1>
-                   
-                </div>
-                
-             </div>
+      <div className="mb-8">
+        <button
+          onClick={() => handleOnBack()}
+          className="flex items-center gap-2 text-slate-500 hover:text-black transition-colors font-medium group px-4 py-2 hover:bg-white rounded-lg hover:cursor-pointer">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back to Dashboard
+        </button>
+      </div>
 
-             <div className="grid gap-8 max-w-3xl">
-                
-                {/* Username Section */}
-                <div className="group">
-                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Username</label>
-                   <div className="flex items-center gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-200 group-hover:border-indigo-200 transition-colors">
-                      <div className="p-2 bg-white rounded-lg shadow-sm text-slate-400">
-                        <UserIcon className="w-5 h-5" />
-                      </div>
-                      <span className="font-semibold text-slate-700 flex-1">@{user?.username || user?.name.toLowerCase().replace(/\s+/g, '')}</span>
-                   </div>
-                </div>
+      <div className="mx-auto w-4xl max-w-7xl px-4 py-6 -mt-5 mb-4">
+        <OwedCards />
+      </div>
 
-                {/* Email Section */}
-                <div>
-                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Email Address</label>
-                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                      <div className="flex-1 flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                         <div className="p-2 bg-indigo-50 rounded-lg text-indigo-500">
-                           <Mail className="w-5 h-5" />
-                         </div>
-                         <span className="font-medium text-slate-700">{user?.email}</span>
-                      </div>
-                      <Button 
-                        onClick={openEmailModal}
-                        className="px-6 py-6 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 active:scale-95 whitespace-nowrap hover:cursor-pointer"
-                      >
-                        Change Email
-                      </Button>
-                   </div>
-                </div>
+      <div className="bg-white rounded-4xl border border-slate-100 shadow-xl shadow-slate-200/60 overflow-hidden">
 
-                 {/* Password Section */}
-                <div>
-                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Password</label>
-                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                      <div className="flex-1 flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                         <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
-                           <Lock className="w-5 h-5" />
-                         </div>
-                         <span className="font-black text-slate-400 tracking-[0.2em] text-lg flex-1">••••••••••••••••</span>
-                      </div>
-                      <Button 
-                        onClick={openPasswordModal}
-                        className="px-6 py-6 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 active:scale-95 whitespace-nowrap hover:cursor-pointer"
-                      >
-                        Change Password
-                      </Button>
-                   </div>
-                </div>
+        <div className="px-8 md:px-12 pb-8 relative">
 
-             </div>
 
-             <div className="mt-16 pt-8 border-t border-slate-100 flex justify-between items-center">
-                <span className="text-sm"></span>
-                <Button 
-                  onClick={() => handleLogout()}
-                  className="flex items-center gap-2 px-6 py-6 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-100 hover:shadow-lg hover:shadow-red-100 transition-all active:scale-[0.98] hover:cursor-pointer"
-                >
-                   <LogOut className="w-5 h-5" />
-                   Log Out
-                </Button>
-             </div>
+
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10 mt-5">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900">{user?.name}</h1>
+
+            </div>
 
           </div>
-       </div>
 
-       {/* Change Email Modal */}
-       <Dialog open={isEmailModalOpen} onOpenChange={setIsEmailModalOpen}>
+          <div className="grid gap-8 max-w-3xl">
+
+            <div className="group">
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Username</label>
+              <div className="flex items-center gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-200 group-hover:border-indigo-200 transition-colors">
+                <div className="p-2 bg-white rounded-lg shadow-sm text-slate-400">
+                  <UserIcon className="w-5 h-5" />
+                </div>
+                <span className="font-semibold text-slate-700 flex-1">@{user?.username || user?.name.toLowerCase().replace(/\s+/g, '')}</span>
+              </div>
+            </div>
+
+
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Email Address</label>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex-1 flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="p-2 bg-indigo-50 rounded-lg text-indigo-500">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium text-slate-700">{user?.email}</span>
+                </div>
+                <Button
+                  onClick={openEmailModal}
+                  className="px-6 py-6 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 active:scale-95 whitespace-nowrap hover:cursor-pointer"
+                >
+                  Change Email
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">Password</label>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex-1 flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
+                    <Lock className="w-5 h-5" />
+                  </div>
+                  <span className="font-black text-slate-400 tracking-[0.2em] text-lg flex-1">••••••••••••••••</span>
+                </div>
+                <Button
+                  onClick={openPasswordModal}
+                  className="px-6 py-6 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 active:scale-95 whitespace-nowrap hover:cursor-pointer"
+                >
+                  Change Password
+                </Button>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="mt-16 pt-8 border-t border-slate-100 flex justify-between items-center">
+            <span className="text-sm"></span>
+            <Button
+              onClick={() => handleLogout()}
+              className="flex items-center gap-2 px-6 py-6 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-100 hover:shadow-lg hover:shadow-red-100 transition-all active:scale-[0.98] hover:cursor-pointer"
+            >
+              <LogOut className="w-5 h-5" />
+              Log Out
+            </Button>
+          </div>
+
+        </div>
+      </div>
+
+      <Dialog open={isEmailModalOpen} onOpenChange={setIsEmailModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Change Email Address</DialogTitle>
@@ -300,7 +303,6 @@ export const UserProfile = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Change Password Modal */}
       <Dialog open={isPasswordModalOpen} onOpenChange={setIsPasswordModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -389,5 +391,5 @@ export const UserProfile = () => {
         </DialogContent>
       </Dialog>
     </div>
-    )
+  )
 }

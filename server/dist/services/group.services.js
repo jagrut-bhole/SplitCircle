@@ -1,12 +1,11 @@
 import { prisma } from '../index.js';
-import { normalizeFriendshipIds } from '../utils/friendships.utils.js';
 import { UserService } from './user.services.js';
 const userService = new UserService();
 export class GroupService {
     async createGroup(userId, groupData) {
         const extractName = await userService.extractNameFromId(userId);
         const { name, description, memberUsernames } = groupData;
-        console.log("Incoming usernames:", memberUsernames);
+        // console.log("Incoming usernames:", memberUsernames);
         if (!name || name.trim().length < 3 || name.trim().length > 50) {
             throw new Error("Group name must be between 3 and 50 characters.");
         }
@@ -159,6 +158,8 @@ export class GroupService {
         const recentExpenses = await prisma.expense.findMany({
             where: {
                 groupId: groupId
+                // Include all expenses including settlements
+                // Settlements will show as "User X paid User Y" messages
             },
             orderBy: {
                 createdAt: 'desc'
@@ -331,145 +332,92 @@ export class GroupService {
                 throw new Error(`User ${split.userId} is not a group member`);
             }
         }
-        // Calculate balance updates for friend pairs
-        const balanceUpdates = [];
-        const netPositions = new Map();
-        for (const split of calculatedSplits) {
-            const amountPaid = split.userId === paidById ? amount : 0;
-            const amountOwed = split.amount;
-            const netPosition = amountPaid - amountOwed;
-            netPositions.set(split.userId, netPosition);
-        }
-        for (const [userId1, net1] of netPositions) {
-            for (const [userId2, net2] of netPositions) {
-                if (userId1 > userId2)
-                    continue;
-                const friendship = await prisma.friendship.findFirst({
-                    where: {
-                        OR: [
-                            { user1Id: userId1, user2Id: userId2 },
-                            { user1Id: userId2, user2Id: userId1 }
-                        ]
+        // Group expenses should NOT update friend-to-friend Balance table
+        // Group balances are calculated separately on-the-fly when needed
+        const result = await prisma.$transaction(async (tx) => {
+            const expense = await tx.expense.create({
+                data: {
+                    title: title,
+                    note: note,
+                    amount: amount,
+                    currency: 'INR',
+                    date: new Date(),
+                    paidById: paidById,
+                    groupId: groupId,
+                    splitType: splitType,
+                    scenario: null,
+                    createdById: currentUserId
+                }
+            });
+            await tx.expenseSplit.createMany({
+                data: calculatedSplits.map(split => ({
+                    expenseId: expense.id,
+                    userId: split.userId,
+                    amount: split.amount,
+                    percentage: split.percentage || null
+                }))
+            });
+            const currentUser = group.members.find(m => m.userId === currentUserId)?.user;
+            await tx.activity.create({
+                data: {
+                    note: `${currentUser?.name} added expense: ${title}`,
+                    userId: currentUserId,
+                    expenseId: expense.id,
+                    groupId: groupId,
+                    metadata: {
+                        amount: amount,
+                        splitType: splitType,
+                        participants: participantUsernames,
+                        nonParticipants: nonParticipantMembers.map(m => m.user.username)
+                    }
+                }
+            });
+            for (const nonParticipant of nonParticipantMembers) {
+                await tx.activity.create({
+                    data: {
+                        note: `${currentUser?.name} added expense: ${title}. You are not involved in this expense.`,
+                        userId: nonParticipant.userId,
+                        expenseId: expense.id,
+                        groupId: groupId,
+                        metadata: {
+                            amount: amount,
+                            involved: false,
+                            participants: participantUsernames
+                        }
                     }
                 });
-                if (friendship) {
-                    const { user1Id: normUser1, user2Id: normUser2 } = normalizeFriendshipIds(userId1, userId2);
-                    let change = 0;
-                    if (net1 > 0 && net2 < 0) {
-                        change = Math.min(net1, Math.abs(net2));
-                    }
-                    else if (net1 < 0 && net2 > 0) {
-                        change = -Math.min(Math.abs(net1), net2);
-                    }
-                    if (userId1 === normUser1) {
-                        balanceUpdates.push({ user1Id: normUser1, user2Id: normUser2, change });
-                    }
-                    else {
-                        balanceUpdates.push({ user1Id: normUser1, user2Id: normUser2, change: -change });
-                    }
-                    const result = await prisma.$transaction(async (tx) => {
-                        const expense = await tx.expense.create({
-                            data: {
-                                title: title,
-                                note: note,
-                                amount: amount,
-                                currency: 'INR',
-                                date: new Date(),
-                                paidById: paidById,
-                                groupId: groupId,
-                                splitType: splitType,
-                                scenario: null,
-                                createdById: currentUserId
-                            }
-                        });
-                        await tx.expenseSplit.createMany({
-                            data: calculatedSplits.map(split => ({
-                                expenseId: expense.id,
-                                userId: split.userId,
-                                amount: split.amount,
-                                percentage: split.percentage || null
-                            }))
-                        });
-                        const currentUser = group.members.find(m => m.userId === currentUserId)?.user;
-                        await tx.activity.create({
-                            data: {
-                                note: `${currentUser?.name} added expense: ${title}`,
-                                userId: currentUserId,
-                                expenseId: expense.id,
-                                groupId: groupId,
-                                metadata: {
-                                    amount: amount,
-                                    splitType: splitType,
-                                    participants: participantUsernames,
-                                    nonParticipants: nonParticipantMembers.map(m => m.user.username)
-                                }
-                            }
-                        });
-                        for (const nonParticipant of nonParticipantMembers) {
-                            await tx.activity.create({
-                                data: {
-                                    note: `${currentUser?.name} added expense: ${title}. You are not involved in this expense.`,
-                                    userId: nonParticipant.userId,
-                                    expenseId: expense.id,
-                                    groupId: groupId,
-                                    metadata: {
-                                        amount: amount,
-                                        involved: false,
-                                        participants: participantUsernames
-                                    }
-                                }
-                            });
-                        }
-                        for (const update of balanceUpdates) {
-                            const balance = await tx.balance.findUnique({
-                                where: {
-                                    user1Id_user2Id: {
-                                        user1Id: update.user1Id,
-                                        user2Id: update.user2Id
-                                    }
-                                }
-                            });
-                            if (balance && Math.abs(update.change) > 0.01) {
-                                await tx.balance.update({
-                                    where: { id: balance.id },
-                                    data: { amount: balance.amount + update.change }
-                                });
-                            }
-                        }
-                        return await tx.expense.findUnique({
-                            where: { id: expense.id },
-                            include: {
-                                splits: {
-                                    include: {
-                                        user: {
-                                            select: {
-                                                id: true,
-                                                username: true,
-                                                name: true
-                                            }
-                                        }
-                                    }
-                                },
-                                paidBy: {
-                                    select: {
-                                        id: true,
-                                        username: true,
-                                        name: true
-                                    }
-                                },
-                                group: {
-                                    select: {
-                                        id: true,
-                                        name: true
-                                    }
-                                }
-                            }
-                        });
-                    });
-                    return result;
-                }
             }
-        }
+            return await tx.expense.findUnique({
+                where: { id: expense.id },
+                include: {
+                    splits: {
+                        include: {
+                            user: {
+                                select: {
+                                    id: true,
+                                    username: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    },
+                    paidBy: {
+                        select: {
+                            id: true,
+                            username: true,
+                            name: true
+                        }
+                    },
+                    group: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    }
+                }
+            });
+        });
+        return result;
     }
     async updateGroupExpense(expenseId, groupId, currentUserId, title, amount, paidByUsername, participantUsernames) {
         const expense = await prisma.expense.findUnique({
@@ -898,7 +846,8 @@ export class GroupService {
         return result;
     }
     async calculateGroupBalanceForUser(groupId, userId) {
-        // Get all expenses for this group
+        // Get all expenses for this group (including settlements)
+        // Settlements are payments that reduce debt
         const expenses = await prisma.expense.findMany({
             where: {
                 groupId: groupId

@@ -157,36 +157,53 @@ export class UserService {
                 }
             };
         }
-        const balance = await prisma.balance.findMany({
-            where: {
-                OR: [
-                    { user1Id: currentUserId },
-                    { user2Id: currentUserId }
-                ]
-            }
-        });
-        const balanceMap = new Map();
-        balance.forEach(b => {
-            const key = `${b.user1Id}_${b.user2Id}`;
-            balanceMap.set(key, b);
-        });
+        // Calculate balances from actual friend-to-friend expenses (groupId = null)
+        // This ensures group expenses don't affect friend balances
         let friendList = [];
         let youOwe = 0;
         let youAreOwed = 0;
         for (const f of friendship) {
             const friend = f.user1Id === currentUserId ? f.user2 : f.user1;
             const friendId = friend.id;
-            const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, friendId);
-            const balanceKey = `${user1Id}_${user2Id}`;
-            const balance = balanceMap.get(balanceKey);
+            // Get all friend-to-friend expenses between current user and this friend
+            // Include settlements - they are payments that reduce debt
+            const expenses = await prisma.expense.findMany({
+                where: {
+                    groupId: null, // Only friend-to-friend expenses
+                    splits: {
+                        some: {
+                            userId: currentUserId
+                        }
+                    },
+                    AND: {
+                        splits: {
+                            some: {
+                                userId: friendId
+                            }
+                        }
+                    }
+                },
+                include: {
+                    splits: true
+                }
+            });
+            // Calculate balance for this friend
             let finalBalance = 0;
-            if (balance) {
-                finalBalance = balance.user1Id === currentUserId ? balance.amount : -balance.amount;
-                if (finalBalance > 0)
-                    youAreOwed += finalBalance;
-                if (finalBalance < 0)
-                    youOwe += Math.abs(finalBalance);
+            for (const expense of expenses) {
+                const currentUserSplit = expense.splits.find(s => s.userId === currentUserId);
+                const friendSplit = expense.splits.find(s => s.userId === friendId);
+                if (currentUserSplit && friendSplit) {
+                    const currentUserPaid = expense.paidById === currentUserId ? expense.amount : 0;
+                    const currentUserOwed = currentUserSplit.amount;
+                    // Net position for this expense from current user's perspective
+                    const netPosition = currentUserPaid - currentUserOwed;
+                    finalBalance += netPosition;
+                }
             }
+            if (finalBalance > 0)
+                youAreOwed += finalBalance;
+            if (finalBalance < 0)
+                youOwe += Math.abs(finalBalance);
             friendList.push({
                 id: friend.id,
                 name: friend.name,
@@ -226,7 +243,8 @@ export class UserService {
         return { user };
     }
     async calulateUserOwedAmounts(userId) {
-        // Get all expenses where user is involved (both friend and group expenses)
+        // Get ALL expenses where user is involved (both friend-to-friend AND group expenses)
+        // Include settlements - they are payments that reduce debt
         const expenses = await prisma.expense.findMany({
             where: {
                 splits: {
@@ -289,6 +307,7 @@ export class UserService {
         const groupsWithBalance = groups.map(groupMember => {
             let balance = 0;
             // Calculate user's balance in this group
+            // Include settlements - they are payments that reduce debt
             for (const expense of groupMember.group.expenses) {
                 const userSplit = expense.splits.find(s => s.userId === userId);
                 if (!userSplit)
@@ -320,7 +339,8 @@ export class UserService {
         if (!friend) {
             throw new Error("Friend not found!!");
         }
-        // Get all expenses between current user and friend
+        // Get all expenses between current user and friend (including settlements)
+        // Settlements are payments that reduce debt
         const expenses = await prisma.expense.findMany({
             where: {
                 groupId: null,
@@ -361,32 +381,25 @@ export class UserService {
                 }
             },
         });
-        // Get balance between current user and friend
-        const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, friendId);
-        const balance = await prisma.balance.findUnique({
-            where: {
-                user1Id_user2Id: {
-                    user1Id,
-                    user2Id
-                }
-            }
-        });
-        // Calculate final balance from perspective of current user
-        // The balance.amount represents how much user1 is owed by user2 (positive means user1 lent to user2)
+        // Calculate balance from actual friend-to-friend expenses
+        // This ensures group expenses don't affect friend balances
         let finalBalance = 0;
-        if (balance) {
-            // If current user is user1, balance is from their perspective
-            // If current user is user2, invert the balance
-            finalBalance = balance.user1Id === currentUserId ? balance.amount : -balance.amount;
+        for (const expense of expenses) {
+            const currentUserSplit = expense.splits.find(s => s.userId === currentUserId);
+            const friendSplit = expense.splits.find(s => s.userId === friendId);
+            if (currentUserSplit && friendSplit) {
+                const currentUserPaid = expense.paidById === currentUserId ? expense.amount : 0;
+                const currentUserOwed = currentUserSplit.amount;
+                // Net position for this expense from current user's perspective
+                const netPosition = currentUserPaid - currentUserOwed;
+                finalBalance += netPosition;
+            }
         }
         // console.log('Get friend details balance:', {
         //     currentUserId,
         //     friendId,
-        //     user1Id,
-        //     user2Id,
-        //     storedBalance: balance?.amount,
-        //     isCurrentUserUser1: balance?.user1Id === currentUserId,
-        //     finalBalance
+        //     calculatedBalance: finalBalance,
+        //     expenseCount: expenses.length
         // });
         return {
             friend,

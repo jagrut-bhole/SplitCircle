@@ -42,7 +42,12 @@ export const authService = {
     },
 
     changePassword: async (data: ChangePasswordData): Promise<void> => {
-        await api.patch('/auth/change-password', data);
+        // Server expects { oldPassword, newPassword }
+        const payload = {
+            oldPassword: (data as any).currentPasssword || (data as any).oldPassword,
+            newPassword: data.newPassword
+        };
+        await api.patch('/auth/change-password', payload);
     },
 
 

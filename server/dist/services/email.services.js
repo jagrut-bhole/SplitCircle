@@ -1,8 +1,11 @@
 import nodemailer from 'nodemailer';
 export class EmailServices {
     constructor() {
+        // console.log('Email configured for:', process.env.EMAIL_USER);
         this.transporter = nodemailer.createTransport({
-            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
@@ -11,22 +14,20 @@ export class EmailServices {
     }
     async sendEmail(to, subject, html) {
         try {
-            console.log(process.env.EMAIL_USER);
-            console.log(process.env.EMAIL_PASS);
             const info = await this.transporter.sendMail({
                 from: process.env.EMAIL_USER,
                 to: to,
                 subject: subject,
                 html: html
             });
-            console.log('Email Sent: ', info.messageId);
+            // console.log('Email Sent: ', info.messageId);
             return {
                 success: true,
                 message: info.messageId
             };
         }
         catch (error) {
-            console.log("Email send error: ", error.message);
+            console.log("Email send error: ", error);
             return { success: false, error };
         }
     }
@@ -164,11 +165,11 @@ export class EmailServices {
           </div>
           <div class="content">
             <h2>Hi ${frienAddedName},</h2>
-            <p><strong>${addedByName}</strong> (@${addedByUsername}) added you as a friend on Splitwise Clone!</p>
+            <p><strong>${addedByName}</strong> (@${addedByUsername}) added you as a friend on SplitCircle!</p>
             <p>You can now share expenses and split bills together.</p>
           </div>
           <div class="footer">
-            <p>Splitwise Clone</p>
+            <p>SplitCircle</p>
           </div>
         </div>
       </body>
@@ -201,7 +202,7 @@ export class EmailServices {
             <p>You can now share expenses with other group members.</p>
           </div>
           <div class="footer">
-            <p>Splitwise Clone</p>
+            <p>SplitCircle</p>
           </div>
         </div>
       </body>
@@ -241,7 +242,7 @@ export class EmailServices {
             <p>Your balances have been updated accordingly.</p>
           </div>
           <div class="footer">
-            <p>Splitwise Clone</p>
+            <p>SplitCircle</p>
           </div>
         </div>
       </body>

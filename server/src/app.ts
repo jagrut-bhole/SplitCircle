@@ -1,9 +1,9 @@
+import dotenv from 'dotenv'
+dotenv.config({
+   path : "./.env" 
+});
 import express,{Express,Request,Response} from 'express'
 import cors from 'cors'
-import dotnev from 'dotenv'
-dotnev.config({
-    path: "./.env"
-});
 import cookieParser from 'cookie-parser';
 
 //routes login
