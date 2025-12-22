@@ -1,7 +1,7 @@
 // Load environment variables FIRST, before any other imports
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 dotenv.config({
-    path: "./.env"
+  path: "./.env",
 });
 
 import app from "./app.js";
@@ -9,14 +9,14 @@ import app from "./app.js";
 // Prisma COnfiguration
 import { PrismaClient } from "./generated/prisma/client.js";
 import { PrismaPg } from "@prisma/adapter-pg";
-const connectionString = `${process.env.DATABASE_URL}`
+const connectionString = `${process.env.DATABASE_URL}`;
 
-const adapter = new PrismaPg({connectionString});
-export const prisma = new PrismaClient({adapter})
+const adapter = new PrismaPg({ connectionString });
+export const prisma = new PrismaClient({ adapter });
 
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
-    console.log(`http://localhost:${PORT}`);
+  console.log(`Server is running on port: ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });

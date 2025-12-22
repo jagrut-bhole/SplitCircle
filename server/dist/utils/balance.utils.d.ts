@@ -1,2 +1,8 @@
-export declare function calculateBalanceChange(currentUserId: string, friendId: string, currentUserOwes: number, friendOwes: number, paidById: string): number;
+export declare function calculateBalanceChange(
+  currentUserId: string,
+  friendId: string,
+  currentUserOwes: number,
+  friendOwes: number,
+  paidById: string,
+): number;
 //# sourceMappingURL=balance.utils.d.ts.map

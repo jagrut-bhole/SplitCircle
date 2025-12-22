@@ -1,53 +1,44 @@
-import nodemailer from 'nodemailer'
+import nodemailer from "nodemailer";
 
 export class EmailServices {
-    private transporter : nodemailer.Transporter;
+  private transporter: nodemailer.Transporter;
 
-    constructor() {
+  constructor() {
+    // console.log('Email configured for:', process.env.EMAIL_USER);
 
-        // console.log('Email configured for:', process.env.EMAIL_USER);
+    this.transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
 
-        this.transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth : {
-                user : process.env.EMAIL_USER,
-                pass : process.env.EMAIL_PASS,
-            }
-        })
+  private async sendEmail(to: string, subject: string, html: string) {
+    try {
+      const info = await this.transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: subject,
+        html: html,
+      });
+
+      // console.log('Email Sent: ', info.messageId);
+      return {
+        success: true,
+        message: info.messageId,
+      };
+    } catch (error: any) {
+      console.log("Email send error: ", error);
+      return { success: false, error };
     }
+  }
 
-    private async sendEmail(
-        to : string,
-        subject : string,
-        html : string
-    ){
-        try {
-            const info = await this.transporter.sendMail({
-                from: process.env.EMAIL_USER,
-                to : to,
-                subject : subject,
-                html : html
-            });
-            
-            // console.log('Email Sent: ', info.messageId);
-            return {
-                success : true,
-                message : info.messageId
-            }
-        } catch (error:any) {
-            console.log("Email send error: ",error);
-            return { success: false, error };
-        }
-    }
-
-    async sendWelcomeEmail(
-        name : string,
-        email : string,
-        username : string
-    ) {
-        const html = `
+  async sendWelcomeEmail(name: string, email: string, username: string) {
+    const html = `
         <!DOCTYPE html>
       <html>
       <head>
@@ -85,19 +76,15 @@ export class EmailServices {
       </html>
         `;
 
-        return this.sendEmail(
-            email,
-            'Welcome To SplitCircle! 🎉',
-            html
-        )
-    }
+    return this.sendEmail(email, "Welcome To SplitCircle! 🎉", html);
+  }
 
-    async sendEmailChangeNotification(
-        name : string,
-        email : string,
-        newEmail : string
-    ) {
-        const html = `
+  async sendEmailChangeNotification(
+    name: string,
+    email: string,
+    newEmail: string,
+  ) {
+    const html = `
     <!DOCTYPE html>
       <html>
       <head>
@@ -130,25 +117,18 @@ export class EmailServices {
         </div>
       </body>
     </html> 
-        `
+        `;
 
-        await this.sendEmail(
-            email,
-            'Email Address Changed - Security Alert',
-            html
-        )
-        return this.sendEmail(
-            newEmail,
-            'Email Address Changed - Confirmation',
-            html
-        )
-    }
+    await this.sendEmail(email, "Email Address Changed - Security Alert", html);
+    return this.sendEmail(
+      newEmail,
+      "Email Address Changed - Confirmation",
+      html,
+    );
+  }
 
-    async sendPasswordChangeConfirmation(
-        name : string,
-        email : string,
-    ) {
-        const html = `
+  async sendPasswordChangeConfirmation(name: string, email: string) {
+    const html = `
     <!DOCTYPE html>
       <html>
       <head>
@@ -180,23 +160,18 @@ export class EmailServices {
         </div>
       </body>
       </html>
-        `
+        `;
 
-        return this.sendEmail(
-            email,
-            'Password Changed - Security Alert',
-            html
-        )
-    }
+    return this.sendEmail(email, "Password Changed - Security Alert", html);
+  }
 
-    async sendFriendAddedEmail(
-      frienAddedName:string,
-      friendAddedEmail : string,
-      addedByName : string,
-      addedByUsername : string
-    ) {
-      const html = 
-      `
+  async sendFriendAddedEmail(
+    frienAddedName: string,
+    friendAddedEmail: string,
+    addedByName: string,
+    addedByUsername: string,
+  ) {
+    const html = `
        <!DOCTYPE html>
       <html>
       <head>
@@ -229,19 +204,18 @@ export class EmailServices {
     return this.sendEmail(
       friendAddedEmail,
       `${addedByName} added you as a friend`,
-      html
-    )
-    }
+      html,
+    );
+  }
 
-    async sendGroupInviteEmail(
-        invitedUsername : string,
-        invitedEmail : string,
-        groupName : string,
-        invitedByName : string,
-        invitedByUsername : string,
-      ) {
-    
-        const html = `
+  async sendGroupInviteEmail(
+    invitedUsername: string,
+    invitedEmail: string,
+    groupName: string,
+    invitedByName: string,
+    invitedByUsername: string,
+  ) {
+    const html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -271,15 +245,15 @@ export class EmailServices {
       </body>
       </html>
     `;
-    
+
     return this.sendEmail(
       invitedEmail,
-       `You've been added to "${groupName}"`,
-       html
+      `You've been added to "${groupName}"`,
+      html,
     );
-    }
+  }
 
-    async sendSettlementEmail(
+  async sendSettlementEmail(
     recipient: { name: string; email: string },
     settlement: {
       amount: number;
@@ -287,12 +261,12 @@ export class EmailServices {
       groupName?: string;
       friendName?: string;
     },
-    paidBy: { name: string; username: string }
+    paidBy: { name: string; username: string },
   ) {
-    const context = settlement.isGroupSettlement 
-      ? `in group "${settlement.groupName}"` 
+    const context = settlement.isGroupSettlement
+      ? `in group "${settlement.groupName}"`
       : `with ${settlement.friendName}`;
-    
+
     const html = `
       <!DOCTYPE html>
       <html>
@@ -327,12 +301,11 @@ export class EmailServices {
       </body>
       </html>
     `;
-    
+
     return this.sendEmail(
       recipient.email,
       `${paidBy.name} recorded a payment of ₹${settlement.amount}`,
-      html
+      html,
     );
-    }
-
+  }
 }

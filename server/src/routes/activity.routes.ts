@@ -4,6 +4,6 @@ import { getUserActivitiesController } from "../controllers/activity.controllers
 
 const activityRouter: Router = Router();
 
-activityRouter.get('/activities', jwtVerify, getUserActivitiesController);
+activityRouter.get("/activities", jwtVerify, getUserActivitiesController);
 
 export { activityRouter };
