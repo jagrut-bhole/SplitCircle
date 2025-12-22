@@ -350,12 +350,12 @@ export const changeEmailController = asyncHandler(
       );
 
       const userResponse = {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        username: user.username,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        id: emailUpdated.id,
+        email: emailUpdated.email,
+        name: emailUpdated.name,
+        username: emailUpdated.username,
+        createdAt: emailUpdated.createdAt,
+        updatedAt: emailUpdated.updatedAt,
       };
 
       return res.status(200).json({

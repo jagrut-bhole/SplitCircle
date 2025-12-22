@@ -264,12 +264,12 @@ export const changeEmailController = asyncHandler(async (req, res) => {
         const emailService = new EmailServices();
         emailService.sendEmailChangeNotification(emailUpdated.name, user.email, emailUpdated.email);
         const userResponse = {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            username: user.username,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
+            id: emailUpdated.id,
+            email: emailUpdated.email,
+            name: emailUpdated.name,
+            username: emailUpdated.username,
+            createdAt: emailUpdated.createdAt,
+            updatedAt: emailUpdated.updatedAt,
         };
         return res.status(200).json({
             message: `Email has been updated to ${newEmail}`,
