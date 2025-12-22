@@ -10,23 +10,23 @@ export const userSearchControler = asyncHandler(async (req, res) => {
         if (!friendUsername || friendUsername.trim().length === 0) {
             return res.status(400).json({
                 message: "Please enter the username!!",
-                success: false
+                success: false,
             });
         }
         const result = await userService.searchUserByUsername(friendUsername, currentUserId);
         if (!result) {
             return res.status(404).json({
-                message: "User not found!!"
+                message: "User not found!!",
             });
         }
         return res.status(200).json({
             success: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
         return res.status(500).json({
-            message: "Server error while searching user"
+            message: "Server error while searching user",
         });
     }
 });
@@ -36,57 +36,60 @@ export const addFriendController = asyncHandler(async (req, res) => {
         const { username } = req.body;
         if (!username || username.length === 0) {
             return res.status(400).json({
-                message: "Username not provided!!"
+                message: "Username not provided!!",
             });
         }
         const friendUserId = await userService.extractCurrentUserId(username);
         if (!friendUserId || friendUserId.length === 0) {
             return res.status(400).json({
-                message: "Please provide the valid friend"
+                message: "Please provide the valid friend",
             });
         }
         const userId = req.user?.id;
         if (!userId) {
             return res.status(404).json({
-                message: "Tokens not get!!"
+                message: "Tokens not get!!",
             });
         }
         const user = await prisma.user.findUnique({
             where: {
-                id: userId
-            }
+                id: userId,
+            },
         });
         const friend = await prisma.user.findUnique({
             where: {
-                id: friendUserId
-            }
+                id: friendUserId,
+            },
         });
         const addFriend = await userService.addFriend(userId, friendUserId);
         const emailService = new EmailServices();
-        await emailService.sendFriendAddedEmail(friend?.name, friend?.email, user?.name, user?.username);
-        return res.json({
+        emailService.sendFriendAddedEmail(friend?.name, friend?.email, user?.name, user?.username);
+        return res
+            .json({
             message: "Friend added Successfully!!",
             success: true,
-            data: addFriend
-        }).status(201);
+            data: addFriend,
+        })
+            .status(201);
     }
     catch (error) {
         console.log("Error Message: ", error.message);
-        if (error.message === "Both are already friends" || error.message === "You cannot add yourself as Friend") {
+        if (error.message === "Both are already friends" ||
+            error.message === "You cannot add yourself as Friend") {
             return res.status(400).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         if (error.message === "One or both users do not exists") {
             return res.status(404).json({
                 message: "User not found",
-                success: false
+                success: false,
             });
         }
         return res.status(500).json({
             message: "Can't add friends !! Please try again later!!",
-            success: false
+            success: false,
         });
     }
 });
@@ -97,13 +100,13 @@ export const getAllFriendsController = asyncHandler(async (req, res) => {
         return res.status(200).json({
             message: "Feched the friends successfully!!",
             success: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
         console.log("Error: ", error.message);
         return res.status(500).json({
-            message: "Can't find the friends, Please try again later!!"
+            message: "Can't find the friends, Please try again later!!",
         });
     }
 });
@@ -113,22 +116,25 @@ export const getUserTotalOwedController = asyncHandler(async (req, res) => {
         if (!userId) {
             return res.status(404).json({
                 message: "User not found!!",
-                success: false
+                success: false,
             });
         }
         const result = await userService.calulateUserOwedAmounts(userId);
         return res.status(200).json({
             message: "Fetched user's owed data successfully!!",
             success: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
         console.log("Error while fetching user owed data: ", error);
-        return res.status(500).json({
+        return res
+            .status(500)
+            .json({
             message: "Failed to fetch the user's owed data. Please try again later!!",
             success: false,
-        }).status(500);
+        })
+            .status(500);
     }
 });
 export const getUserTotalGroupsController = asyncHandler(async (req, res) => {
@@ -137,22 +143,25 @@ export const getUserTotalGroupsController = asyncHandler(async (req, res) => {
         if (!userId) {
             return res.status(404).json({
                 message: "User not found!!",
-                success: false
+                success: false,
             });
         }
         const result = await userService.getAllUserGroups(userId);
         return res.status(200).json({
             message: "Fetched user's groups successfully!!",
             success: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
         console.log("Error while fetching users groups : ", error);
-        return res.status(500).json({
+        return res
+            .status(500)
+            .json({
             message: "Failed to fetch the user's groups. Please try again later!!",
             success: false,
-        }).status(500);
+        })
+            .status(500);
     }
 });
 export const getFriendController = asyncHandler(async (req, res) => {
@@ -162,20 +171,20 @@ export const getFriendController = asyncHandler(async (req, res) => {
         if (!userId) {
             return res.status(404).json({
                 message: "User not found!!",
-                success: false
+                success: false,
             });
         }
         const result = await userService.friendDetails(friendId, userId);
         return res.status(200).json({
             success: true,
             message: "Friend details fetched successfully",
-            data: result
+            data: result,
         });
     }
     catch (error) {
         return res.status(500).json({
             message: "Server error while fetching friend details",
-            success: false
+            success: false,
         });
     }
 });

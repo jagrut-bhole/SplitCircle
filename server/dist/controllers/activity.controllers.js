@@ -8,20 +8,20 @@ export const getUserActivitiesController = asyncHandler(async (req, res) => {
         if (!currentUserId) {
             return res.status(401).json({
                 success: false,
-                message: 'Unauthorized'
+                message: "Unauthorized",
             });
         }
         const activities = await activityService.getUserActivities(currentUserId, limit);
         return res.status(200).json({
             success: true,
-            data: activities
+            data: activities,
         });
     }
     catch (error) {
         console.log("Error fetching activities:", error.message);
         return res.status(500).json({
             message: "Internal Server Error while fetching activities",
-            success: false
+            success: false,
         });
     }
 });

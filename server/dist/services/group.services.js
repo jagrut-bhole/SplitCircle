@@ -1,5 +1,5 @@
-import { prisma } from '../index.js';
-import { UserService } from './user.services.js';
+import { prisma } from "../index.js";
+import { UserService } from "./user.services.js";
 const userService = new UserService();
 export class GroupService {
     async createGroup(userId, groupData) {
@@ -9,7 +9,7 @@ export class GroupService {
         if (!name || name.trim().length < 3 || name.trim().length > 50) {
             throw new Error("Group name must be between 3 and 50 characters.");
         }
-        const cleanUsernames = memberUsernames.map(u => u.trim());
+        const cleanUsernames = memberUsernames.map((u) => u.trim());
         console.log("Clean usernames:", cleanUsernames);
         if (!cleanUsernames || cleanUsernames.length === 0) {
             throw new Error("Group must have at least one member.");
@@ -18,20 +18,20 @@ export class GroupService {
         const users = await prisma.user.findMany({
             where: {
                 username: {
-                    in: cleanUsernames
-                }
+                    in: cleanUsernames,
+                },
             },
             select: {
                 id: true,
                 name: true,
-                username: true
-            }
+                username: true,
+            },
         });
-        console.log("DB users found:", users.map(u => u.username));
+        console.log("DB users found:", users.map((u) => u.username));
         if (users.length !== cleanUsernames.length) {
             throw new Error("One or more usernames are invalid!!");
         }
-        let memberIds = users.map(u => u.id);
+        let memberIds = users.map((u) => u.id);
         if (!memberIds.includes(userId)) {
             memberIds.push(userId);
         }
@@ -41,26 +41,26 @@ export class GroupService {
                 data: {
                     name,
                     description: description ?? "",
-                    createdById: userId
-                }
+                    createdById: userId,
+                },
             });
-            const groupMembersData = memberIds.map(uid => ({
+            const groupMembersData = memberIds.map((uid) => ({
                 userId: uid,
-                groupId: group.id
+                groupId: group.id,
             }));
             await tx.groupMember.createMany({
-                data: groupMembersData
+                data: groupMembersData,
             });
             await tx.activity.create({
                 data: {
                     userId: userId,
                     groupId: group.id,
                     note: `${extractName} created group ${name}`,
-                }
+                },
             });
             const createdGroup = await tx.group.findUnique({
                 where: {
-                    id: group.id
+                    id: group.id,
                 },
                 include: {
                     members: {
@@ -70,24 +70,24 @@ export class GroupService {
                                     id: true,
                                     name: true,
                                     email: true,
-                                    username: true
-                                }
-                            }
-                        }
-                    }
-                }
+                                    username: true,
+                                },
+                            },
+                        },
+                    },
+                },
             });
             return createdGroup;
         });
         return {
             message: "Group created successfully!!",
-            group: result
+            group: result,
         };
     }
     async getGroupUsers(userId) {
         const groups = await prisma.groupMember.findMany({
             where: {
-                userId
+                userId,
             },
             include: {
                 group: {
@@ -98,28 +98,28 @@ export class GroupService {
                                     select: {
                                         id: true,
                                         name: true,
-                                        username: true
-                                    }
-                                }
-                            }
+                                        username: true,
+                                    },
+                                },
+                            },
                         },
                         _count: {
                             select: {
-                                expenses: true
-                            }
-                        }
-                    }
-                }
+                                expenses: true,
+                            },
+                        },
+                    },
+                },
             },
             orderBy: {
                 group: {
-                    updatedAt: 'desc'
-                }
-            }
+                    updatedAt: "desc",
+                },
+            },
         });
         return {
             group: groups,
-            success: true
+            success: true,
         };
     }
     async getGroupDetails(userId, groupId) {
@@ -127,135 +127,16 @@ export class GroupService {
             where: {
                 groupId_userId: {
                     groupId,
-                    userId
-                }
-            }
+                    userId,
+                },
+            },
         });
         if (!isMember) {
             throw new Error("You are not a member of this group!!");
         }
         const group = await prisma.group.findMany({
             where: {
-                id: groupId
-            },
-            include: {
-                members: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                name: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        if (!group) {
-            throw new Error("Group Not Found");
-        }
-        const recentExpenses = await prisma.expense.findMany({
-            where: {
-                groupId: groupId
-                // Include all expenses including settlements
-                // Settlements will show as "User X paid User Y" messages
-            },
-            orderBy: {
-                createdAt: 'desc'
-            },
-            include: {
-                paidBy: {
-                    select: {
-                        id: true,
-                        name: true,
-                        username: true,
-                    }
-                },
-                splits: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                name: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        return {
-            group,
-            recentExpenses
-        };
-    }
-    async addMembers(username, groupId, addedByUserId) {
-        const userToBeAdded = await userService.extractCurrentUserId(username);
-        const group = await prisma.group.findUnique({
-            where: {
-                id: groupId
-            }
-        });
-        if (!group) {
-            throw new Error("Group Not Found");
-        }
-        const existingMember = await prisma.groupMember.findUnique({
-            where: {
-                groupId_userId: {
-                    groupId,
-                    userId: userToBeAdded
-                }
-            }
-        });
-        if (existingMember) {
-            throw new Error("User is already a member of this group.");
-        }
-        const result = await prisma.$transaction(async (tx) => {
-            await tx.groupMember.create({
-                data: {
-                    groupId,
-                    userId: userToBeAdded
-                }
-            });
-            const addedName = await userService.extractNameFromId(userToBeAdded);
-            const addedBy = await userService.extractNameFromId(addedByUserId);
-            await tx.activity.create({
-                data: {
-                    userId: addedByUserId,
-                    groupId,
-                    note: `${addedBy} added ${addedName} to the group`
-                }
-            });
-            return await tx.group.findUnique({
-                where: {
-                    id: groupId
-                },
-                include: {
-                    members: {
-                        include: {
-                            user: {
-                                select: {
-                                    id: true,
-                                    name: true,
-                                    email: true,
-                                    username: true
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-        return {
-            message: "Member added successfully!!",
-            data: { result, userToBeAdded }
-        };
-    }
-    async addGroupExpense(groupId, currentUserId, title, note, amount, paidByUsername, splitType, splits, participantUsernames) {
-        const group = await prisma.group.findUnique({
-            where: {
-                id: groupId
+                id: groupId,
             },
             include: {
                 members: {
@@ -265,61 +146,180 @@ export class GroupService {
                                 id: true,
                                 name: true,
                                 username: true,
-                                email: true
-                            }
-                        }
-                    }
-                }
-            }
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        if (!group) {
+            throw new Error("Group Not Found");
+        }
+        const recentExpenses = await prisma.expense.findMany({
+            where: {
+                groupId: groupId,
+                // Include all expenses including settlements
+                // Settlements will show as "User X paid User Y" messages
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+            include: {
+                paidBy: {
+                    select: {
+                        id: true,
+                        name: true,
+                        username: true,
+                    },
+                },
+                splits: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                username: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return {
+            group,
+            recentExpenses,
+        };
+    }
+    async addMembers(username, groupId, addedByUserId) {
+        const userToBeAdded = (await userService.extractCurrentUserId(username));
+        const group = await prisma.group.findUnique({
+            where: {
+                id: groupId,
+            },
+        });
+        if (!group) {
+            throw new Error("Group Not Found");
+        }
+        const existingMember = await prisma.groupMember.findUnique({
+            where: {
+                groupId_userId: {
+                    groupId,
+                    userId: userToBeAdded,
+                },
+            },
+        });
+        if (existingMember) {
+            throw new Error("User is already a member of this group.");
+        }
+        const result = await prisma.$transaction(async (tx) => {
+            await tx.groupMember.create({
+                data: {
+                    groupId,
+                    userId: userToBeAdded,
+                },
+            });
+            const addedName = (await userService.extractNameFromId(userToBeAdded));
+            const addedBy = (await userService.extractNameFromId(addedByUserId));
+            await tx.activity.create({
+                data: {
+                    userId: addedByUserId,
+                    groupId,
+                    note: `${addedBy} added ${addedName} to the group`,
+                },
+            });
+            return await tx.group.findUnique({
+                where: {
+                    id: groupId,
+                },
+                include: {
+                    members: {
+                        include: {
+                            user: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    email: true,
+                                    username: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        });
+        return {
+            message: "Member added successfully!!",
+            data: { result, userToBeAdded },
+        };
+    }
+    async addGroupExpense(groupId, currentUserId, title, note, amount, paidByUsername, splitType, splits, participantUsernames) {
+        const group = await prisma.group.findUnique({
+            where: {
+                id: groupId,
+            },
+            include: {
+                members: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                username: true,
+                                email: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         if (!group) {
             throw new Error("Group Not Found!!");
         }
-        const isMember = group.members.some(m => m.userId === currentUserId);
+        const isMember = group.members.some((m) => m.userId === currentUserId);
         if (!isMember) {
             throw new Error("You are not a member of this group!!");
         }
         const usernameToIdMap = await userService.getUserIdUsernames(participantUsernames);
-        const participantIds = participantUsernames.map(username => usernameToIdMap.get(username));
+        const participantIds = participantUsernames.map((username) => usernameToIdMap.get(username));
         const paidById = usernameToIdMap.get(paidByUsername);
         if (!paidById) {
             throw new Error(`User "${paidByUsername}" not found`);
         }
         for (const participantId of participantIds) {
-            const isGroupMember = group.members.some(m => m.userId === participantId);
+            const isGroupMember = group.members.some((m) => m.userId === participantId);
             if (!isGroupMember) {
-                const username = participantUsernames.find(un => usernameToIdMap.get(un) === participantId);
+                const username = participantUsernames.find((un) => usernameToIdMap.get(un) === participantId);
                 throw new Error(`User "${username}" is not a member of this group`);
             }
         }
-        const nonParticipantMembers = group.members.filter(member => !participantIds.includes(member.userId));
+        const nonParticipantMembers = group.members.filter((member) => !participantIds.includes(member.userId));
         let calculatedSplits;
-        if (splitType === 'EQUAL') {
+        if (splitType === "EQUAL") {
             const perPersonAmount = amount / group.members.length;
-            calculatedSplits = participantIds.map(userId => ({
+            calculatedSplits = participantIds.map((userId) => ({
                 userId,
                 amount: perPersonAmount,
-                percentage: undefined
+                percentage: undefined,
             }));
         }
-        else if (splitType === 'UNEQUAL') {
+        else if (splitType === "UNEQUAL") {
             if (!splits || splits.length === 0) {
-                throw new Error('Splits required for UNEQUAL split type');
+                throw new Error("Splits required for UNEQUAL split type");
             }
-            calculatedSplits = splits.map(split => ({
+            calculatedSplits = splits.map((split) => ({
                 userId: usernameToIdMap.get(split.username),
                 amount: split.amount,
-                percentage: undefined
+                percentage: undefined,
             }));
         }
-        else if (splitType === 'PERCENTAGE') {
+        else if (splitType === "PERCENTAGE") {
             if (!splits || splits.length === 0) {
-                throw new Error('Splits required for PERCENTAGE split type');
+                throw new Error("Splits required for PERCENTAGE split type");
             }
-            calculatedSplits = splits.map(split => ({
+            calculatedSplits = splits.map((split) => ({
                 userId: usernameToIdMap.get(split.username),
                 amount: (amount * split.percentage) / 100,
-                percentage: split.percentage
+                percentage: split.percentage,
             }));
         }
         else {
@@ -327,7 +327,7 @@ export class GroupService {
         }
         // Verify all users in splits are group members
         for (const split of calculatedSplits) {
-            const isMember = group.members.some(m => m.userId === split.userId);
+            const isMember = group.members.some((m) => m.userId === split.userId);
             if (!isMember) {
                 throw new Error(`User ${split.userId} is not a group member`);
             }
@@ -340,24 +340,24 @@ export class GroupService {
                     title: title,
                     note: note,
                     amount: amount,
-                    currency: 'INR',
+                    currency: "INR",
                     date: new Date(),
                     paidById: paidById,
                     groupId: groupId,
                     splitType: splitType,
                     scenario: null,
-                    createdById: currentUserId
-                }
+                    createdById: currentUserId,
+                },
             });
             await tx.expenseSplit.createMany({
-                data: calculatedSplits.map(split => ({
+                data: calculatedSplits.map((split) => ({
                     expenseId: expense.id,
                     userId: split.userId,
                     amount: split.amount,
-                    percentage: split.percentage || null
-                }))
+                    percentage: split.percentage || null,
+                })),
             });
-            const currentUser = group.members.find(m => m.userId === currentUserId)?.user;
+            const currentUser = group.members.find((m) => m.userId === currentUserId)?.user;
             await tx.activity.create({
                 data: {
                     note: `${currentUser?.name} added expense: ${title}`,
@@ -368,9 +368,9 @@ export class GroupService {
                         amount: amount,
                         splitType: splitType,
                         participants: participantUsernames,
-                        nonParticipants: nonParticipantMembers.map(m => m.user.username)
-                    }
-                }
+                        nonParticipants: nonParticipantMembers.map((m) => m.user.username),
+                    },
+                },
             });
             for (const nonParticipant of nonParticipantMembers) {
                 await tx.activity.create({
@@ -382,9 +382,9 @@ export class GroupService {
                         metadata: {
                             amount: amount,
                             involved: false,
-                            participants: participantUsernames
-                        }
-                    }
+                            participants: participantUsernames,
+                        },
+                    },
                 });
             }
             return await tx.expense.findUnique({
@@ -396,25 +396,25 @@ export class GroupService {
                                 select: {
                                     id: true,
                                     username: true,
-                                    name: true
-                                }
-                            }
-                        }
+                                    name: true,
+                                },
+                            },
+                        },
                     },
                     paidBy: {
                         select: {
                             id: true,
                             username: true,
-                            name: true
-                        }
+                            name: true,
+                        },
                     },
                     group: {
                         select: {
                             id: true,
-                            name: true
-                        }
-                    }
-                }
+                            name: true,
+                        },
+                    },
+                },
             });
         });
         return result;
@@ -422,7 +422,7 @@ export class GroupService {
     async updateGroupExpense(expenseId, groupId, currentUserId, title, amount, paidByUsername, participantUsernames) {
         const expense = await prisma.expense.findUnique({
             where: {
-                id: expenseId
+                id: expenseId,
             },
             include: {
                 splits: {
@@ -431,17 +431,17 @@ export class GroupService {
                             select: {
                                 id: true,
                                 username: true,
-                                name: true
-                            }
-                        }
-                    }
+                                name: true,
+                            },
+                        },
+                    },
                 },
                 paidBy: {
                     select: {
                         id: true,
                         username: true,
-                        name: true
-                    }
+                        name: true,
+                    },
                 },
                 group: {
                     include: {
@@ -451,14 +451,14 @@ export class GroupService {
                                     select: {
                                         id: true,
                                         username: true,
-                                        name: true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                        name: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         });
         if (!expense) {
             throw new Error("Expense Not Found!!");
@@ -466,19 +466,19 @@ export class GroupService {
         if (!expense.groupId) {
             throw new Error("This is not a group expense. Use friend expense update endpoint");
         }
-        const userInExpense = expense.splits.some(s => s.userId === currentUserId);
-        const userInGroup = expense.group.members.some(m => m.userId === currentUserId);
+        const userInExpense = expense.splits.some((s) => s.userId === currentUserId);
+        const userInGroup = expense.group.members.some((m) => m.userId === currentUserId);
         if (!userInExpense && !userInGroup) {
-            throw new Error('You don\'t have access to this expense');
+            throw new Error("You don't have access to this expense");
         }
         const hasChanges = (title && title !== expense.title) ||
             (amount && amount !== expense.amount) ||
             (paidByUsername && paidByUsername !== expense.paidBy.username) ||
             (participantUsernames && participantUsernames.length > 0);
         if (!hasChanges) {
-            throw new Error('No changes to update');
+            throw new Error("No changes to update");
         }
-        const oldParticipantIds = expense.splits.map(s => s.userId);
+        const oldParticipantIds = expense.splits.map((s) => s.userId);
         const newTitle = title ?? expense.title;
         const newAmount = amount ?? expense.amount;
         let newPaidById;
@@ -492,17 +492,17 @@ export class GroupService {
         }
         if (participantUsernames) {
             const usernameToIdMap = await userService.getUserIdUsernames(participantUsernames);
-            newParticipantIds = participantUsernames.map(un => usernameToIdMap.get(un));
+            newParticipantIds = participantUsernames.map((un) => usernameToIdMap.get(un));
             // Verify all are group members
             for (const participantId of newParticipantIds) {
-                const isGroupMember = expense.group.members.some(m => m.userId === participantId);
+                const isGroupMember = expense.group.members.some((m) => m.userId === participantId);
                 if (!isGroupMember) {
-                    const username = participantUsernames.find(un => usernameToIdMap.get(un) === participantId);
+                    const username = participantUsernames.find((un) => usernameToIdMap.get(un) === participantId);
                     throw new Error(`User "${username}" is not a group member`);
                 }
             }
             if (!newParticipantIds.includes(newPaidById)) {
-                throw new Error('Payer must be one of the participants');
+                throw new Error("Payer must be one of the participants");
             }
         }
         else {
@@ -510,34 +510,34 @@ export class GroupService {
             newParticipantIds = oldParticipantIds;
         }
         const perPersonAmount = newAmount / newParticipantIds.length;
-        const newSplits = newParticipantIds.map(userId => ({
+        const newSplits = newParticipantIds.map((userId) => ({
             userId,
-            amount: perPersonAmount
+            amount: perPersonAmount,
         }));
-        const leavingParticipants = oldParticipantIds.filter(id => !newParticipantIds.includes(id));
-        const joiningParticipants = newParticipantIds.filter(id => !oldParticipantIds.includes(id));
+        const leavingParticipants = oldParticipantIds.filter((id) => !newParticipantIds.includes(id));
+        const joiningParticipants = newParticipantIds.filter((id) => !oldParticipantIds.includes(id));
         const result = await prisma.$transaction(async (tx) => {
             const updateExpense = await tx.expense.update({
                 where: {
-                    id: expenseId
+                    id: expenseId,
                 },
                 data: {
                     title: newTitle,
                     amount: newAmount,
-                    paidById: newPaidById
-                }
+                    paidById: newPaidById,
+                },
             });
             await tx.expenseSplit.deleteMany({
-                where: { expenseId: expenseId }
+                where: { expenseId: expenseId },
             });
             await tx.expenseSplit.createMany({
-                data: newSplits.map(split => ({
+                data: newSplits.map((split) => ({
                     expenseId: expenseId,
                     userId: split.userId,
-                    amount: split.amount
-                }))
+                    amount: split.amount,
+                })),
             });
-            const currentUser = expense.group.members.find(m => m.userId === currentUserId)?.user;
+            const currentUser = expense.group.members.find((m) => m.userId === currentUserId)?.user;
             await tx.activity.create({
                 data: {
                     note: `${currentUser?.name} updated expense: ${newTitle}`,
@@ -549,19 +549,20 @@ export class GroupService {
                             title: expense.title,
                             amount: expense.amount,
                             paidBy: expense.paidBy.username,
-                            participants: expense.splits.map(s => s.user.username)
+                            participants: expense.splits.map((s) => s.user.username),
                         },
                         newValues: {
                             title: newTitle,
                             amount: newAmount,
                             paidBy: paidByUsername ?? expense.paidBy.username,
-                            participants: participantUsernames ?? expense.splits.map(s => s.user.username)
-                        }
-                    }
-                }
+                            participants: participantUsernames ??
+                                expense.splits.map((s) => s.user.username),
+                        },
+                    },
+                },
             });
             for (const leavingId of leavingParticipants) {
-                const leavingUser = expense.splits.find(s => s.userId === leavingId)?.user;
+                const leavingUser = expense.splits.find((s) => s.userId === leavingId)?.user;
                 await tx.activity.create({
                     data: {
                         note: `${currentUser?.name} removed you from expense: ${newTitle}`,
@@ -569,9 +570,9 @@ export class GroupService {
                         expenseId: expenseId,
                         groupId: expense.groupId,
                         metadata: {
-                            removed: true
-                        }
-                    }
+                            removed: true,
+                        },
+                    },
                 });
             }
             for (const joiningId of joiningParticipants) {
@@ -583,14 +584,14 @@ export class GroupService {
                         groupId: expense.groupId,
                         metadata: {
                             added: true,
-                            yourShare: perPersonAmount
-                        }
-                    }
+                            yourShare: perPersonAmount,
+                        },
+                    },
                 });
             }
             return await tx.expense.findUnique({
                 where: {
-                    id: expenseId
+                    id: expenseId,
                 },
                 include: {
                     splits: {
@@ -599,25 +600,25 @@ export class GroupService {
                                 select: {
                                     id: true,
                                     username: true,
-                                    name: true
-                                }
-                            }
-                        }
+                                    name: true,
+                                },
+                            },
+                        },
                     },
                     paidBy: {
                         select: {
                             id: true,
                             username: true,
-                            name: true
-                        }
+                            name: true,
+                        },
                     },
                     group: {
                         select: {
                             id: true,
-                            name: true
-                        }
-                    }
-                }
+                            name: true,
+                        },
+                    },
+                },
             });
         });
         return result;
@@ -625,7 +626,7 @@ export class GroupService {
     async deleteGroupExpense(expenseId, groupId, currentUserId) {
         const expense = await prisma.expense.findUnique({
             where: {
-                id: expenseId
+                id: expenseId,
             },
             include: {
                 splits: {
@@ -634,24 +635,24 @@ export class GroupService {
                             select: {
                                 id: true,
                                 username: true,
-                                name: true
-                            }
-                        }
-                    }
+                                name: true,
+                            },
+                        },
+                    },
                 },
                 paidBy: {
                     select: {
                         id: true,
                         username: true,
-                        name: true
-                    }
+                        name: true,
+                    },
                 },
                 group: {
                     include: {
-                        members: true
-                    }
-                }
-            }
+                        members: true,
+                    },
+                },
+            },
         });
         if (!expense) {
             throw new Error("Expense not found!!");
@@ -659,37 +660,37 @@ export class GroupService {
         if (!expense.groupId) {
             throw new Error("This is not a group expense. Use friend expense delete endpoint.");
         }
-        const userInExpense = expense.splits.some(s => s.userId === currentUserId);
-        const userInGroup = expense.group.members.some(m => m.userId === currentUserId);
+        const userInExpense = expense.splits.some((s) => s.userId === currentUserId);
+        const userInGroup = expense.group.members.some((m) => m.userId === currentUserId);
         if (!userInExpense && !userInGroup) {
-            throw new Error('You don\'t have access to this expense');
+            throw new Error("You don't have access to this expense");
         }
         const deletedExpenseDetails = {
             title: expense.title,
             amount: expense.amount,
             paidBy: expense.paidBy.name,
             paidByUsername: expense.paidBy.username,
-            participants: expense.splits.map(s => ({
+            participants: expense.splits.map((s) => ({
                 username: s.user.username,
                 name: s.user.name,
-                amount: s.amount
+                amount: s.amount,
             })),
-            groupId: expense.groupId
+            groupId: expense.groupId,
         };
-        const participantIds = expense.splits.map(s => s.userId);
+        const participantIds = expense.splits.map((s) => s.userId);
         const currentUserName = await userService.extractNameFromId(currentUserId);
         const result = await prisma.$transaction(async (tx) => {
             await tx.expenseSplit.deleteMany({
                 where: {
-                    expenseId: expenseId
-                }
+                    expenseId: expenseId,
+                },
             });
             await tx.expense.delete({
                 where: {
-                    id: expenseId
-                }
+                    id: expenseId,
+                },
             });
-            const currentUser = expense.group.members.find(member => member.userId === currentUserId);
+            const currentUser = expense.group.members.find((member) => member.userId === currentUserId);
             for (const participantId of participantIds) {
                 await tx.activity.create({
                     data: {
@@ -698,12 +699,14 @@ export class GroupService {
                         expenseId: null, // Expense is deleted
                         groupId: expense.groupId,
                         metadata: {
-                            deletedExpense: deletedExpenseDetails
-                        }
-                    }
+                            deletedExpense: deletedExpenseDetails,
+                        },
+                    },
                 });
             }
-            const nonParticipantIds = expense.group.members.map(m => m.userId).filter(id => !participantIds.includes(id));
+            const nonParticipantIds = expense
+                .group.members.map((m) => m.userId)
+                .filter((id) => !participantIds.includes(id));
             for (const nonParticipantId of nonParticipantIds) {
                 await tx.activity.create({
                     data: {
@@ -712,14 +715,14 @@ export class GroupService {
                         groupId: expense.groupId,
                         metadata: {
                             deletedExpense: deletedExpenseDetails,
-                            wasNotInvolved: true
-                        }
-                    }
+                            wasNotInvolved: true,
+                        },
+                    },
                 });
             }
             return {
                 success: true,
-                deletedExpense: deletedExpenseDetails
+                deletedExpense: deletedExpenseDetails,
             };
         });
         return result;
@@ -727,7 +730,7 @@ export class GroupService {
     async deleteGroup(currentUserId, groupId) {
         const group = await prisma.group.findUnique({
             where: {
-                id: groupId
+                id: groupId,
             },
             include: {
                 members: {
@@ -736,10 +739,10 @@ export class GroupService {
                             select: {
                                 id: true,
                                 name: true,
-                                username: true
-                            }
-                        }
-                    }
+                                username: true,
+                            },
+                        },
+                    },
                 },
                 expenses: {
                     include: {
@@ -747,12 +750,12 @@ export class GroupService {
                         paidBy: {
                             select: {
                                 id: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
+                                username: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         if (!group) {
             throw new Error("Group not Found!!");
@@ -762,7 +765,7 @@ export class GroupService {
         }
         if (group.expenses.length > 0) {
             const memberBalance = new Map();
-            group.members.forEach(m => {
+            group.members.forEach((m) => {
                 memberBalance.set(m.userId, 0);
             });
             //calculating the net balance of each member from all expenses
@@ -778,44 +781,49 @@ export class GroupService {
             }
             const unsettledMembers = [];
             for (const [userId, balance] of memberBalance) {
-                if (Math.abs(balance) > 0.01) { // Use 0.01 for float comparison
-                    const member = group.members.find(m => m.userId === userId);
+                if (Math.abs(balance) > 0.01) {
+                    // Use 0.01 for float comparison
+                    const member = group.members.find((m) => m.userId === userId);
                     unsettledMembers.push({
                         username: member.user.username,
-                        balance: balance
+                        balance: balance,
                     });
                 }
             }
             if (unsettledMembers.length > 0) {
-                const debtSummary = unsettledMembers.map(m => {
-                    const status = m.balance > 0 ? `is owed ₹${m.balance.toFixed(2)}` : `owes ₹${Math.abs(m.balance).toFixed(2)}`;
+                const debtSummary = unsettledMembers
+                    .map((m) => {
+                    const status = m.balance > 0
+                        ? `is owed ₹${m.balance.toFixed(2)}`
+                        : `owes ₹${Math.abs(m.balance).toFixed(2)}`;
                     return `${m.username} ${status}`;
-                }).join(', ');
+                })
+                    .join(", ");
                 throw new Error(`Cannot delete group with unsettled debts. Please settle all expenses first. Unsettled: ${debtSummary}`);
             }
         }
         const result = await prisma.$transaction(async (tx) => {
-            const expenseIds = group.expenses.map(e => e.id);
+            const expenseIds = group.expenses.map((e) => e.id);
             if (expenseIds.length > 0) {
                 await tx.expenseSplit.deleteMany({
                     where: {
                         expenseId: {
-                            in: expenseIds
-                        }
-                    }
+                            in: expenseIds,
+                        },
+                    },
                 });
             }
             await tx.expense.deleteMany({
                 where: {
-                    groupId: groupId
-                }
+                    groupId: groupId,
+                },
             });
             await tx.groupMember.deleteMany({
                 where: {
-                    id: groupId
-                }
+                    id: groupId,
+                },
             });
-            const currentUser = group.members.find(u => u.userId === currentUserId);
+            const currentUser = group.members.find((u) => u.userId === currentUserId);
             for (const member of group.members) {
                 await tx.activity.create({
                     data: {
@@ -824,23 +832,23 @@ export class GroupService {
                         groupId: null,
                         metadata: {
                             groupName: group.name,
-                            deletedBy: currentUser?.user.name
-                        }
-                    }
+                            deletedBy: currentUser?.user.name,
+                        },
+                    },
                 });
             }
             await tx.group.delete({
                 where: {
-                    id: groupId
-                }
+                    id: groupId,
+                },
             });
             return {
                 success: true,
                 deletedGroup: {
                     id: group.id,
                     name: group.name,
-                    description: group.name
-                }
+                    description: group.name,
+                },
             };
         });
         return result;
@@ -850,22 +858,22 @@ export class GroupService {
         // Settlements are payments that reduce debt
         const expenses = await prisma.expense.findMany({
             where: {
-                groupId: groupId
+                groupId: groupId,
             },
             include: {
-                splits: true
-            }
+                splits: true,
+            },
         });
         let balance = 0;
         for (const expense of expenses) {
             // Find current user's split
-            const userSplit = expense.splits.find(s => s.userId === userId);
+            const userSplit = expense.splits.find((s) => s.userId === userId);
             if (!userSplit)
                 continue;
             const userOwed = userSplit.amount;
             const userPaid = expense.paidById === userId ? expense.amount : 0;
             // Net position: positive means user is owed, negative means user owes
-            balance += (userPaid - userOwed);
+            balance += userPaid - userOwed;
         }
         return balance;
     }

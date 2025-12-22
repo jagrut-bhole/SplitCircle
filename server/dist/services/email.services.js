@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 export class EmailServices {
     constructor() {
         // console.log('Email configured for:', process.env.EMAIL_USER);
@@ -9,7 +9,7 @@ export class EmailServices {
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
-            }
+            },
         });
     }
     async sendEmail(to, subject, html) {
@@ -18,12 +18,12 @@ export class EmailServices {
                 from: process.env.EMAIL_USER,
                 to: to,
                 subject: subject,
-                html: html
+                html: html,
             });
             // console.log('Email Sent: ', info.messageId);
             return {
                 success: true,
-                message: info.messageId
+                message: info.messageId,
             };
         }
         catch (error) {
@@ -69,7 +69,7 @@ export class EmailServices {
       </body>
       </html>
         `;
-        return this.sendEmail(email, 'Welcome To SplitCircle! 🎉', html);
+        return this.sendEmail(email, "Welcome To SplitCircle! 🎉", html);
     }
     async sendEmailChangeNotification(name, email, newEmail) {
         const html = `
@@ -106,8 +106,8 @@ export class EmailServices {
       </body>
     </html> 
         `;
-        await this.sendEmail(email, 'Email Address Changed - Security Alert', html);
-        return this.sendEmail(newEmail, 'Email Address Changed - Confirmation', html);
+        await this.sendEmail(email, "Email Address Changed - Security Alert", html);
+        return this.sendEmail(newEmail, "Email Address Changed - Confirmation", html);
     }
     async sendPasswordChangeConfirmation(name, email) {
         const html = `
@@ -143,7 +143,7 @@ export class EmailServices {
       </body>
       </html>
         `;
-        return this.sendEmail(email, 'Password Changed - Security Alert', html);
+        return this.sendEmail(email, "Password Changed - Security Alert", html);
     }
     async sendFriendAddedEmail(frienAddedName, friendAddedEmail, addedByName, addedByUsername) {
         const html = `

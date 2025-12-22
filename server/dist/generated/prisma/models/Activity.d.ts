@@ -4,214 +4,180 @@ import type * as Prisma from "../internal/prismaNamespace.js";
  * Model Activity
  *
  */
-export type ActivityModel =
-  runtime.Types.Result.DefaultSelection<Prisma.$ActivityPayload>;
+export type ActivityModel = runtime.Types.Result.DefaultSelection<Prisma.$ActivityPayload>;
 export type AggregateActivity = {
-  _count: ActivityCountAggregateOutputType | null;
-  _min: ActivityMinAggregateOutputType | null;
-  _max: ActivityMaxAggregateOutputType | null;
+    _count: ActivityCountAggregateOutputType | null;
+    _min: ActivityMinAggregateOutputType | null;
+    _max: ActivityMaxAggregateOutputType | null;
 };
 export type ActivityMinAggregateOutputType = {
-  id: string | null;
-  note: string | null;
-  userId: string | null;
-  groupId: string | null;
-  expenseId: string | null;
-  settlementId: string | null;
-  createdAt: Date | null;
+    id: string | null;
+    note: string | null;
+    userId: string | null;
+    groupId: string | null;
+    expenseId: string | null;
+    settlementId: string | null;
+    createdAt: Date | null;
 };
 export type ActivityMaxAggregateOutputType = {
-  id: string | null;
-  note: string | null;
-  userId: string | null;
-  groupId: string | null;
-  expenseId: string | null;
-  settlementId: string | null;
-  createdAt: Date | null;
+    id: string | null;
+    note: string | null;
+    userId: string | null;
+    groupId: string | null;
+    expenseId: string | null;
+    settlementId: string | null;
+    createdAt: Date | null;
 };
 export type ActivityCountAggregateOutputType = {
-  id: number;
-  note: number;
-  userId: number;
-  groupId: number;
-  expenseId: number;
-  settlementId: number;
-  metadata: number;
-  createdAt: number;
-  _all: number;
+    id: number;
+    note: number;
+    userId: number;
+    groupId: number;
+    expenseId: number;
+    settlementId: number;
+    metadata: number;
+    createdAt: number;
+    _all: number;
 };
 export type ActivityMinAggregateInputType = {
-  id?: true;
-  note?: true;
-  userId?: true;
-  groupId?: true;
-  expenseId?: true;
-  settlementId?: true;
-  createdAt?: true;
+    id?: true;
+    note?: true;
+    userId?: true;
+    groupId?: true;
+    expenseId?: true;
+    settlementId?: true;
+    createdAt?: true;
 };
 export type ActivityMaxAggregateInputType = {
-  id?: true;
-  note?: true;
-  userId?: true;
-  groupId?: true;
-  expenseId?: true;
-  settlementId?: true;
-  createdAt?: true;
+    id?: true;
+    note?: true;
+    userId?: true;
+    groupId?: true;
+    expenseId?: true;
+    settlementId?: true;
+    createdAt?: true;
 };
 export type ActivityCountAggregateInputType = {
-  id?: true;
-  note?: true;
-  userId?: true;
-  groupId?: true;
-  expenseId?: true;
-  settlementId?: true;
-  metadata?: true;
-  createdAt?: true;
-  _all?: true;
+    id?: true;
+    note?: true;
+    userId?: true;
+    groupId?: true;
+    expenseId?: true;
+    settlementId?: true;
+    metadata?: true;
+    createdAt?: true;
+    _all?: true;
 };
-export type ActivityAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Filter which Activity to aggregate.
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-   *
-   * Determine the order of Activities to fetch.
-   */
-  orderBy?:
-    | Prisma.ActivityOrderByWithRelationInput
-    | Prisma.ActivityOrderByWithRelationInput[];
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-   *
-   * Sets the start position
-   */
-  cursor?: Prisma.ActivityWhereUniqueInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Take `±n` Activities from the position of the cursor.
-   */
-  take?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Skip the first `n` Activities.
-   */
-  skip?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Count returned Activities
-   **/
-  _count?: true | ActivityCountAggregateInputType;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to find the minimum value
-   **/
-  _min?: ActivityMinAggregateInputType;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to find the maximum value
-   **/
-  _max?: ActivityMaxAggregateInputType;
+export type ActivityAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Activity to aggregate.
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Activities.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Activities
+    **/
+    _count?: true | ActivityCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivityMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivityMaxAggregateInputType;
 };
 export type GetActivityAggregateType<T extends ActivityAggregateArgs> = {
-  [P in keyof T & keyof AggregateActivity]: P extends "_count" | "count"
-    ? T[P] extends true
-      ? number
-      : Prisma.GetScalarType<T[P], AggregateActivity[P]>
-    : Prisma.GetScalarType<T[P], AggregateActivity[P]>;
+    [P in keyof T & keyof AggregateActivity]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateActivity[P]> : Prisma.GetScalarType<T[P], AggregateActivity[P]>;
 };
-export type ActivityGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.ActivityWhereInput;
-  orderBy?:
-    | Prisma.ActivityOrderByWithAggregationInput
-    | Prisma.ActivityOrderByWithAggregationInput[];
-  by: Prisma.ActivityScalarFieldEnum[] | Prisma.ActivityScalarFieldEnum;
-  having?: Prisma.ActivityScalarWhereWithAggregatesInput;
-  take?: number;
-  skip?: number;
-  _count?: ActivityCountAggregateInputType | true;
-  _min?: ActivityMinAggregateInputType;
-  _max?: ActivityMaxAggregateInputType;
+export type ActivityGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ActivityWhereInput;
+    orderBy?: Prisma.ActivityOrderByWithAggregationInput | Prisma.ActivityOrderByWithAggregationInput[];
+    by: Prisma.ActivityScalarFieldEnum[] | Prisma.ActivityScalarFieldEnum;
+    having?: Prisma.ActivityScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: ActivityCountAggregateInputType | true;
+    _min?: ActivityMinAggregateInputType;
+    _max?: ActivityMaxAggregateInputType;
 };
 export type ActivityGroupByOutputType = {
-  id: string;
-  note: string;
-  userId: string;
-  groupId: string | null;
-  expenseId: string | null;
-  settlementId: string | null;
-  metadata: runtime.JsonValue | null;
-  createdAt: Date;
-  _count: ActivityCountAggregateOutputType | null;
-  _min: ActivityMinAggregateOutputType | null;
-  _max: ActivityMaxAggregateOutputType | null;
+    id: string;
+    note: string;
+    userId: string;
+    groupId: string | null;
+    expenseId: string | null;
+    settlementId: string | null;
+    metadata: runtime.JsonValue | null;
+    createdAt: Date;
+    _count: ActivityCountAggregateOutputType | null;
+    _min: ActivityMinAggregateOutputType | null;
+    _max: ActivityMaxAggregateOutputType | null;
 };
-type GetActivityGroupByPayload<T extends ActivityGroupByArgs> =
-  Prisma.PrismaPromise<
-    Array<
-      Prisma.PickEnumerable<ActivityGroupByOutputType, T["by"]> & {
-        [P in keyof T & keyof ActivityGroupByOutputType]: P extends "_count"
-          ? T[P] extends boolean
-            ? number
-            : Prisma.GetScalarType<T[P], ActivityGroupByOutputType[P]>
-          : Prisma.GetScalarType<T[P], ActivityGroupByOutputType[P]>;
-      }
-    >
-  >;
+type GetActivityGroupByPayload<T extends ActivityGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ActivityGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof ActivityGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], ActivityGroupByOutputType[P]> : Prisma.GetScalarType<T[P], ActivityGroupByOutputType[P]>;
+}>>;
 export type ActivityWhereInput = {
-  AND?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[];
-  OR?: Prisma.ActivityWhereInput[];
-  NOT?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[];
-  id?: Prisma.StringFilter<"Activity"> | string;
-  note?: Prisma.StringFilter<"Activity"> | string;
-  userId?: Prisma.StringFilter<"Activity"> | string;
-  groupId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  expenseId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  settlementId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  metadata?: Prisma.JsonNullableFilter<"Activity">;
-  createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string;
-  actor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-  group?: Prisma.XOR<
-    Prisma.GroupNullableScalarRelationFilter,
-    Prisma.GroupWhereInput
-  > | null;
-  expense?: Prisma.XOR<
-    Prisma.ExpenseNullableScalarRelationFilter,
-    Prisma.ExpenseWhereInput
-  > | null;
-  settlement?: Prisma.XOR<
-    Prisma.SettlementNullableScalarRelationFilter,
-    Prisma.SettlementWhereInput
-  > | null;
+    AND?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[];
+    OR?: Prisma.ActivityWhereInput[];
+    NOT?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[];
+    id?: Prisma.StringFilter<"Activity"> | string;
+    note?: Prisma.StringFilter<"Activity"> | string;
+    userId?: Prisma.StringFilter<"Activity"> | string;
+    groupId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    expenseId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    settlementId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    metadata?: Prisma.JsonNullableFilter<"Activity">;
+    createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string;
+    actor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    expense?: Prisma.XOR<Prisma.ExpenseNullableScalarRelationFilter, Prisma.ExpenseWhereInput> | null;
+    settlement?: Prisma.XOR<Prisma.SettlementNullableScalarRelationFilter, Prisma.SettlementWhereInput> | null;
 };
 export type ActivityOrderByWithRelationInput = {
-  id?: Prisma.SortOrder;
-  note?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  expenseId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  settlementId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
-  actor?: Prisma.UserOrderByWithRelationInput;
-  group?: Prisma.GroupOrderByWithRelationInput;
-  expense?: Prisma.ExpenseOrderByWithRelationInput;
-  settlement?: Prisma.SettlementOrderByWithRelationInput;
+    id?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    expenseId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    settlementId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    actor?: Prisma.UserOrderByWithRelationInput;
+    group?: Prisma.GroupOrderByWithRelationInput;
+    expense?: Prisma.ExpenseOrderByWithRelationInput;
+    settlement?: Prisma.SettlementOrderByWithRelationInput;
 };
-export type ActivityWhereUniqueInput = Prisma.AtLeast<
-  {
+export type ActivityWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
     AND?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[];
     OR?: Prisma.ActivityWhereInput[];
@@ -224,932 +190,604 @@ export type ActivityWhereUniqueInput = Prisma.AtLeast<
     metadata?: Prisma.JsonNullableFilter<"Activity">;
     createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string;
     actor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-    group?: Prisma.XOR<
-      Prisma.GroupNullableScalarRelationFilter,
-      Prisma.GroupWhereInput
-    > | null;
-    expense?: Prisma.XOR<
-      Prisma.ExpenseNullableScalarRelationFilter,
-      Prisma.ExpenseWhereInput
-    > | null;
-    settlement?: Prisma.XOR<
-      Prisma.SettlementNullableScalarRelationFilter,
-      Prisma.SettlementWhereInput
-    > | null;
-  },
-  "id"
->;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    expense?: Prisma.XOR<Prisma.ExpenseNullableScalarRelationFilter, Prisma.ExpenseWhereInput> | null;
+    settlement?: Prisma.XOR<Prisma.SettlementNullableScalarRelationFilter, Prisma.SettlementWhereInput> | null;
+}, "id">;
 export type ActivityOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder;
-  note?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  expenseId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  settlementId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
-  _count?: Prisma.ActivityCountOrderByAggregateInput;
-  _max?: Prisma.ActivityMaxOrderByAggregateInput;
-  _min?: Prisma.ActivityMinOrderByAggregateInput;
+    id?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    expenseId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    settlementId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    _count?: Prisma.ActivityCountOrderByAggregateInput;
+    _max?: Prisma.ActivityMaxOrderByAggregateInput;
+    _min?: Prisma.ActivityMinOrderByAggregateInput;
 };
 export type ActivityScalarWhereWithAggregatesInput = {
-  AND?:
-    | Prisma.ActivityScalarWhereWithAggregatesInput
-    | Prisma.ActivityScalarWhereWithAggregatesInput[];
-  OR?: Prisma.ActivityScalarWhereWithAggregatesInput[];
-  NOT?:
-    | Prisma.ActivityScalarWhereWithAggregatesInput
-    | Prisma.ActivityScalarWhereWithAggregatesInput[];
-  id?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
-  note?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
-  userId?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
-  groupId?:
-    | Prisma.StringNullableWithAggregatesFilter<"Activity">
-    | string
-    | null;
-  expenseId?:
-    | Prisma.StringNullableWithAggregatesFilter<"Activity">
-    | string
-    | null;
-  settlementId?:
-    | Prisma.StringNullableWithAggregatesFilter<"Activity">
-    | string
-    | null;
-  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Activity">;
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string;
+    AND?: Prisma.ActivityScalarWhereWithAggregatesInput | Prisma.ActivityScalarWhereWithAggregatesInput[];
+    OR?: Prisma.ActivityScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.ActivityScalarWhereWithAggregatesInput | Prisma.ActivityScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
+    note?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
+    userId?: Prisma.StringWithAggregatesFilter<"Activity"> | string;
+    groupId?: Prisma.StringNullableWithAggregatesFilter<"Activity"> | string | null;
+    expenseId?: Prisma.StringNullableWithAggregatesFilter<"Activity"> | string | null;
+    settlementId?: Prisma.StringNullableWithAggregatesFilter<"Activity"> | string | null;
+    metadata?: Prisma.JsonNullableWithAggregatesFilter<"Activity">;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string;
 };
 export type ActivityCreateInput = {
-  id?: string;
-  note: string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
-  actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
-  group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
-  expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
-  settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
+    id?: string;
+    note: string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
+    actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
+    group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
+    expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
+    settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
 };
 export type ActivityUncheckedCreateInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
-  group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
-  expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
-  settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
+    expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
+    settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
 };
 export type ActivityUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityCreateManyInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityListRelationFilter = {
-  every?: Prisma.ActivityWhereInput;
-  some?: Prisma.ActivityWhereInput;
-  none?: Prisma.ActivityWhereInput;
+    every?: Prisma.ActivityWhereInput;
+    some?: Prisma.ActivityWhereInput;
+    none?: Prisma.ActivityWhereInput;
 };
 export type ActivityOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder;
+    _count?: Prisma.SortOrder;
 };
 export type ActivityCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  note?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  groupId?: Prisma.SortOrder;
-  expenseId?: Prisma.SortOrder;
-  settlementId?: Prisma.SortOrder;
-  metadata?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
+    id?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    expenseId?: Prisma.SortOrder;
+    settlementId?: Prisma.SortOrder;
+    metadata?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
 };
 export type ActivityMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  note?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  groupId?: Prisma.SortOrder;
-  expenseId?: Prisma.SortOrder;
-  settlementId?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
+    id?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    expenseId?: Prisma.SortOrder;
+    settlementId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
 };
 export type ActivityMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  note?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  groupId?: Prisma.SortOrder;
-  expenseId?: Prisma.SortOrder;
-  settlementId?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
+    id?: Prisma.SortOrder;
+    note?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    expenseId?: Prisma.SortOrder;
+    settlementId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
 };
 export type ActivityCreateNestedManyWithoutActorInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutActorInput,
-        Prisma.ActivityUncheckedCreateWithoutActorInput
-      >
-    | Prisma.ActivityCreateWithoutActorInput[]
-    | Prisma.ActivityUncheckedCreateWithoutActorInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutActorInput
-    | Prisma.ActivityCreateOrConnectWithoutActorInput[];
-  createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput> | Prisma.ActivityCreateWithoutActorInput[] | Prisma.ActivityUncheckedCreateWithoutActorInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutActorInput | Prisma.ActivityCreateOrConnectWithoutActorInput[];
+    createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUncheckedCreateNestedManyWithoutActorInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutActorInput,
-        Prisma.ActivityUncheckedCreateWithoutActorInput
-      >
-    | Prisma.ActivityCreateWithoutActorInput[]
-    | Prisma.ActivityUncheckedCreateWithoutActorInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutActorInput
-    | Prisma.ActivityCreateOrConnectWithoutActorInput[];
-  createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput> | Prisma.ActivityCreateWithoutActorInput[] | Prisma.ActivityUncheckedCreateWithoutActorInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutActorInput | Prisma.ActivityCreateOrConnectWithoutActorInput[];
+    createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUpdateManyWithoutActorNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutActorInput,
-        Prisma.ActivityUncheckedCreateWithoutActorInput
-      >
-    | Prisma.ActivityCreateWithoutActorInput[]
-    | Prisma.ActivityUncheckedCreateWithoutActorInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutActorInput
-    | Prisma.ActivityCreateOrConnectWithoutActorInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput[];
-  createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutActorInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutActorInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput> | Prisma.ActivityCreateWithoutActorInput[] | Prisma.ActivityUncheckedCreateWithoutActorInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutActorInput | Prisma.ActivityCreateOrConnectWithoutActorInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput[];
+    createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutActorInput | Prisma.ActivityUpdateManyWithWhereWithoutActorInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityUncheckedUpdateManyWithoutActorNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutActorInput,
-        Prisma.ActivityUncheckedCreateWithoutActorInput
-      >
-    | Prisma.ActivityCreateWithoutActorInput[]
-    | Prisma.ActivityUncheckedCreateWithoutActorInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutActorInput
-    | Prisma.ActivityCreateOrConnectWithoutActorInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput[];
-  createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutActorInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutActorInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput> | Prisma.ActivityCreateWithoutActorInput[] | Prisma.ActivityUncheckedCreateWithoutActorInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutActorInput | Prisma.ActivityCreateOrConnectWithoutActorInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput | Prisma.ActivityUpsertWithWhereUniqueWithoutActorInput[];
+    createMany?: Prisma.ActivityCreateManyActorInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput | Prisma.ActivityUpdateWithWhereUniqueWithoutActorInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutActorInput | Prisma.ActivityUpdateManyWithWhereWithoutActorInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityCreateNestedManyWithoutGroupInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutGroupInput,
-        Prisma.ActivityUncheckedCreateWithoutGroupInput
-      >
-    | Prisma.ActivityCreateWithoutGroupInput[]
-    | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
-  createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput> | Prisma.ActivityCreateWithoutGroupInput[] | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutGroupInput | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUncheckedCreateNestedManyWithoutGroupInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutGroupInput,
-        Prisma.ActivityUncheckedCreateWithoutGroupInput
-      >
-    | Prisma.ActivityCreateWithoutGroupInput[]
-    | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
-  createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput> | Prisma.ActivityCreateWithoutGroupInput[] | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutGroupInput | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUpdateManyWithoutGroupNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutGroupInput,
-        Prisma.ActivityUncheckedCreateWithoutGroupInput
-      >
-    | Prisma.ActivityCreateWithoutGroupInput[]
-    | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput[];
-  createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput> | Prisma.ActivityCreateWithoutGroupInput[] | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutGroupInput | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutGroupInput | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityUncheckedUpdateManyWithoutGroupNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutGroupInput,
-        Prisma.ActivityUncheckedCreateWithoutGroupInput
-      >
-    | Prisma.ActivityCreateWithoutGroupInput[]
-    | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput
-    | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput[];
-  createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput> | Prisma.ActivityCreateWithoutGroupInput[] | Prisma.ActivityUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutGroupInput | Prisma.ActivityCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput | Prisma.ActivityUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.ActivityCreateManyGroupInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput | Prisma.ActivityUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutGroupInput | Prisma.ActivityUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityCreateNestedManyWithoutExpenseInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutExpenseInput,
-        Prisma.ActivityUncheckedCreateWithoutExpenseInput
-      >
-    | Prisma.ActivityCreateWithoutExpenseInput[]
-    | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
-  createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput> | Prisma.ActivityCreateWithoutExpenseInput[] | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutExpenseInput | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
+    createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUncheckedCreateNestedManyWithoutExpenseInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutExpenseInput,
-        Prisma.ActivityUncheckedCreateWithoutExpenseInput
-      >
-    | Prisma.ActivityCreateWithoutExpenseInput[]
-    | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
-  createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput> | Prisma.ActivityCreateWithoutExpenseInput[] | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutExpenseInput | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
+    createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUpdateManyWithoutExpenseNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutExpenseInput,
-        Prisma.ActivityUncheckedCreateWithoutExpenseInput
-      >
-    | Prisma.ActivityCreateWithoutExpenseInput[]
-    | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput[];
-  createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput> | Prisma.ActivityCreateWithoutExpenseInput[] | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutExpenseInput | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput[];
+    createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityUncheckedUpdateManyWithoutExpenseNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutExpenseInput,
-        Prisma.ActivityUncheckedCreateWithoutExpenseInput
-      >
-    | Prisma.ActivityCreateWithoutExpenseInput[]
-    | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput
-    | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput[];
-  createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput> | Prisma.ActivityCreateWithoutExpenseInput[] | Prisma.ActivityUncheckedCreateWithoutExpenseInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutExpenseInput | Prisma.ActivityCreateOrConnectWithoutExpenseInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput | Prisma.ActivityUpsertWithWhereUniqueWithoutExpenseInput[];
+    createMany?: Prisma.ActivityCreateManyExpenseInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput | Prisma.ActivityUpdateWithWhereUniqueWithoutExpenseInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput | Prisma.ActivityUpdateManyWithWhereWithoutExpenseInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityCreateNestedManyWithoutSettlementInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutSettlementInput,
-        Prisma.ActivityUncheckedCreateWithoutSettlementInput
-      >
-    | Prisma.ActivityCreateWithoutSettlementInput[]
-    | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
-  createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput> | Prisma.ActivityCreateWithoutSettlementInput[] | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSettlementInput | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
+    createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUncheckedCreateNestedManyWithoutSettlementInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutSettlementInput,
-        Prisma.ActivityUncheckedCreateWithoutSettlementInput
-      >
-    | Prisma.ActivityCreateWithoutSettlementInput[]
-    | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
-  createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput> | Prisma.ActivityCreateWithoutSettlementInput[] | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSettlementInput | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
+    createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
 };
 export type ActivityUpdateManyWithoutSettlementNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutSettlementInput,
-        Prisma.ActivityUncheckedCreateWithoutSettlementInput
-      >
-    | Prisma.ActivityCreateWithoutSettlementInput[]
-    | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput[];
-  createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput> | Prisma.ActivityCreateWithoutSettlementInput[] | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSettlementInput | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput[];
+    createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityUncheckedUpdateManyWithoutSettlementNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ActivityCreateWithoutSettlementInput,
-        Prisma.ActivityUncheckedCreateWithoutSettlementInput
-      >
-    | Prisma.ActivityCreateWithoutSettlementInput[]
-    | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
-  connectOrCreate?:
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput
-    | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
-  upsert?:
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput
-    | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput[];
-  createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ActivityWhereUniqueInput
-    | Prisma.ActivityWhereUniqueInput[];
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
-  update?:
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput
-    | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput[];
-  updateMany?:
-    | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput
-    | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput[];
-  deleteMany?:
-    | Prisma.ActivityScalarWhereInput
-    | Prisma.ActivityScalarWhereInput[];
+    create?: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput> | Prisma.ActivityCreateWithoutSettlementInput[] | Prisma.ActivityUncheckedCreateWithoutSettlementInput[];
+    connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSettlementInput | Prisma.ActivityCreateOrConnectWithoutSettlementInput[];
+    upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput | Prisma.ActivityUpsertWithWhereUniqueWithoutSettlementInput[];
+    createMany?: Prisma.ActivityCreateManySettlementInputEnvelope;
+    set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[];
+    update?: Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput | Prisma.ActivityUpdateWithWhereUniqueWithoutSettlementInput[];
+    updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput | Prisma.ActivityUpdateManyWithWhereWithoutSettlementInput[];
+    deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
 };
 export type ActivityCreateWithoutActorInput = {
-  id?: string;
-  note: string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
-  group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
-  expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
-  settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
+    id?: string;
+    note: string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
+    group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
+    expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
+    settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
 };
 export type ActivityUncheckedCreateWithoutActorInput = {
-  id?: string;
-  note: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityCreateOrConnectWithoutActorInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutActorInput,
-    Prisma.ActivityUncheckedCreateWithoutActorInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput>;
 };
 export type ActivityCreateManyActorInputEnvelope = {
-  data:
-    | Prisma.ActivityCreateManyActorInput
-    | Prisma.ActivityCreateManyActorInput[];
-  skipDuplicates?: boolean;
+    data: Prisma.ActivityCreateManyActorInput | Prisma.ActivityCreateManyActorInput[];
+    skipDuplicates?: boolean;
 };
 export type ActivityUpsertWithWhereUniqueWithoutActorInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutActorInput,
-    Prisma.ActivityUncheckedUpdateWithoutActorInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutActorInput,
-    Prisma.ActivityUncheckedCreateWithoutActorInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ActivityUpdateWithoutActorInput, Prisma.ActivityUncheckedUpdateWithoutActorInput>;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutActorInput, Prisma.ActivityUncheckedCreateWithoutActorInput>;
 };
 export type ActivityUpdateWithWhereUniqueWithoutActorInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutActorInput,
-    Prisma.ActivityUncheckedUpdateWithoutActorInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateWithoutActorInput, Prisma.ActivityUncheckedUpdateWithoutActorInput>;
 };
 export type ActivityUpdateManyWithWhereWithoutActorInput = {
-  where: Prisma.ActivityScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyWithoutActorInput
-  >;
+    where: Prisma.ActivityScalarWhereInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutActorInput>;
 };
 export type ActivityScalarWhereInput = {
-  AND?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
-  OR?: Prisma.ActivityScalarWhereInput[];
-  NOT?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
-  id?: Prisma.StringFilter<"Activity"> | string;
-  note?: Prisma.StringFilter<"Activity"> | string;
-  userId?: Prisma.StringFilter<"Activity"> | string;
-  groupId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  expenseId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  settlementId?: Prisma.StringNullableFilter<"Activity"> | string | null;
-  metadata?: Prisma.JsonNullableFilter<"Activity">;
-  createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string;
+    AND?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
+    OR?: Prisma.ActivityScalarWhereInput[];
+    NOT?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[];
+    id?: Prisma.StringFilter<"Activity"> | string;
+    note?: Prisma.StringFilter<"Activity"> | string;
+    userId?: Prisma.StringFilter<"Activity"> | string;
+    groupId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    expenseId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    settlementId?: Prisma.StringNullableFilter<"Activity"> | string | null;
+    metadata?: Prisma.JsonNullableFilter<"Activity">;
+    createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string;
 };
 export type ActivityCreateWithoutGroupInput = {
-  id?: string;
-  note: string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
-  actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
-  expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
-  settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
+    id?: string;
+    note: string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
+    actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
+    expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
+    settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
 };
 export type ActivityUncheckedCreateWithoutGroupInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityCreateOrConnectWithoutGroupInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutGroupInput,
-    Prisma.ActivityUncheckedCreateWithoutGroupInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput>;
 };
 export type ActivityCreateManyGroupInputEnvelope = {
-  data:
-    | Prisma.ActivityCreateManyGroupInput
-    | Prisma.ActivityCreateManyGroupInput[];
-  skipDuplicates?: boolean;
+    data: Prisma.ActivityCreateManyGroupInput | Prisma.ActivityCreateManyGroupInput[];
+    skipDuplicates?: boolean;
 };
 export type ActivityUpsertWithWhereUniqueWithoutGroupInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutGroupInput,
-    Prisma.ActivityUncheckedUpdateWithoutGroupInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutGroupInput,
-    Prisma.ActivityUncheckedCreateWithoutGroupInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ActivityUpdateWithoutGroupInput, Prisma.ActivityUncheckedUpdateWithoutGroupInput>;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutGroupInput, Prisma.ActivityUncheckedCreateWithoutGroupInput>;
 };
 export type ActivityUpdateWithWhereUniqueWithoutGroupInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutGroupInput,
-    Prisma.ActivityUncheckedUpdateWithoutGroupInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateWithoutGroupInput, Prisma.ActivityUncheckedUpdateWithoutGroupInput>;
 };
 export type ActivityUpdateManyWithWhereWithoutGroupInput = {
-  where: Prisma.ActivityScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyWithoutGroupInput
-  >;
+    where: Prisma.ActivityScalarWhereInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutGroupInput>;
 };
 export type ActivityCreateWithoutExpenseInput = {
-  id?: string;
-  note: string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
-  actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
-  group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
-  settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
+    id?: string;
+    note: string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
+    actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
+    group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
+    settlement?: Prisma.SettlementCreateNestedOneWithoutActivitiesInput;
 };
 export type ActivityUncheckedCreateWithoutExpenseInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityCreateOrConnectWithoutExpenseInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutExpenseInput,
-    Prisma.ActivityUncheckedCreateWithoutExpenseInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput>;
 };
 export type ActivityCreateManyExpenseInputEnvelope = {
-  data:
-    | Prisma.ActivityCreateManyExpenseInput
-    | Prisma.ActivityCreateManyExpenseInput[];
-  skipDuplicates?: boolean;
+    data: Prisma.ActivityCreateManyExpenseInput | Prisma.ActivityCreateManyExpenseInput[];
+    skipDuplicates?: boolean;
 };
 export type ActivityUpsertWithWhereUniqueWithoutExpenseInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutExpenseInput,
-    Prisma.ActivityUncheckedUpdateWithoutExpenseInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutExpenseInput,
-    Prisma.ActivityUncheckedCreateWithoutExpenseInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ActivityUpdateWithoutExpenseInput, Prisma.ActivityUncheckedUpdateWithoutExpenseInput>;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutExpenseInput, Prisma.ActivityUncheckedCreateWithoutExpenseInput>;
 };
 export type ActivityUpdateWithWhereUniqueWithoutExpenseInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutExpenseInput,
-    Prisma.ActivityUncheckedUpdateWithoutExpenseInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateWithoutExpenseInput, Prisma.ActivityUncheckedUpdateWithoutExpenseInput>;
 };
 export type ActivityUpdateManyWithWhereWithoutExpenseInput = {
-  where: Prisma.ActivityScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyWithoutExpenseInput
-  >;
+    where: Prisma.ActivityScalarWhereInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutExpenseInput>;
 };
 export type ActivityCreateWithoutSettlementInput = {
-  id?: string;
-  note: string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
-  actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
-  group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
-  expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
+    id?: string;
+    note: string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
+    actor: Prisma.UserCreateNestedOneWithoutActivitiesInput;
+    group?: Prisma.GroupCreateNestedOneWithoutActivitiesInput;
+    expense?: Prisma.ExpenseCreateNestedOneWithoutActivitiesInput;
 };
 export type ActivityUncheckedCreateWithoutSettlementInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityCreateOrConnectWithoutSettlementInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutSettlementInput,
-    Prisma.ActivityUncheckedCreateWithoutSettlementInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput>;
 };
 export type ActivityCreateManySettlementInputEnvelope = {
-  data:
-    | Prisma.ActivityCreateManySettlementInput
-    | Prisma.ActivityCreateManySettlementInput[];
-  skipDuplicates?: boolean;
+    data: Prisma.ActivityCreateManySettlementInput | Prisma.ActivityCreateManySettlementInput[];
+    skipDuplicates?: boolean;
 };
 export type ActivityUpsertWithWhereUniqueWithoutSettlementInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutSettlementInput,
-    Prisma.ActivityUncheckedUpdateWithoutSettlementInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ActivityCreateWithoutSettlementInput,
-    Prisma.ActivityUncheckedCreateWithoutSettlementInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ActivityUpdateWithoutSettlementInput, Prisma.ActivityUncheckedUpdateWithoutSettlementInput>;
+    create: Prisma.XOR<Prisma.ActivityCreateWithoutSettlementInput, Prisma.ActivityUncheckedCreateWithoutSettlementInput>;
 };
 export type ActivityUpdateWithWhereUniqueWithoutSettlementInput = {
-  where: Prisma.ActivityWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateWithoutSettlementInput,
-    Prisma.ActivityUncheckedUpdateWithoutSettlementInput
-  >;
+    where: Prisma.ActivityWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateWithoutSettlementInput, Prisma.ActivityUncheckedUpdateWithoutSettlementInput>;
 };
 export type ActivityUpdateManyWithWhereWithoutSettlementInput = {
-  where: Prisma.ActivityScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyWithoutSettlementInput
-  >;
+    where: Prisma.ActivityScalarWhereInput;
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutSettlementInput>;
 };
 export type ActivityCreateManyActorInput = {
-  id?: string;
-  note: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateWithoutActorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
-  expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
-  settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
+    expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
+    settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
 };
 export type ActivityUncheckedUpdateWithoutActorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityUncheckedUpdateManyWithoutActorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityCreateManyGroupInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  expenseId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    expenseId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
-  expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
-  settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
+    expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
+    settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
 };
 export type ActivityUncheckedUpdateWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityUncheckedUpdateManyWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityCreateManyExpenseInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  settlementId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    settlementId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
-  group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
-  settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
+    settlement?: Prisma.SettlementUpdateOneWithoutActivitiesNestedInput;
 };
 export type ActivityUncheckedUpdateWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityUncheckedUpdateManyWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  settlementId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    settlementId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityCreateManySettlementInput = {
-  id?: string;
-  note: string;
-  userId: string;
-  groupId?: string | null;
-  expenseId?: string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Date | string;
+    id?: string;
+    note: string;
+    userId: string;
+    groupId?: string | null;
+    expenseId?: string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Date | string;
 };
 export type ActivityUpdateWithoutSettlementInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
-  group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
-  expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    actor?: Prisma.UserUpdateOneRequiredWithoutActivitiesNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutActivitiesNestedInput;
+    expense?: Prisma.ExpenseUpdateOneWithoutActivitiesNestedInput;
 };
 export type ActivityUncheckedUpdateWithoutSettlementInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ActivityUncheckedUpdateManyWithoutSettlementInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  note?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    note?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    expenseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
-export type ActivitySelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = runtime.Types.Extensions.GetSelect<
-  {
+export type ActivitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     note?: boolean;
     userId?: boolean;
@@ -1162,14 +800,8 @@ export type ActivitySelect<
     group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
     expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
     settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
-  },
-  ExtArgs["result"]["activity"]
->;
-export type ActivitySelectCreateManyAndReturn<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = runtime.Types.Extensions.GetSelect<
-  {
+}, ExtArgs["result"]["activity"]>;
+export type ActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     note?: boolean;
     userId?: boolean;
@@ -1182,14 +814,8 @@ export type ActivitySelectCreateManyAndReturn<
     group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
     expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
     settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
-  },
-  ExtArgs["result"]["activity"]
->;
-export type ActivitySelectUpdateManyAndReturn<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = runtime.Types.Extensions.GetSelect<
-  {
+}, ExtArgs["result"]["activity"]>;
+export type ActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     note?: boolean;
     userId?: boolean;
@@ -1202,602 +828,373 @@ export type ActivitySelectUpdateManyAndReturn<
     group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
     expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
     settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
-  },
-  ExtArgs["result"]["activity"]
->;
+}, ExtArgs["result"]["activity"]>;
 export type ActivitySelectScalar = {
-  id?: boolean;
-  note?: boolean;
-  userId?: boolean;
-  groupId?: boolean;
-  expenseId?: boolean;
-  settlementId?: boolean;
-  metadata?: boolean;
-  createdAt?: boolean;
+    id?: boolean;
+    note?: boolean;
+    userId?: boolean;
+    groupId?: boolean;
+    expenseId?: boolean;
+    settlementId?: boolean;
+    metadata?: boolean;
+    createdAt?: boolean;
 };
-export type ActivityOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = runtime.Types.Extensions.GetOmit<
-  | "id"
-  | "note"
-  | "userId"
-  | "groupId"
-  | "expenseId"
-  | "settlementId"
-  | "metadata"
-  | "createdAt",
-  ExtArgs["result"]["activity"]
->;
-export type ActivityInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-  group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
-  expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
-  settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
+export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "note" | "userId" | "groupId" | "expenseId" | "settlementId" | "metadata" | "createdAt", ExtArgs["result"]["activity"]>;
+export type ActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
+    expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
+    settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
 };
-export type ActivityIncludeCreateManyAndReturn<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-  group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
-  expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
-  settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
+export type ActivityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
+    expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
+    settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
 };
-export type ActivityIncludeUpdateManyAndReturn<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-  group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
-  expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
-  settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
+export type ActivityIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    actor?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Activity$groupArgs<ExtArgs>;
+    expense?: boolean | Prisma.Activity$expenseArgs<ExtArgs>;
+    settlement?: boolean | Prisma.Activity$settlementArgs<ExtArgs>;
 };
-export type $ActivityPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  name: "Activity";
-  objects: {
-    actor: Prisma.$UserPayload<ExtArgs>;
-    group: Prisma.$GroupPayload<ExtArgs> | null;
-    expense: Prisma.$ExpensePayload<ExtArgs> | null;
-    settlement: Prisma.$SettlementPayload<ExtArgs> | null;
-  };
-  scalars: runtime.Types.Extensions.GetPayloadResult<
-    {
-      id: string;
-      note: string;
-      userId: string;
-      groupId: string | null;
-      expenseId: string | null;
-      settlementId: string | null;
-      metadata: runtime.JsonValue | null;
-      createdAt: Date;
-    },
-    ExtArgs["result"]["activity"]
-  >;
-  composites: {};
-};
-export type ActivityGetPayload<
-  S extends boolean | null | undefined | ActivityDefaultArgs,
-> = runtime.Types.Result.GetResult<Prisma.$ActivityPayload, S>;
-export type ActivityCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = Omit<ActivityFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
-  select?: ActivityCountAggregateInputType | true;
-};
-export interface ActivityDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {},
-> {
-  [K: symbol]: {
-    types: Prisma.TypeMap<ExtArgs>["model"]["Activity"];
-    meta: {
-      name: "Activity";
+export type $ActivityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "Activity";
+    objects: {
+        actor: Prisma.$UserPayload<ExtArgs>;
+        group: Prisma.$GroupPayload<ExtArgs> | null;
+        expense: Prisma.$ExpensePayload<ExtArgs> | null;
+        settlement: Prisma.$SettlementPayload<ExtArgs> | null;
     };
-  };
-  /**
-   * Find zero or one Activity that matches the filter.
-   * @param {ActivityFindUniqueArgs} args - Arguments to find a Activity
-   * @example
-   * // Get one Activity
-   * const activity = await prisma.activity.findUnique({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   */
-  findUnique<T extends ActivityFindUniqueArgs>(
-    args: Prisma.SelectSubset<T, ActivityFindUniqueArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "findUnique",
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Find one Activity that matches the filter or throw an error with `error.code='P2025'`
-   * if no matches were found.
-   * @param {ActivityFindUniqueOrThrowArgs} args - Arguments to find a Activity
-   * @example
-   * // Get one Activity
-   * const activity = await prisma.activity.findUniqueOrThrow({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   */
-  findUniqueOrThrow<T extends ActivityFindUniqueOrThrowArgs>(
-    args: Prisma.SelectSubset<T, ActivityFindUniqueOrThrowArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "findUniqueOrThrow",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Find the first Activity that matches the filter.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityFindFirstArgs} args - Arguments to find a Activity
-   * @example
-   * // Get one Activity
-   * const activity = await prisma.activity.findFirst({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   */
-  findFirst<T extends ActivityFindFirstArgs>(
-    args?: Prisma.SelectSubset<T, ActivityFindFirstArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "findFirst",
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Find the first Activity that matches the filter or
-   * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityFindFirstOrThrowArgs} args - Arguments to find a Activity
-   * @example
-   * // Get one Activity
-   * const activity = await prisma.activity.findFirstOrThrow({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   */
-  findFirstOrThrow<T extends ActivityFindFirstOrThrowArgs>(
-    args?: Prisma.SelectSubset<T, ActivityFindFirstOrThrowArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "findFirstOrThrow",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Find zero or more Activities that matches the filter.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityFindManyArgs} args - Arguments to filter and select certain fields only.
-   * @example
-   * // Get all Activities
-   * const activities = await prisma.activity.findMany()
-   *
-   * // Get first 10 Activities
-   * const activities = await prisma.activity.findMany({ take: 10 })
-   *
-   * // Only select the `id`
-   * const activityWithIdOnly = await prisma.activity.findMany({ select: { id: true } })
-   *
-   */
-  findMany<T extends ActivityFindManyArgs>(
-    args?: Prisma.SelectSubset<T, ActivityFindManyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "findMany",
-      GlobalOmitOptions
-    >
-  >;
-  /**
-   * Create a Activity.
-   * @param {ActivityCreateArgs} args - Arguments to create a Activity.
-   * @example
-   * // Create one Activity
-   * const Activity = await prisma.activity.create({
-   *   data: {
-   *     // ... data to create a Activity
-   *   }
-   * })
-   *
-   */
-  create<T extends ActivityCreateArgs>(
-    args: Prisma.SelectSubset<T, ActivityCreateArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "create",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Create many Activities.
-   * @param {ActivityCreateManyArgs} args - Arguments to create many Activities.
-   * @example
-   * // Create many Activities
-   * const activity = await prisma.activity.createMany({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   *
-   */
-  createMany<T extends ActivityCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, ActivityCreateManyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
-  /**
-   * Create many Activities and returns the data saved in the database.
-   * @param {ActivityCreateManyAndReturnArgs} args - Arguments to create many Activities.
-   * @example
-   * // Create many Activities
-   * const activity = await prisma.activity.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   *
-   * // Create many Activities and only return the `id`
-   * const activityWithIdOnly = await prisma.activity.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   *
-   */
-  createManyAndReturn<T extends ActivityCreateManyAndReturnArgs>(
-    args?: Prisma.SelectSubset<T, ActivityCreateManyAndReturnArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "createManyAndReturn",
-      GlobalOmitOptions
-    >
-  >;
-  /**
-   * Delete a Activity.
-   * @param {ActivityDeleteArgs} args - Arguments to delete one Activity.
-   * @example
-   * // Delete one Activity
-   * const Activity = await prisma.activity.delete({
-   *   where: {
-   *     // ... filter to delete one Activity
-   *   }
-   * })
-   *
-   */
-  delete<T extends ActivityDeleteArgs>(
-    args: Prisma.SelectSubset<T, ActivityDeleteArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "delete",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Update one Activity.
-   * @param {ActivityUpdateArgs} args - Arguments to update one Activity.
-   * @example
-   * // Update one Activity
-   * const activity = await prisma.activity.update({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: {
-   *     // ... provide data here
-   *   }
-   * })
-   *
-   */
-  update<T extends ActivityUpdateArgs>(
-    args: Prisma.SelectSubset<T, ActivityUpdateArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "update",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Delete zero or more Activities.
-   * @param {ActivityDeleteManyArgs} args - Arguments to filter Activities to delete.
-   * @example
-   * // Delete a few Activities
-   * const { count } = await prisma.activity.deleteMany({
-   *   where: {
-   *     // ... provide filter here
-   *   }
-   * })
-   *
-   */
-  deleteMany<T extends ActivityDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, ActivityDeleteManyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
-  /**
-   * Update zero or more Activities.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityUpdateManyArgs} args - Arguments to update one or more rows.
-   * @example
-   * // Update many Activities
-   * const activity = await prisma.activity.updateMany({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: {
-   *     // ... provide data here
-   *   }
-   * })
-   *
-   */
-  updateMany<T extends ActivityUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, ActivityUpdateManyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
-  /**
-   * Update zero or more Activities and returns the data updated in the database.
-   * @param {ActivityUpdateManyAndReturnArgs} args - Arguments to update many Activities.
-   * @example
-   * // Update many Activities
-   * const activity = await prisma.activity.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   *
-   * // Update zero or more Activities and only return the `id`
-   * const activityWithIdOnly = await prisma.activity.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   *
-   */
-  updateManyAndReturn<T extends ActivityUpdateManyAndReturnArgs>(
-    args: Prisma.SelectSubset<T, ActivityUpdateManyAndReturnArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "updateManyAndReturn",
-      GlobalOmitOptions
-    >
-  >;
-  /**
-   * Create or update one Activity.
-   * @param {ActivityUpsertArgs} args - Arguments to update or create a Activity.
-   * @example
-   * // Update or create a Activity
-   * const activity = await prisma.activity.upsert({
-   *   create: {
-   *     // ... data to create a Activity
-   *   },
-   *   update: {
-   *     // ... in case it already exists, update
-   *   },
-   *   where: {
-   *     // ... the filter for the Activity we want to update
-   *   }
-   * })
-   */
-  upsert<T extends ActivityUpsertArgs>(
-    args: Prisma.SelectSubset<T, ActivityUpsertArgs<ExtArgs>>,
-  ): Prisma.Prisma__ActivityClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ActivityPayload<ExtArgs>,
-      T,
-      "upsert",
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Count the number of Activities.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityCountArgs} args - Arguments to filter Activities to count.
-   * @example
-   * // Count the number of Activities
-   * const count = await prisma.activity.count({
-   *   where: {
-   *     // ... the filter for the Activities we want to count
-   *   }
-   * })
-   **/
-  count<T extends ActivityCountArgs>(
-    args?: Prisma.Subset<T, ActivityCountArgs>,
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<"select", any>
-      ? T["select"] extends true
-        ? number
-        : Prisma.GetScalarType<T["select"], ActivityCountAggregateOutputType>
-      : number
-  >;
-  /**
-   * Allows you to perform aggregations operations on a Activity.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-   * @example
-   * // Ordered by age ascending
-   * // Where email contains prisma.io
-   * // Limited to the 10 users
-   * const aggregations = await prisma.user.aggregate({
-   *   _avg: {
-   *     age: true,
-   *   },
-   *   where: {
-   *     email: {
-   *       contains: "prisma.io",
-   *     },
-   *   },
-   *   orderBy: {
-   *     age: "asc",
-   *   },
-   *   take: 10,
-   * })
-   **/
-  aggregate<T extends ActivityAggregateArgs>(
-    args: Prisma.Subset<T, ActivityAggregateArgs>,
-  ): Prisma.PrismaPromise<GetActivityAggregateType<T>>;
-  /**
-   * Group by Activity.
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * @param {ActivityGroupByArgs} args - Group by arguments.
-   * @example
-   * // Group by city, order by createdAt, get count
-   * const result = await prisma.user.groupBy({
-   *   by: ['city', 'createdAt'],
-   *   orderBy: {
-   *     createdAt: true
-   *   },
-   *   _count: {
-   *     _all: true
-   *   },
-   * })
-   *
-   **/
-  groupBy<
-    T extends ActivityGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<"skip", Prisma.Keys<T>>,
-      Prisma.Extends<"take", Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? {
-          orderBy: ActivityGroupByArgs["orderBy"];
-        }
-      : {
-          orderBy?: ActivityGroupByArgs["orderBy"];
-        },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T["orderBy"]>>
-    >,
-    ByFields extends Prisma.MaybeTupleToUnion<T["by"]>,
-    ByValid extends Prisma.Has<ByFields, OrderFields>,
-    HavingFields extends Prisma.GetHavingFields<T["having"]>,
-    HavingValid extends Prisma.Has<ByFields, HavingFields>,
-    ByEmpty extends T["by"] extends never[] ? Prisma.True : Prisma.False,
-    InputErrors extends ByEmpty extends Prisma.True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends Prisma.False
-        ? {
-            [P in HavingFields]: P extends ByFields
-              ? never
-              : P extends string
-                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-                : [
-                    Error,
-                    "Field ",
-                    P,
-                    ` in "having" needs to be provided in "by"`,
-                  ];
-          }[HavingFields]
-        : "take" extends Prisma.Keys<T>
-          ? "orderBy" extends Prisma.Keys<T>
-            ? ByValid extends Prisma.True
-              ? {}
-              : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
-                }[OrderFields]
-            : 'Error: If you provide "take", you also need to provide "orderBy"'
-          : "skip" extends Prisma.Keys<T>
-            ? "orderBy" extends Prisma.Keys<T>
-              ? ByValid extends Prisma.True
-                ? {}
-                : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
-                  }[OrderFields]
-              : 'Error: If you provide "skip", you also need to provide "orderBy"'
-            : ByValid extends Prisma.True
-              ? {}
-              : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
-                }[OrderFields],
-  >(
-    args: Prisma.SubsetIntersection<T, ActivityGroupByArgs, OrderByArg> &
-      InputErrors,
-  ): {} extends InputErrors
-    ? GetActivityGroupByPayload<T>
-    : Prisma.PrismaPromise<InputErrors>;
-  /**
-   * Fields of the Activity model
-   */
-  readonly fields: ActivityFieldRefs;
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        note: string;
+        userId: string;
+        groupId: string | null;
+        expenseId: string | null;
+        settlementId: string | null;
+        metadata: runtime.JsonValue | null;
+        createdAt: Date;
+    }, ExtArgs["result"]["activity"]>;
+    composites: {};
+};
+export type ActivityGetPayload<S extends boolean | null | undefined | ActivityDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ActivityPayload, S>;
+export type ActivityCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<ActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: ActivityCountAggregateInputType | true;
+};
+export interface ActivityDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['Activity'];
+        meta: {
+            name: 'Activity';
+        };
+    };
+    /**
+     * Find zero or one Activity that matches the filter.
+     * @param {ActivityFindUniqueArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivityFindUniqueArgs>(args: Prisma.SelectSubset<T, ActivityFindUniqueArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one Activity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivityFindUniqueOrThrowArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivityFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, ActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Activity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindFirstArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivityFindFirstArgs>(args?: Prisma.SelectSubset<T, ActivityFindFirstArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Activity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindFirstOrThrowArgs} args - Arguments to find a Activity
+     * @example
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivityFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, ActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Activities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Activities
+     * const activities = await prisma.activity.findMany()
+     *
+     * // Get first 10 Activities
+     * const activities = await prisma.activity.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const activityWithIdOnly = await prisma.activity.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends ActivityFindManyArgs>(args?: Prisma.SelectSubset<T, ActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a Activity.
+     * @param {ActivityCreateArgs} args - Arguments to create a Activity.
+     * @example
+     * // Create one Activity
+     * const Activity = await prisma.activity.create({
+     *   data: {
+     *     // ... data to create a Activity
+     *   }
+     * })
+     *
+     */
+    create<T extends ActivityCreateArgs>(args: Prisma.SelectSubset<T, ActivityCreateArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Activities.
+     * @param {ActivityCreateManyArgs} args - Arguments to create many Activities.
+     * @example
+     * // Create many Activities
+     * const activity = await prisma.activity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends ActivityCreateManyArgs>(args?: Prisma.SelectSubset<T, ActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Activities and returns the data saved in the database.
+     * @param {ActivityCreateManyAndReturnArgs} args - Arguments to create many Activities.
+     * @example
+     * // Create many Activities
+     * const activity = await prisma.activity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends ActivityCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a Activity.
+     * @param {ActivityDeleteArgs} args - Arguments to delete one Activity.
+     * @example
+     * // Delete one Activity
+     * const Activity = await prisma.activity.delete({
+     *   where: {
+     *     // ... filter to delete one Activity
+     *   }
+     * })
+     *
+     */
+    delete<T extends ActivityDeleteArgs>(args: Prisma.SelectSubset<T, ActivityDeleteArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one Activity.
+     * @param {ActivityUpdateArgs} args - Arguments to update one Activity.
+     * @example
+     * // Update one Activity
+     * const activity = await prisma.activity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends ActivityUpdateArgs>(args: Prisma.SelectSubset<T, ActivityUpdateArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Activities.
+     * @param {ActivityDeleteManyArgs} args - Arguments to filter Activities to delete.
+     * @example
+     * // Delete a few Activities
+     * const { count } = await prisma.activity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends ActivityDeleteManyArgs>(args?: Prisma.SelectSubset<T, ActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Activities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Activities
+     * const activity = await prisma.activity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends ActivityUpdateManyArgs>(args: Prisma.SelectSubset<T, ActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Activities and returns the data updated in the database.
+     * @param {ActivityUpdateManyAndReturnArgs} args - Arguments to update many Activities.
+     * @example
+     * // Update many Activities
+     * const activity = await prisma.activity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends ActivityUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ActivityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one Activity.
+     * @param {ActivityUpsertArgs} args - Arguments to update or create a Activity.
+     * @example
+     * // Update or create a Activity
+     * const activity = await prisma.activity.upsert({
+     *   create: {
+     *     // ... data to create a Activity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Activity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivityUpsertArgs>(args: Prisma.SelectSubset<T, ActivityUpsertArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Activities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityCountArgs} args - Arguments to filter Activities to count.
+     * @example
+     * // Count the number of Activities
+     * const count = await prisma.activity.count({
+     *   where: {
+     *     // ... the filter for the Activities we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivityCountArgs>(args?: Prisma.Subset<T, ActivityCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], ActivityCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a Activity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivityAggregateArgs>(args: Prisma.Subset<T, ActivityAggregateArgs>): Prisma.PrismaPromise<GetActivityAggregateType<T>>;
+    /**
+     * Group by Activity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends ActivityGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: ActivityGroupByArgs['orderBy'];
+    } : {
+        orderBy?: ActivityGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, ActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Activity model
+     */
+    readonly fields: ActivityFieldRefs;
 }
 /**
  * The delegate class that acts as a "Promise-like" for Activity.
@@ -1805,642 +1202,493 @@ export interface ActivityDelegate<
  * Because we want to prevent naming conflicts as mentioned in
  * https://github.com/prisma/prisma-client-js/issues/707
  */
-export interface Prisma__ActivityClient<
-  T,
-  Null = never,
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {},
-> extends Prisma.PrismaPromise<T> {
-  readonly [Symbol.toStringTag]: "PrismaPromise";
-  actor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__UserClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        "findUniqueOrThrow",
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  group<T extends Prisma.Activity$groupArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Activity$groupArgs<ExtArgs>>,
-  ): Prisma.Prisma__GroupClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$GroupPayload<ExtArgs>,
-      T,
-      "findUniqueOrThrow",
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  expense<T extends Prisma.Activity$expenseArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Activity$expenseArgs<ExtArgs>>,
-  ): Prisma.Prisma__ExpenseClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ExpensePayload<ExtArgs>,
-      T,
-      "findUniqueOrThrow",
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  settlement<T extends Prisma.Activity$settlementArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Activity$settlementArgs<ExtArgs>>,
-  ): Prisma.Prisma__SettlementClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$SettlementPayload<ExtArgs>,
-      T,
-      "findUniqueOrThrow",
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  /**
-   * Attaches callbacks for the resolution and/or rejection of the Promise.
-   * @param onfulfilled The callback to execute when the Promise is resolved.
-   * @param onrejected The callback to execute when the Promise is rejected.
-   * @returns A Promise for the completion of which ever callback is executed.
-   */
-  then<TResult1 = T, TResult2 = never>(
-    onfulfilled?:
-      | ((value: T) => TResult1 | PromiseLike<TResult1>)
-      | undefined
-      | null,
-    onrejected?:
-      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-      | undefined
-      | null,
-  ): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
-  /**
-   * Attaches a callback for only the rejection of the Promise.
-   * @param onrejected The callback to execute when the Promise is rejected.
-   * @returns A Promise for the completion of the callback.
-   */
-  catch<TResult = never>(
-    onrejected?:
-      | ((reason: any) => TResult | PromiseLike<TResult>)
-      | undefined
-      | null,
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
-  /**
-   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-   * resolved value cannot be modified from the callback.
-   * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-   * @returns A Promise for the completion of the callback.
-   */
-  finally(
-    onfinally?: (() => void) | undefined | null,
-  ): runtime.Types.Utils.JsPromise<T>;
+export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    actor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    group<T extends Prisma.Activity$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    expense<T extends Prisma.Activity$expenseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$expenseArgs<ExtArgs>>): Prisma.Prisma__ExpenseClient<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    settlement<T extends Prisma.Activity$settlementArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$settlementArgs<ExtArgs>>): Prisma.Prisma__SettlementClient<runtime.Types.Result.GetResult<Prisma.$SettlementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
 }
 /**
  * Fields of the Activity model
  */
 export interface ActivityFieldRefs {
-  readonly id: Prisma.FieldRef<"Activity", "String">;
-  readonly note: Prisma.FieldRef<"Activity", "String">;
-  readonly userId: Prisma.FieldRef<"Activity", "String">;
-  readonly groupId: Prisma.FieldRef<"Activity", "String">;
-  readonly expenseId: Prisma.FieldRef<"Activity", "String">;
-  readonly settlementId: Prisma.FieldRef<"Activity", "String">;
-  readonly metadata: Prisma.FieldRef<"Activity", "Json">;
-  readonly createdAt: Prisma.FieldRef<"Activity", "DateTime">;
+    readonly id: Prisma.FieldRef<"Activity", 'String'>;
+    readonly note: Prisma.FieldRef<"Activity", 'String'>;
+    readonly userId: Prisma.FieldRef<"Activity", 'String'>;
+    readonly groupId: Prisma.FieldRef<"Activity", 'String'>;
+    readonly expenseId: Prisma.FieldRef<"Activity", 'String'>;
+    readonly settlementId: Prisma.FieldRef<"Activity", 'String'>;
+    readonly metadata: Prisma.FieldRef<"Activity", 'Json'>;
+    readonly createdAt: Prisma.FieldRef<"Activity", 'DateTime'>;
 }
 /**
  * Activity findUnique
  */
-export type ActivityFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter, which Activity to fetch.
-   */
-  where: Prisma.ActivityWhereUniqueInput;
+export type ActivityFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where: Prisma.ActivityWhereUniqueInput;
 };
 /**
  * Activity findUniqueOrThrow
  */
-export type ActivityFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter, which Activity to fetch.
-   */
-  where: Prisma.ActivityWhereUniqueInput;
+export type ActivityFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where: Prisma.ActivityWhereUniqueInput;
 };
 /**
  * Activity findFirst
  */
-export type ActivityFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter, which Activity to fetch.
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-   *
-   * Determine the order of Activities to fetch.
-   */
-  orderBy?:
-    | Prisma.ActivityOrderByWithRelationInput
-    | Prisma.ActivityOrderByWithRelationInput[];
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-   *
-   * Sets the position for searching for Activities.
-   */
-  cursor?: Prisma.ActivityWhereUniqueInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Take `±n` Activities from the position of the cursor.
-   */
-  take?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Skip the first `n` Activities.
-   */
-  skip?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   *
-   * Filter by unique combinations of Activities.
-   */
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
+export type ActivityFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Activities.
+     */
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Activities.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Activities.
+     */
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
 };
 /**
  * Activity findFirstOrThrow
  */
-export type ActivityFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter, which Activity to fetch.
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-   *
-   * Determine the order of Activities to fetch.
-   */
-  orderBy?:
-    | Prisma.ActivityOrderByWithRelationInput
-    | Prisma.ActivityOrderByWithRelationInput[];
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-   *
-   * Sets the position for searching for Activities.
-   */
-  cursor?: Prisma.ActivityWhereUniqueInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Take `±n` Activities from the position of the cursor.
-   */
-  take?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Skip the first `n` Activities.
-   */
-  skip?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   *
-   * Filter by unique combinations of Activities.
-   */
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
+export type ActivityFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter, which Activity to fetch.
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Activities.
+     */
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Activities.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Activities.
+     */
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
 };
 /**
  * Activity findMany
  */
-export type ActivityFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter, which Activities to fetch.
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-   *
-   * Determine the order of Activities to fetch.
-   */
-  orderBy?:
-    | Prisma.ActivityOrderByWithRelationInput
-    | Prisma.ActivityOrderByWithRelationInput[];
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-   *
-   * Sets the position for listing Activities.
-   */
-  cursor?: Prisma.ActivityWhereUniqueInput;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Take `±n` Activities from the position of the cursor.
-   */
-  take?: number;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-   *
-   * Skip the first `n` Activities.
-   */
-  skip?: number;
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
+export type ActivityFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter, which Activities to fetch.
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Activities to fetch.
+     */
+    orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Activities.
+     */
+    cursor?: Prisma.ActivityWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Activities from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Activities.
+     */
+    skip?: number;
+    distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[];
 };
 /**
  * Activity create
  */
-export type ActivityCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * The data needed to create a Activity.
-   */
-  data: Prisma.XOR<
-    Prisma.ActivityCreateInput,
-    Prisma.ActivityUncheckedCreateInput
-  >;
+export type ActivityCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Activity.
+     */
+    data: Prisma.XOR<Prisma.ActivityCreateInput, Prisma.ActivityUncheckedCreateInput>;
 };
 /**
  * Activity createMany
  */
-export type ActivityCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * The data used to create many Activities.
-   */
-  data: Prisma.ActivityCreateManyInput | Prisma.ActivityCreateManyInput[];
-  skipDuplicates?: boolean;
+export type ActivityCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Activities.
+     */
+    data: Prisma.ActivityCreateManyInput | Prisma.ActivityCreateManyInput[];
+    skipDuplicates?: boolean;
 };
 /**
  * Activity createManyAndReturn
  */
-export type ActivityCreateManyAndReturnArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelectCreateManyAndReturn<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * The data used to create many Activities.
-   */
-  data: Prisma.ActivityCreateManyInput | Prisma.ActivityCreateManyInput[];
-  skipDuplicates?: boolean;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityIncludeCreateManyAndReturn<ExtArgs> | null;
+export type ActivityCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Activities.
+     */
+    data: Prisma.ActivityCreateManyInput | Prisma.ActivityCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Activity update
  */
-export type ActivityUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * The data needed to update a Activity.
-   */
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateInput,
-    Prisma.ActivityUncheckedUpdateInput
-  >;
-  /**
-   * Choose, which Activity to update.
-   */
-  where: Prisma.ActivityWhereUniqueInput;
+export type ActivityUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Activity.
+     */
+    data: Prisma.XOR<Prisma.ActivityUpdateInput, Prisma.ActivityUncheckedUpdateInput>;
+    /**
+     * Choose, which Activity to update.
+     */
+    where: Prisma.ActivityWhereUniqueInput;
 };
 /**
  * Activity updateMany
  */
-export type ActivityUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * The data used to update Activities.
-   */
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyInput
-  >;
-  /**
-   * Filter which Activities to update
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * Limit how many Activities to update.
-   */
-  limit?: number;
+export type ActivityUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Activities.
+     */
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyInput>;
+    /**
+     * Filter which Activities to update
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * Limit how many Activities to update.
+     */
+    limit?: number;
 };
 /**
  * Activity updateManyAndReturn
  */
-export type ActivityUpdateManyAndReturnArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelectUpdateManyAndReturn<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * The data used to update Activities.
-   */
-  data: Prisma.XOR<
-    Prisma.ActivityUpdateManyMutationInput,
-    Prisma.ActivityUncheckedUpdateManyInput
-  >;
-  /**
-   * Filter which Activities to update
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * Limit how many Activities to update.
-   */
-  limit?: number;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityIncludeUpdateManyAndReturn<ExtArgs> | null;
+export type ActivityUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * The data used to update Activities.
+     */
+    data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyInput>;
+    /**
+     * Filter which Activities to update
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * Limit how many Activities to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Activity upsert
  */
-export type ActivityUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * The filter to search for the Activity to update in case it exists.
-   */
-  where: Prisma.ActivityWhereUniqueInput;
-  /**
-   * In case the Activity found by the `where` argument doesn't exist, create a new Activity with this data.
-   */
-  create: Prisma.XOR<
-    Prisma.ActivityCreateInput,
-    Prisma.ActivityUncheckedCreateInput
-  >;
-  /**
-   * In case the Activity was found with the provided `where` argument, update it with this data.
-   */
-  update: Prisma.XOR<
-    Prisma.ActivityUpdateInput,
-    Prisma.ActivityUncheckedUpdateInput
-  >;
+export type ActivityUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Activity to update in case it exists.
+     */
+    where: Prisma.ActivityWhereUniqueInput;
+    /**
+     * In case the Activity found by the `where` argument doesn't exist, create a new Activity with this data.
+     */
+    create: Prisma.XOR<Prisma.ActivityCreateInput, Prisma.ActivityUncheckedCreateInput>;
+    /**
+     * In case the Activity was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.ActivityUpdateInput, Prisma.ActivityUncheckedUpdateInput>;
 };
 /**
  * Activity delete
  */
-export type ActivityDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
-  /**
-   * Filter which Activity to delete.
-   */
-  where: Prisma.ActivityWhereUniqueInput;
+export type ActivityDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
+    /**
+     * Filter which Activity to delete.
+     */
+    where: Prisma.ActivityWhereUniqueInput;
 };
 /**
  * Activity deleteMany
  */
-export type ActivityDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Filter which Activities to delete
-   */
-  where?: Prisma.ActivityWhereInput;
-  /**
-   * Limit how many Activities to delete.
-   */
-  limit?: number;
+export type ActivityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Activities to delete
+     */
+    where?: Prisma.ActivityWhereInput;
+    /**
+     * Limit how many Activities to delete.
+     */
+    limit?: number;
 };
 /**
  * Activity.group
  */
-export type Activity$groupArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Group
-   */
-  select?: Prisma.GroupSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Group
-   */
-  omit?: Prisma.GroupOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.GroupInclude<ExtArgs> | null;
-  where?: Prisma.GroupWhereInput;
+export type Activity$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: Prisma.GroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    where?: Prisma.GroupWhereInput;
 };
 /**
  * Activity.expense
  */
-export type Activity$expenseArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Expense
-   */
-  select?: Prisma.ExpenseSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Expense
-   */
-  omit?: Prisma.ExpenseOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ExpenseInclude<ExtArgs> | null;
-  where?: Prisma.ExpenseWhereInput;
+export type Activity$expenseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: Prisma.ExpenseSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: Prisma.ExpenseOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ExpenseInclude<ExtArgs> | null;
+    where?: Prisma.ExpenseWhereInput;
 };
 /**
  * Activity.settlement
  */
-export type Activity$settlementArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Settlement
-   */
-  select?: Prisma.SettlementSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Settlement
-   */
-  omit?: Prisma.SettlementOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SettlementInclude<ExtArgs> | null;
-  where?: Prisma.SettlementWhereInput;
+export type Activity$settlementArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Settlement
+     */
+    select?: Prisma.SettlementSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Settlement
+     */
+    omit?: Prisma.SettlementOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.SettlementInclude<ExtArgs> | null;
+    where?: Prisma.SettlementWhereInput;
 };
 /**
  * Activity without action
  */
-export type ActivityDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Activity
-   */
-  select?: Prisma.ActivitySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Activity
-   */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActivityInclude<ExtArgs> | null;
+export type ActivityDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: Prisma.ActivitySelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: Prisma.ActivityOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ActivityInclude<ExtArgs> | null;
 };
 export {};
 //# sourceMappingURL=Activity.d.ts.map

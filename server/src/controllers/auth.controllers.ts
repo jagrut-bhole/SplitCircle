@@ -55,7 +55,7 @@ export const registerController = asyncHandler(
       });
 
       const emailService = new EmailServices();
-      await emailService.sendWelcomeEmail(user.name, user.email, user.username);
+      emailService.sendWelcomeEmail(user.name, user.email, user.username);
 
       const accessToken = generateAccessToken(user.id, email);
       const refreshToken = generateRefreshToken(user.id, email);
@@ -283,7 +283,7 @@ export const changePasswordController = asyncHandler(
       });
 
       const emailService = new EmailServices();
-      await emailService.sendPasswordChangeConfirmation(user.name, user.email);
+      emailService.sendPasswordChangeConfirmation(user.name, user.email);
 
       return res.status(201).json({
         message: "Password Changed Successfully!!",
@@ -343,7 +343,7 @@ export const changeEmailController = asyncHandler(
       });
       const emailService = new EmailServices();
 
-      await emailService.sendEmailChangeNotification(
+      emailService.sendEmailChangeNotification(
         emailUpdated.name,
         user.email,
         emailUpdated.email,

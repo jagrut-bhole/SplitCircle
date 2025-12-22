@@ -88,7 +88,7 @@ export const addFriendController = asyncHandler(
       const addFriend = await userService.addFriend(userId, friendUserId);
 
       const emailService = new EmailServices();
-      await emailService.sendFriendAddedEmail(
+      emailService.sendFriendAddedEmail(
         friend?.name as string,
         friend?.email as string,
         user?.name as string,

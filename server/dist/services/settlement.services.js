@@ -1,7 +1,7 @@
-import { prisma } from '../index.js';
-import { normalizeFriendshipIds } from '../utils/friendships.utils.js';
-import { EmailServices } from './email.services.js';
-import { UserService } from './user.services.js';
+import { prisma } from "../index.js";
+import { normalizeFriendshipIds } from "../utils/friendships.utils.js";
+import { EmailServices } from "./email.services.js";
+import { UserService } from "./user.services.js";
 export class SettlementService {
     async getFriendSettlementInfo(currentUserId, friendId) {
         console.log("currentUserId: ", currentUserId);
@@ -10,9 +10,9 @@ export class SettlementService {
             where: {
                 OR: [
                     { user1Id: currentUserId, user2Id: friendId },
-                    { user1Id: friendId, user2Id: currentUserId }
-                ]
-            }
+                    { user1Id: friendId, user2Id: currentUserId },
+                ],
+            },
         });
         if (!friendship) {
             throw new Error(`You are not friends with ${friendId}`);
@@ -22,9 +22,9 @@ export class SettlementService {
             where: {
                 user1Id_user2Id: {
                     user1Id,
-                    user2Id
-                }
-            }
+                    user2Id,
+                },
+            },
         });
         if (!balance) {
             throw new Error("Balance not found");
@@ -38,14 +38,14 @@ export class SettlementService {
         }
         const friend = await prisma.user.findUnique({
             where: {
-                id: friendId
+                id: friendId,
             },
             select: {
                 id: true,
                 username: true,
                 name: true,
-                email: true
-            }
+                email: true,
+            },
         });
         let message;
         let youOwe = 0;
@@ -65,13 +65,13 @@ export class SettlementService {
             friend: {
                 id: friend.id,
                 username: friend.username,
-                name: friend.name
+                name: friend.name,
             },
             balance: actualBalance,
             message,
             youOwe,
             theyOwe,
-            isSettled: Math.abs(actualBalance) < 0.01
+            isSettled: Math.abs(actualBalance) < 0.01,
         };
     }
     async settleFriendSettlement(currentUserId, friendId, amount, note) {
@@ -84,10 +84,10 @@ export class SettlementService {
                     },
                     {
                         user1Id: friendId,
-                        user2Id: currentUserId
-                    }
-                ]
-            }
+                        user2Id: currentUserId,
+                    },
+                ],
+            },
         });
         if (!friendship) {
             throw new Error("You are not friends with this user");
@@ -97,9 +97,9 @@ export class SettlementService {
             where: {
                 user1Id_user2Id: {
                     user1Id,
-                    user2Id
-                }
-            }
+                    user2Id,
+                },
+            },
         });
         if (!balance) {
             throw new Error("Balance not found");
@@ -128,39 +128,39 @@ export class SettlementService {
         const result = await prisma.$transaction(async (tx) => {
             const settlementExpense = await tx.expense.create({
                 data: {
-                    title: isFullSettlement ? 'Full Settlement' : 'Partial Settlement',
+                    title: isFullSettlement ? "Full Settlement" : "Partial Settlement",
                     note: note || `Payment of ₹${amount}`,
                     amount: amount,
-                    currency: 'INR',
+                    currency: "INR",
                     paidById: currentUserId,
                     groupId: null,
-                    splitType: 'SETTLEMENT',
+                    splitType: "SETTLEMENT",
                     scenario: null,
                     createdById: currentUserId,
-                    date: new Date()
-                }
+                    date: new Date(),
+                },
             });
             await tx.expenseSplit.createMany({
                 data: [
                     {
                         expenseId: settlementExpense.id,
                         userId: currentUserId,
-                        amount: 0
+                        amount: 0,
                     },
                     {
                         expenseId: settlementExpense.id,
                         userId: friendId,
-                        amount: amount
-                    }
-                ]
+                        amount: amount,
+                    },
+                ],
             });
             const newBalance = await tx.balance.update({
                 where: {
                     id: balance.id,
                 },
                 data: {
-                    amount: balance.amount + balanceChange
-                }
+                    amount: balance.amount + balanceChange,
+                },
             });
             let newActualBalance = 0;
             if (currentUserId === user1Id) {
@@ -169,11 +169,14 @@ export class SettlementService {
             else {
                 newActualBalance = -newBalance.amount;
             }
-            const settlementType = isFullSettlement ? 'full' : 'partial';
+            const settlementType = isFullSettlement ? "full" : "partial";
             // Get user names for better activity messages
             const [currentUserData, friendUserData] = await Promise.all([
-                tx.user.findUnique({ where: { id: currentUserId }, select: { name: true } }),
-                tx.user.findUnique({ where: { id: friendId }, select: { name: true } })
+                tx.user.findUnique({
+                    where: { id: currentUserId },
+                    select: { name: true },
+                }),
+                tx.user.findUnique({ where: { id: friendId }, select: { name: true } }),
             ]);
             await tx.activity.create({
                 data: {
@@ -186,9 +189,9 @@ export class SettlementService {
                         note: note,
                         isFullSettlement,
                         remainingBalance: newActualBalance,
-                        settlementType: settlementType
-                    }
-                }
+                        settlementType: settlementType,
+                    },
+                },
             });
             await tx.activity.create({
                 data: {
@@ -201,58 +204,58 @@ export class SettlementService {
                         note: note,
                         isFullSettlement,
                         remainingBalance: -newActualBalance,
-                        settlementType: settlementType
-                    }
-                }
+                        settlementType: settlementType,
+                    },
+                },
             });
             return {
                 settlement: settlementExpense,
                 oldBalance: actualBalance,
                 newBalance: newActualBalance,
                 isFullSettlement,
-                remainingAmount: Math.max(0, newActualBalance)
+                remainingAmount: Math.max(0, newActualBalance),
             };
         });
         const emailService = new EmailServices();
         const [currentUser, friendUser] = await Promise.all([
             prisma.user.findUnique({
                 where: {
-                    id: currentUserId
+                    id: currentUserId,
                 },
                 select: {
                     email: true,
                     name: true,
-                    username: true
-                }
+                    username: true,
+                },
             }),
             prisma.user.findUnique({
                 where: {
-                    id: friendId
+                    id: friendId,
                 },
                 select: {
                     name: true,
                     username: true,
-                    email: true
-                }
-            })
+                    email: true,
+                },
+            }),
         ]);
-        await emailService.sendSettlementEmail({
+        emailService.sendSettlementEmail({
             name: friendUser.name,
-            email: friendUser.email
+            email: friendUser.email,
         }, {
             amount: amount,
             isGroupSettlement: false,
-            friendName: currentUser.name
+            friendName: currentUser.name,
         }, {
             name: currentUser.name,
-            username: currentUser.username
+            username: currentUser.username,
         });
         return result;
     }
     async groupSettlementInfo(currentUserId, groupId) {
         const group = await prisma.group.findUnique({
             where: {
-                id: groupId
+                id: groupId,
             },
             include: {
                 members: {
@@ -262,29 +265,29 @@ export class SettlementService {
                                 id: true,
                                 username: true,
                                 email: true,
-                                name: true
-                            }
-                        }
-                    }
+                                name: true,
+                            },
+                        },
+                    },
                 },
                 expenses: {
                     include: {
-                        splits: true
-                    }
-                }
-            }
+                        splits: true,
+                    },
+                },
+            },
         });
         if (!group) {
             throw new Error("Group not found");
         }
-        const isMember = group.members.find(m => m.userId === currentUserId);
+        const isMember = group.members.find((m) => m.userId === currentUserId);
         if (!isMember) {
             throw new Error("You are not a member of the group");
         }
         // Calculating net balance for each member
         // Include settlements - they are payments that reduce debt
         const memberBalance = new Map();
-        group.members.forEach(m => {
+        group.members.forEach((m) => {
             memberBalance.set(m.userId, 0);
         });
         for (const expense of group.expenses) {
@@ -310,10 +313,10 @@ export class SettlementService {
                         user: {
                             id: member.user.id,
                             username: member.user.username,
-                            name: member.user.name
+                            name: member.user.name,
                         },
                         youOwe: proportionalDebt,
-                        message: `You owe ${member.user.name} ₹${proportionalDebt.toFixed(2)}`
+                        message: `You owe ${member.user.name} ₹${proportionalDebt.toFixed(2)}`,
                     });
                     totalYouOwe += proportionalDebt;
                 }
@@ -324,10 +327,10 @@ export class SettlementService {
                         user: {
                             id: member.user.id,
                             username: member.user.username,
-                            name: member.user.name
+                            name: member.user.name,
                         },
                         theyOwe: proportionalDebt,
-                        message: `${member.user.name} owes you ₹${proportionalDebt.toFixed(2)}`
+                        message: `${member.user.name} owes you ₹${proportionalDebt.toFixed(2)}`,
                     });
                     totalOwedToYou += proportionalDebt;
                 }
@@ -345,12 +348,12 @@ export class SettlementService {
         return {
             group: {
                 id: group.id,
-                name: group.name
+                name: group.name,
             },
             yourDebts,
             totalYouOwe,
             totalOwedToYou,
-            netPosition: currentUserBalance
+            netPosition: currentUserBalance,
         };
     }
     async settleGroupDebt(currentUserId, groupId, recipientId, amount, note) {
@@ -358,7 +361,7 @@ export class SettlementService {
         // const recipientId = await userService.extractCurrentUserId(payToUsername);
         const info = await this.groupSettlementInfo(currentUserId, groupId);
         const recipientName = await userService.extractNameFromId(recipientId);
-        const debtToUser = info?.yourDebts.find(d => d.user.id === recipientId);
+        const debtToUser = info?.yourDebts.find((d) => d.user.id === recipientId);
         if (!debtToUser || !debtToUser.youOwe) {
             throw new Error(`You don't owe money to ${recipientName} in this group`);
         }
@@ -369,46 +372,54 @@ export class SettlementService {
             where: {
                 OR: [
                     { user1Id: currentUserId, user2Id: recipientId },
-                    { user1Id: recipientId, user2Id: currentUserId }
-                ]
-            }
+                    { user1Id: recipientId, user2Id: currentUserId },
+                ],
+            },
         });
         const isFullSettlement = Math.abs(amount - debtToUser.youOwe) < 0.01;
         const result = await prisma.$transaction(async (tx) => {
             const settlementExpense = await tx.expense.create({
                 data: {
-                    title: isFullSettlement ? 'Full Group Settlement' : 'Partial Group Settlement',
+                    title: isFullSettlement
+                        ? "Full Group Settlement"
+                        : "Partial Group Settlement",
                     note: note || `Group payment of ₹${amount}`,
                     amount: amount,
-                    currency: 'INR',
+                    currency: "INR",
                     paidById: currentUserId,
                     groupId: groupId,
-                    splitType: 'SETTLEMENT',
+                    splitType: "SETTLEMENT",
                     scenario: null,
                     createdById: currentUserId,
-                    date: new Date()
-                }
+                    date: new Date(),
+                },
             });
             await tx.expenseSplit.createMany({
                 data: [
                     {
                         expenseId: settlementExpense.id,
                         userId: currentUserId,
-                        amount: 0
+                        amount: 0,
                     },
                     {
                         expenseId: settlementExpense.id,
                         userId: recipientId,
-                        amount: amount
-                    }
-                ]
+                        amount: amount,
+                    },
+                ],
             });
             // Group settlements should NOT update friend-to-friend Balance table
             // Group balances are calculated separately from friend balances
             // Get user names for better activity messages
             const [payerData, recipientData] = await Promise.all([
-                tx.user.findUnique({ where: { id: currentUserId }, select: { name: true } }),
-                tx.user.findUnique({ where: { id: recipientId }, select: { name: true } })
+                tx.user.findUnique({
+                    where: { id: currentUserId },
+                    select: { name: true },
+                }),
+                tx.user.findUnique({
+                    where: { id: recipientId },
+                    select: { name: true },
+                }),
             ]);
             await tx.activity.create({
                 data: {
@@ -420,9 +431,9 @@ export class SettlementService {
                         amount: amount,
                         recipientId,
                         isFullSettlement,
-                        remainingDebt: debtToUser.youOwe - amount
-                    }
-                }
+                        remainingDebt: debtToUser.youOwe - amount,
+                    },
+                },
             });
             await tx.activity.create({
                 data: {
@@ -433,37 +444,37 @@ export class SettlementService {
                     metadata: {
                         amount: amount,
                         fromUserId: currentUserId,
-                        isFullSettlement
-                    }
-                }
+                        isFullSettlement,
+                    },
+                },
             });
             return {
                 settlement: settlementExpense,
                 paidTo: debtToUser.user,
                 amountPaid: amount,
                 remainingDebt: Math.max(0, debtToUser.youOwe - amount),
-                isFullSettlement
+                isFullSettlement,
             };
         });
         const emailService = new EmailServices();
         const [currentUser, group] = await Promise.all([
             prisma.user.findUnique({
                 where: { id: currentUserId },
-                select: { name: true, username: true, email: true }
+                select: { name: true, username: true, email: true },
             }),
             prisma.group.findUnique({
                 where: { id: groupId },
-                select: { name: true }
-            })
+                select: { name: true },
+            }),
         ]);
         const recipient = await prisma.user.findUnique({
             where: { id: recipientId },
-            select: { name: true, email: true }
+            select: { name: true, email: true },
         });
-        await emailService.sendSettlementEmail({ name: recipient.name, email: recipient.email }, {
+        emailService.sendSettlementEmail({ name: recipient.name, email: recipient.email }, {
             amount: amount,
             isGroupSettlement: true,
-            groupName: group.name
+            groupName: group.name,
         }, { name: currentUser.name, username: currentUser.username });
         return result;
     }

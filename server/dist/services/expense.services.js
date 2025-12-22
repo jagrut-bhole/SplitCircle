@@ -1,9 +1,9 @@
-import { prisma } from '../index.js';
+import { prisma } from "../index.js";
 import { UserService } from "../services/user.services.js";
 import { SplitType } from "../generated/prisma/enums.js";
-import { normalizeFriendshipIds } from '../utils/friendships.utils.js';
+import { normalizeFriendshipIds } from "../utils/friendships.utils.js";
 const userService = new UserService();
-import { calculateBalanceChange } from '../utils/balance.utils.js';
+import { calculateBalanceChange } from "../utils/balance.utils.js";
 export class ExpenseServices {
     async addFriendExpense(currentUserId, friendId, description, amount, date, title, scenario) {
         const friendship = await this.checkFriendshipExists(currentUserId, friendId);
@@ -12,13 +12,13 @@ export class ExpenseServices {
         }
         const { paidById, currentUserOwes, friendOwes, splitType } = this.calculateSplits(friendId, currentUserId, amount, scenario);
         const balanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes, paidById);
-        console.log('Balance calculation:', {
+        console.log("Balance calculation:", {
             currentUserId,
             friendId,
             paidById,
             currentUserOwes,
             friendOwes,
-            balanceChange
+            balanceChange,
         });
         const result = await prisma.$transaction(async (tx) => {
             const expense = await tx.expense.create({
@@ -26,27 +26,27 @@ export class ExpenseServices {
                     title,
                     note: description,
                     amount,
-                    currency: 'INR',
+                    currency: "INR",
                     date,
                     paidById,
                     createdById: currentUserId,
                     groupId: null,
-                    splitType
-                }
+                    splitType,
+                },
             });
             await tx.expenseSplit.createMany({
                 data: [
                     {
                         expenseId: expense.id,
                         userId: currentUserId,
-                        amount: currentUserOwes
+                        amount: currentUserOwes,
                     },
                     {
                         expenseId: expense.id,
                         userId: friendId,
-                        amount: friendOwes
-                    }
-                ]
+                        amount: friendOwes,
+                    },
+                ],
             });
             await this.updateBalance(currentUserId, friendId, balanceChange, tx);
             await this.createActivity(tx, expense, currentUserId);
@@ -64,35 +64,36 @@ export class ExpenseServices {
                 groupId: null,
                 splits: {
                     some: {
-                        userId: currentUserId
-                    }
-                }, AND: {
+                        userId: currentUserId,
+                    },
+                },
+                AND: {
                     splits: {
                         some: {
-                            userId: friendId
-                        }
-                    }
-                }
-            }
+                            userId: friendId,
+                        },
+                    },
+                },
+            },
         });
         const expense = await prisma.expense.findMany({
             where: {
                 groupId: null,
                 splits: {
                     some: {
-                        userId: currentUserId
-                    }
+                        userId: currentUserId,
+                    },
                 },
                 AND: {
                     splits: {
                         some: {
-                            userId: friendId
-                        }
-                    }
-                }
+                            userId: friendId,
+                        },
+                    },
+                },
             },
             orderBy: {
-                date: 'desc'
+                date: "desc",
             },
             include: {
                 paidBy: {
@@ -100,7 +101,7 @@ export class ExpenseServices {
                         id: true,
                         username: true,
                         name: true,
-                    }
+                    },
                 },
                 splits: {
                     include: {
@@ -108,16 +109,16 @@ export class ExpenseServices {
                             select: {
                                 id: true,
                                 username: true,
-                                name: true
-                            }
-                        }
-                    }
-                }
+                                name: true,
+                            },
+                        },
+                    },
+                },
             },
         });
         return {
             count: totalCount,
-            data: expense
+            data: expense,
         };
     }
     async friendSingleExpenseDetail(expenseId, currentUserId) {
@@ -126,33 +127,33 @@ export class ExpenseServices {
                 id: expenseId,
                 OR: [
                     {
-                        paidById: currentUserId
+                        paidById: currentUserId,
                     },
                     {
-                        createdById: currentUserId
-                    }
+                        createdById: currentUserId,
+                    },
                 ],
                 splits: {
                     some: {
-                        userId: currentUserId
-                    }
-                }
-            }
+                        userId: currentUserId,
+                    },
+                },
+            },
         });
         if (!user) {
             throw new Error("You Don't have access in the expense!!");
         }
         const expense = await prisma.expense.findMany({
             where: {
-                id: expenseId
+                id: expenseId,
             },
             include: {
                 paidBy: {
                     select: {
                         id: true,
                         username: true,
-                        name: true
-                    }
+                        name: true,
+                    },
                 },
                 splits: {
                     include: {
@@ -160,10 +161,10 @@ export class ExpenseServices {
                             select: {
                                 id: true,
                                 username: true,
-                                email: true
-                            }
-                        }
-                    }
+                                email: true,
+                            },
+                        },
+                    },
                 },
                 group: {
                     select: {
@@ -171,37 +172,38 @@ export class ExpenseServices {
                         name: true,
                         description: true,
                         createdAt: true,
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
         return {
-            expense
+            expense,
         };
     }
     async updateFriendExpense(currentUserId, expenseId, updates) {
         const expense = await prisma.expense.findUnique({
             where: {
-                id: expenseId
-            }, include: {
+                id: expenseId,
+            },
+            include: {
                 splits: {
                     select: {
                         id: true,
                         expenseId: true,
                         userId: true,
-                        amount: true
-                    }
+                        amount: true,
+                    },
                 },
                 paidBy: {
                     select: {
                         id: true,
                         name: true,
-                        username: true
-                    }
-                }
-            }
+                        username: true,
+                    },
+                },
+            },
         });
-        const userSplit = expense?.splits.find(s => s.userId === currentUserId);
+        const userSplit = expense?.splits.find((s) => s.userId === currentUserId);
         if (!userSplit) {
             throw new Error("You don\'t have access to this expense");
         }
@@ -219,8 +221,8 @@ export class ExpenseServices {
         const user1Id = split1.userId;
         const user2Id = split2.userId;
         const friendId = user1Id === currentUserId ? user2Id : user1Id;
-        const currentUserOldOwes = expense.splits.find(s => s.userId === currentUserId).amount;
-        const friendOldOwes = expense.splits.find(s => s.userId === friendId).amount;
+        const currentUserOldOwes = expense.splits.find((s) => s.userId === currentUserId).amount;
+        const friendOldOwes = expense.splits.find((s) => s.userId === friendId).amount;
         const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOldOwes, friendOldOwes, expense.paidById);
         const newAmount = updates.amount ?? expense.amount;
         const newDescription = updates.description ?? expense.note;
@@ -237,7 +239,7 @@ export class ExpenseServices {
         const result = await prisma.$transaction(async (tx) => {
             const updateExpense = await tx.expense.update({
                 where: {
-                    id: expenseId
+                    id: expenseId,
                 },
                 data: {
                     note: newDescription,
@@ -245,46 +247,47 @@ export class ExpenseServices {
                     title: newTitle,
                     paidById,
                     splitType,
-                }
+                },
             });
             await tx.expenseSplit.deleteMany({
                 where: {
-                    expenseId
-                }
+                    expenseId,
+                },
             });
             await tx.expenseSplit.createMany({
                 data: [
                     {
                         expenseId,
                         userId: currentUserId,
-                        amount: currentUserOwes
+                        amount: currentUserOwes,
                     },
                     {
                         expenseId,
                         userId: friendId,
-                        amount: friendOwes
-                    }
-                ]
+                        amount: friendOwes,
+                    },
+                ],
             });
             if (netBalanceChange !== 0) {
                 const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, friendId);
                 const balance = await tx.balance.findUnique({
                     where: {
                         user1Id_user2Id: {
-                            user1Id, user2Id
-                        }
-                    }
+                            user1Id,
+                            user2Id,
+                        },
+                    },
                 });
                 if (!balance) {
                     throw new Error("Balance Not Found!!");
                 }
                 await tx.balance.update({
                     where: {
-                        id: balance.id
+                        id: balance.id,
                     },
                     data: {
-                        amount: balance.amount + netBalanceChange
-                    }
+                        amount: balance.amount + netBalanceChange,
+                    },
                 });
                 await tx.activity.create({
                     data: {
@@ -296,43 +299,43 @@ export class ExpenseServices {
                                 description: expense.note,
                                 title: expense.title,
                                 amount: expense.amount,
-                                splitType: expense.splitType
+                                splitType: expense.splitType,
                             },
                             newValues: {
                                 description: newDescription,
                                 title: newTitle,
                                 amount: newAmount,
-                                splitType
-                            }
-                        }
-                    }
+                                splitType,
+                            },
+                        },
+                    },
                 });
             }
             return {
-                updateExpense
+                updateExpense,
             };
         });
         return {
-            result
+            result,
         };
     }
     async deleteFriendExpense(currentUserId, expenseId) {
         const expense = await prisma.expense.findUnique({
             where: {
-                id: expenseId
+                id: expenseId,
             },
             include: {
                 splits: true,
-                paidBy: true
-            }
+                paidBy: true,
+            },
         });
         if (!expense) {
             throw new Error("Expense not found");
         }
         if (expense.groupId !== null) {
-            throw new Error('Cannot delete group expense with this endpoint');
+            throw new Error("Cannot delete group expense with this endpoint");
         }
-        const userThere = expense?.splits.find(s => s.userId === currentUserId);
+        const userThere = expense?.splits.find((s) => s.userId === currentUserId);
         if (!userThere) {
             throw new Error("you can\'t delete this expense");
         }
@@ -340,8 +343,8 @@ export class ExpenseServices {
         const user1Id = split1.userId;
         const user2Id = split2.userId;
         const friendId = user1Id === currentUserId ? user2Id : user1Id;
-        const currentUserOwes = expense.splits.find(s => s.userId === currentUserId).amount;
-        const friendOwes = expense.splits.find(s => s.userId === friendId).amount;
+        const currentUserOwes = expense.splits.find((s) => s.userId === currentUserId).amount;
+        const friendOwes = expense.splits.find((s) => s.userId === friendId).amount;
         const oldBalanceChange = calculateBalanceChange(currentUserId, friendId, currentUserOwes, friendOwes, expense.paidById);
         const deletedExpenseDetails = {
             note: expense.note,
@@ -351,7 +354,7 @@ export class ExpenseServices {
             paidById: expense.paidById,
             splitType: expense.splitType,
             currentUserOwed: currentUserOwes,
-            friendOwed: friendOwes
+            friendOwed: friendOwes,
         };
         const result = await prisma.$transaction(async (tx) => {
             const { user1Id, user2Id } = normalizeFriendshipIds(currentUserId, friendId);
@@ -359,49 +362,49 @@ export class ExpenseServices {
                 where: {
                     user1Id_user2Id: {
                         user1Id,
-                        user2Id
-                    }
-                }
+                        user2Id,
+                    },
+                },
             });
             if (!balance) {
-                throw new Error('Balance record not found');
+                throw new Error("Balance record not found");
             }
             await tx.balance.update({
                 where: {
-                    id: balance.id
+                    id: balance.id,
                 },
                 data: {
-                    amount: balance.amount - oldBalanceChange
-                }
+                    amount: balance.amount - oldBalanceChange,
+                },
             });
             // deleting the expense
             await tx.expenseSplit.deleteMany({
                 where: {
-                    expenseId: expenseId
-                }
+                    expenseId: expenseId,
+                },
             });
             // delete the expense
             await tx.expense.delete({
                 where: {
-                    id: expenseId
-                }
+                    id: expenseId,
+                },
             });
             await tx.activity.create({
                 data: {
                     note: `Deleted expense: ${deletedExpenseDetails}`,
                     userId: currentUserId,
                     metadata: {
-                        deletedExpense: deletedExpenseDetails
-                    }
-                }
+                        deletedExpense: deletedExpenseDetails,
+                    },
+                },
             });
             return {
                 success: true,
-                deletedExpense: deletedExpenseDetails
+                deletedExpense: deletedExpenseDetails,
             };
         });
         return {
-            expense
+            expense,
         };
     }
     // methods
@@ -437,7 +440,7 @@ export class ExpenseServices {
                 splitType = SplitType.UNEQUAL;
                 break;
             default:
-                throw new Error('Invalid Scenario');
+                throw new Error("Invalid Scenario");
         }
         return { paidById, currentUserOwes, friendOwes, splitType };
     }
@@ -446,9 +449,9 @@ export class ExpenseServices {
             where: {
                 OR: [
                     { user1Id: user1, user2Id: user2 },
-                    { user1Id: user2, user2Id: user1 }
-                ]
-            }
+                    { user1Id: user2, user2Id: user1 },
+                ],
+            },
         });
         return friendship;
     }
@@ -458,18 +461,18 @@ export class ExpenseServices {
             where: {
                 user1Id_user2Id: {
                     user1Id,
-                    user2Id
-                }
-            }
+                    user2Id,
+                },
+            },
         });
-        console.log('Update balance:', {
+        console.log("Update balance:", {
             userId1,
             userId2,
             user1Id,
             user2Id,
             change,
             existingBalance: balance?.amount,
-            newBalance: balance ? balance.amount + change : change
+            newBalance: balance ? balance.amount + change : change,
         });
         if (!balance) {
             // Create the balance record if it doesn't exist
@@ -477,19 +480,19 @@ export class ExpenseServices {
                 data: {
                     user1Id,
                     user2Id,
-                    amount: change
-                }
+                    amount: change,
+                },
             });
         }
         else {
             // Update existing balance
             await tx.balance.update({
                 where: {
-                    id: balance.id
+                    id: balance.id,
                 },
                 data: {
-                    amount: balance.amount + change
-                }
+                    amount: balance.amount + change,
+                },
             });
         }
     }
@@ -500,9 +503,9 @@ export class ExpenseServices {
                 userId,
                 expenseId: expense.id,
                 metadata: {
-                    amount: expense.amount
-                }
-            }
+                    amount: expense.amount,
+                },
+            },
         });
     }
 }

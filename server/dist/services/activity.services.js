@@ -1,4 +1,4 @@
-import { prisma } from '../index.js';
+import { prisma } from "../index.js";
 export class ActivityService {
     async getUserActivities(userId, limit = 20) {
         try {
@@ -12,19 +12,16 @@ export class ActivityService {
                             group: {
                                 members: {
                                     some: {
-                                        userId: userId
-                                    }
-                                }
-                            }
+                                        userId: userId,
+                                    },
+                                },
+                            },
                         },
                         {
                             // Settlement activities where user is involved
                             settlement: {
-                                OR: [
-                                    { paidById: userId },
-                                    { paidToId: userId }
-                                ]
-                            }
+                                OR: [{ paidById: userId }, { paidToId: userId }],
+                            },
                         },
                         {
                             // Expense activities where user is involved
@@ -34,28 +31,28 @@ export class ActivityService {
                                     {
                                         splits: {
                                             some: {
-                                                userId: userId
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
+                                                userId: userId,
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
                 },
                 include: {
                     actor: {
                         select: {
                             id: true,
                             name: true,
-                            email: true
-                        }
+                            email: true,
+                        },
                     },
                     group: {
                         select: {
                             id: true,
-                            name: true
-                        }
+                            name: true,
+                        },
                     },
                     expense: {
                         select: {
@@ -67,8 +64,8 @@ export class ActivityService {
                             paidBy: {
                                 select: {
                                     id: true,
-                                    name: true
-                                }
+                                    name: true,
+                                },
                             },
                             splits: {
                                 select: {
@@ -77,12 +74,12 @@ export class ActivityService {
                                     user: {
                                         select: {
                                             id: true,
-                                            name: true
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                            name: true,
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                     settlement: {
                         select: {
@@ -92,23 +89,23 @@ export class ActivityService {
                             paidBy: {
                                 select: {
                                     id: true,
-                                    name: true
-                                }
+                                    name: true,
+                                },
                             },
                             paidTo: {
                                 select: {
                                     id: true,
-                                    name: true
-                                }
-                            }
-                        }
-                    }
+                                    name: true,
+                                },
+                            },
+                        },
+                    },
                 },
                 orderBy: {
-                    createdAt: 'desc'
+                    createdAt: "desc",
                 },
                 take: limit,
-                distinct: ['id'] // Avoid duplicates from multiple OR conditions
+                distinct: ["id"], // Avoid duplicates from multiple OR conditions
             });
             // Format activities with proper messages and "You" substitution
             const formattedActivities = activities.map((activity) => {
@@ -116,25 +113,23 @@ export class ActivityService {
                 // Handle settlement activities specifically
                 if (activity.settlement) {
                     const paidByName = activity.settlement.paidBy.id === userId
-                        ? 'You'
+                        ? "You"
                         : activity.settlement.paidBy.name;
                     const paidToName = activity.settlement.paidTo.id === userId
-                        ? 'You'
+                        ? "You"
                         : activity.settlement.paidTo.name;
                     formattedNote = `${paidByName} paid ${paidToName}: ₹${activity.settlement.amount.toFixed(2)}`;
                 }
                 // Handle expense activities
                 else if (activity.expense) {
                     const paidByName = activity.expense.paidBy.id === userId
-                        ? 'You'
+                        ? "You"
                         : activity.expense.paidBy.name;
-                    if (activity.expense.splitType === 'SETTLEMENT') {
+                    if (activity.expense.splitType === "SETTLEMENT") {
                         // This is a settlement recorded as an expense
-                        const recipient = activity.expense.splits.find(s => s.amount > 0);
+                        const recipient = activity.expense.splits.find((s) => s.amount > 0);
                         if (recipient) {
-                            const recipientName = recipient.userId === userId
-                                ? 'You'
-                                : recipient.user.name;
+                            const recipientName = recipient.userId === userId ? "You" : recipient.user.name;
                             formattedNote = `${paidByName} paid ${recipientName}: ₹${activity.expense.amount.toFixed(2)}`;
                         }
                     }
@@ -146,8 +141,10 @@ export class ActivityService {
                 // Handle other activities - replace actor name with "You" if it's the current user
                 else {
                     const activityActor = activity.actor;
-                    if (activityActor && activityActor.id === userId && activityActor.name) {
-                        formattedNote = formattedNote.replace(activityActor.name, 'You');
+                    if (activityActor &&
+                        activityActor.id === userId &&
+                        activityActor.name) {
+                        formattedNote = formattedNote.replace(activityActor.name, "You");
                     }
                 }
                 return {
@@ -162,14 +159,14 @@ export class ActivityService {
                     actor: activity.actor,
                     group: activity.group,
                     expense: activity.expense,
-                    settlement: activity.settlement
+                    settlement: activity.settlement,
                 };
             });
             return formattedActivities;
         }
         catch (error) {
-            console.error('Error fetching user activities:', error);
-            throw new Error('Failed to fetch user activities');
+            console.error("Error fetching user activities:", error);
+            throw new Error("Failed to fetch user activities");
         }
     }
 }

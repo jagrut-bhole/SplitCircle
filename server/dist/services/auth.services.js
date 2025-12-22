@@ -14,9 +14,10 @@ export function generateAccessToken(userId, email) {
     }
     //@ts-ignore
     return jwt.sign({
-        userId, email
+        userId,
+        email,
     }, secret, {
-        expiresIn: expiry
+        expiresIn: expiry,
     });
 }
 export function generateRefreshToken(userId, email) {
@@ -27,9 +28,10 @@ export function generateRefreshToken(userId, email) {
     }
     //@ts-ignore
     return jwt.sign({
-        userId, email
+        userId,
+        email,
     }, secret, {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
 }
 //# sourceMappingURL=auth.services.js.map

@@ -9,61 +9,61 @@ export const addFriendExpenseController = asyncHandler(async (req, res) => {
         if (!username || !amount || !description || !scenario || !title) {
             return res.status(400).json({
                 message: "Missing required fields",
-                success: false
+                success: false,
             });
         }
         if (amount < 0) {
             return res.status(400).json({
                 message: "Please provide the amount.",
-                success: false
+                success: false,
             });
         }
         if (title.length === 0 || title.length > 20) {
             return res.status(400).json({
                 message: "Title cannot be empty and must be under 20 characters!!",
-                success: false
+                success: false,
             });
         }
         if (description.length === 0 || description.length > 50) {
             return res.status(400).json({
                 message: "Description cannot be empty and must be under 50 characters!!",
-                success: false
+                success: false,
             });
         }
         console.log("Received scenario:", scenario);
-        const friendId = await userService.extractCurrentUserId(username);
+        const friendId = (await userService.extractCurrentUserId(username));
         const currentUserId = req.user?.id;
         const DATE = new Date();
         const expense = await expenseServices.addFriendExpense(currentUserId, friendId, description, amount, DATE, title, scenario);
         return res.status(201).json({
             success: true,
             data: expense,
-            message: 'Expense added successfully'
+            message: "Expense added successfully",
         });
     }
     catch (error) {
         console.log("Error: ", error.message);
-        if (error.member === 'Not friends with the user!!') {
+        if (error.member === "Not friends with the user!!") {
             return res.status(400).json({
                 message: "Not friends with the user!!",
-                success: false
+                success: false,
             });
         }
-        if (error.member === 'Invalid Scenario') {
+        if (error.member === "Invalid Scenario") {
             return res.status(400).json({
                 message: "Invalid Scenario",
-                success: false
+                success: false,
             });
         }
-        if (error.member === 'IBalance not found!!') {
+        if (error.member === "IBalance not found!!") {
             return res.status(400).json({
                 message: "Balance not found!!",
-                success: false
+                success: false,
             });
         }
         return res.status(500).json({
             message: "Error while adding the expense",
-            success: false
+            success: false,
         });
     }
 });
@@ -72,16 +72,16 @@ export const friendExpenseListController = asyncHandler(async (req, res) => {
         const friendId = req.params.friendId;
         if (!friendId) {
             return res.status(401).json({
-                message: "Friend Id not found!!"
+                message: "Friend Id not found!!",
             });
         }
         const currentUserId = req.user?.id;
         const result = await expenseServices.friendExpenseList(currentUserId, friendId);
         return res.status(200).json({
-            message: 'Friend Expense Feteched SuccessFully!!',
+            message: "Friend Expense Feteched SuccessFully!!",
             success: true,
             data: result.data,
-            count: result.count
+            count: result.count,
         });
     }
     catch (error) {
@@ -89,12 +89,12 @@ export const friendExpenseListController = asyncHandler(async (req, res) => {
         if (error.message === "Not friends with the user!!") {
             return res.status(401).json({
                 message: "Not friends with the user!!",
-                success: true
+                success: true,
             });
         }
         return res.status(500).json({
             message: "Failed to fetch the friends expenses",
-            success: true
+            success: true,
         });
     }
 });
@@ -106,7 +106,7 @@ export const singleExpenseDetailController = asyncHandler(async (req, res) => {
         return res.status(200).json({
             message: "Expense Detail feched SuccessFully!!",
             success: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
@@ -114,12 +114,12 @@ export const singleExpenseDetailController = asyncHandler(async (req, res) => {
         if (error.message === "You Don't have access in the expense!!") {
             return res.status(403).json({
                 message: "You Don't have access in the expense!!",
-                success: false
+                success: false,
             });
         }
         return res.status(500).json({
             message: "Can't fetched the Expense Detail, Server Error",
-            success: false
+            success: false,
         });
     }
 });
@@ -131,32 +131,32 @@ export const updateFriendExpenseController = asyncHandler(async (req, res) => {
         if (amount !== undefined && amount <= 0) {
             return res.status(400).json({
                 success: false,
-                message: 'Amount must be greater than 0'
+                message: "Amount must be greater than 0",
             });
         }
         const validScenarios = [
-            'I_PAID_SPLIT_EQUAL',
-            'I_OWED_FULL',
-            'FRIEND_PAID_SPLIT_EQUAL',
-            'FRIEND_OWED_FULL'
+            "I_PAID_SPLIT_EQUAL",
+            "I_OWED_FULL",
+            "FRIEND_PAID_SPLIT_EQUAL",
+            "FRIEND_OWED_FULL",
         ];
         if (scenario && !validScenarios.includes(scenario)) {
             return res.status(400).json({
                 success: false,
-                message: 'Invalid scenario'
+                message: "Invalid scenario",
             });
         }
         const updates = {
             title,
             description,
             amount,
-            scenario
+            scenario,
         };
         const expense = await expenseServices.updateFriendExpense(currentUserId, expenseId, updates);
         return res.status(200).json({
             message: "Expense Updated SuccessFully!!",
             success: true,
-            data: expense
+            data: expense,
         });
     }
     catch (error) {
@@ -164,30 +164,30 @@ export const updateFriendExpenseController = asyncHandler(async (req, res) => {
         if (error.message === "You don\'t have access to this expense") {
             return res.status(403).json({
                 message: "You don\'t have access to this expense",
-                success: false
+                success: false,
             });
         }
         if (error.message === "This is a group expense") {
             return res.status(400).json({
                 message: "This is a group expense",
-                success: false
+                success: false,
             });
         }
         if (error.message === "No changes to update") {
             return res.status(400).json({
                 message: "No changes to update",
-                success: false
+                success: false,
             });
         }
         if (error.message === "Balance Not Found!!") {
             return res.status(400).json({
                 message: "Balance Not Found!!",
-                success: false
+                success: false,
             });
         }
         return res.status(500).json({
             message: "Can't fetched the Expense Detail, Server Error",
-            success: false
+            success: false,
         });
     }
 });
@@ -198,14 +198,14 @@ export const deleteFriendExpenseController = asyncHandler(async (req, res) => {
         if (!currentUserId) {
             return res.status(401).json({
                 success: false,
-                message: 'Unauthorized'
+                message: "Unauthorized",
             });
         }
         const expense = await expenseServices.deleteFriendExpense(currentUserId, expenseId);
         return res.status(200).json({
             message: "Expense Deleted SuccessFully!!",
             success: true,
-            data: expense
+            data: expense,
         });
     }
     catch (error) {
@@ -213,36 +213,36 @@ export const deleteFriendExpenseController = asyncHandler(async (req, res) => {
         if (error.message === "Balance record not found") {
             return res.status(403).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         if (error.message === "Cannot delete group expense with this endpoint") {
             return res.status(400).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         if (error.message === "Expense not found") {
             return res.status(400).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         if (error.message === "You can\'t delete this expense") {
             return res.status(400).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         if (error.message === "Balance Not Found!!") {
             return res.status(400).json({
                 message: error.message,
-                success: false
+                success: false,
             });
         }
         return res.status(500).json({
             message: "Can't fetched the Expense Detail, Server Error",
-            success: false
+            success: false,
         });
     }
 });

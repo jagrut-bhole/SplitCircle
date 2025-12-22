@@ -1,1 +1,1 @@
-{"version":3,"file":"settlement.routes.d.ts","sourceRoot":"","sources":["../../src/routes/settlement.routes.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,SAAS,CAAC;AASjC,QAAA,MAAM,gBAAgB,EAAC,MAAiB,CAAC;AAOzC,OAAO,EAAC,gBAAgB,EAAC,CAAC"}
+{"version":3,"file":"settlement.routes.d.ts","sourceRoot":"","sources":["../../src/routes/settlement.routes.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,SAAS,CAAC;AASjC,QAAA,MAAM,gBAAgB,EAAE,MAAiB,CAAC;AAuB1C,OAAO,EAAE,gBAAgB,EAAE,CAAC"}

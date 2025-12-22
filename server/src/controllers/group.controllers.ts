@@ -170,7 +170,7 @@ export const addMemberController = asyncHandler(
       );
 
       const emailService = new EmailServices();
-      await emailService.sendGroupInviteEmail(
+      emailService.sendGroupInviteEmail(
         currentFriend.user.name,
         currentFriend.user.email,
         group?.name as string,

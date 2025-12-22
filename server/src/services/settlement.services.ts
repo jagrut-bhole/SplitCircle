@@ -280,7 +280,7 @@ export class SettlementService {
       }),
     ]);
 
-    await emailService.sendSettlementEmail(
+    emailService.sendSettlementEmail(
       {
         name: friendUser!.name,
         email: friendUser!.email,
@@ -568,7 +568,7 @@ export class SettlementService {
       select: { name: true, email: true },
     });
 
-    await emailService.sendSettlementEmail(
+    emailService.sendSettlementEmail(
       { name: recipient!.name, email: recipient!.email },
       {
         amount: amount,

@@ -4,8 +4,8 @@ export class UserService {
     async extractCurrentUserId(username) {
         const user = await prisma.user.findUnique({
             where: {
-                username
-            }
+                username,
+            },
         });
         if (!user) {
             throw new Error(`User with username "${username}" not found`);
@@ -16,35 +16,35 @@ export class UserService {
         const users = await prisma.user.findMany({
             where: {
                 username: {
-                    in: usernames
-                }
+                    in: usernames,
+                },
             },
             select: {
                 id: true,
-                username: true
-            }
+                username: true,
+            },
         });
         const usernameToIdMap = new Map();
-        users.forEach(user => {
+        users.forEach((user) => {
             usernameToIdMap.set(user.username, user.id);
         });
-        const notFound = usernames.filter(username => !usernameToIdMap.has(username));
+        const notFound = usernames.filter((username) => !usernameToIdMap.has(username));
         if (notFound.length > 0) {
-            throw new Error(`Users not found: ${notFound.join(', ')}`);
+            throw new Error(`Users not found: ${notFound.join(", ")}`);
         }
         return usernameToIdMap;
     }
     async searchUserByUsername(friendUsername, currentUserId) {
         const user = await prisma.user.findUnique({
             where: {
-                username: friendUsername.trim()
+                username: friendUsername.trim(),
             },
             select: {
                 id: true,
                 name: true,
                 email: true,
-                username: true
-            }
+                username: true,
+            },
         });
         if (!user) {
             return null;
@@ -53,7 +53,7 @@ export class UserService {
             return null;
         }
         return {
-            user
+            user,
         };
     }
     async checkFriendshipExists(userId1, userId2) {
@@ -62,19 +62,19 @@ export class UserService {
             where: {
                 user1Id_user2Id: {
                     user1Id,
-                    user2Id
-                }
-            }
+                    user2Id,
+                },
+            },
         });
         if (friendship) {
             return {
                 exists: true,
-                friendship
+                friendship,
             };
         }
         return {
             exists: false,
-            friendship: null
+            friendship: null,
         };
     }
     async addFriend(currentUserId, friendUserId) {
@@ -88,12 +88,9 @@ export class UserService {
         const users = await prisma.user.findMany({
             where: {
                 id: {
-                    in: [
-                        currentUserId,
-                        friendUserId
-                    ]
-                }
-            }
+                    in: [currentUserId, friendUserId],
+                },
+            },
         });
         if (users.length !== 2) {
             throw new Error("One or both users do not exists");
@@ -103,30 +100,27 @@ export class UserService {
             prisma.friendship.create({
                 data: {
                     user1Id,
-                    user2Id
+                    user2Id,
                 },
             }),
             prisma.balance.create({
                 data: {
                     user1Id,
                     user2Id,
-                    amount: 0
-                }
-            })
+                    amount: 0,
+                },
+            }),
         ]);
         return {
             message: "Friend added successfully",
             friendship,
-            balance
+            balance,
         };
     }
     async getAllFriends(currentUserId) {
         const friendship = await prisma.friendship.findMany({
             where: {
-                OR: [
-                    { user1Id: currentUserId },
-                    { user2Id: currentUserId }
-                ]
+                OR: [{ user1Id: currentUserId }, { user2Id: currentUserId }],
             },
             include: {
                 user1: {
@@ -134,18 +128,18 @@ export class UserService {
                         id: true,
                         username: true,
                         name: true,
-                        email: true
-                    }
+                        email: true,
+                    },
                 },
                 user2: {
                     select: {
                         id: true,
                         username: true,
                         name: true,
-                        email: true
-                    }
-                }
-            }
+                        email: true,
+                    },
+                },
+            },
         });
         if (friendship.length === 0) {
             return {
@@ -153,8 +147,8 @@ export class UserService {
                 summary: {
                     totalFriends: 0,
                     youOwe: 0,
-                    youAreOwed: 0
-                }
+                    youAreOwed: 0,
+                },
             };
         }
         // Calculate balances from actual friend-to-friend expenses (groupId = null)
@@ -172,26 +166,26 @@ export class UserService {
                     groupId: null, // Only friend-to-friend expenses
                     splits: {
                         some: {
-                            userId: currentUserId
-                        }
+                            userId: currentUserId,
+                        },
                     },
                     AND: {
                         splits: {
                             some: {
-                                userId: friendId
-                            }
-                        }
-                    }
+                                userId: friendId,
+                            },
+                        },
+                    },
                 },
                 include: {
-                    splits: true
-                }
+                    splits: true,
+                },
             });
             // Calculate balance for this friend
             let finalBalance = 0;
             for (const expense of expenses) {
-                const currentUserSplit = expense.splits.find(s => s.userId === currentUserId);
-                const friendSplit = expense.splits.find(s => s.userId === friendId);
+                const currentUserSplit = expense.splits.find((s) => s.userId === currentUserId);
+                const friendSplit = expense.splits.find((s) => s.userId === friendId);
                 if (currentUserSplit && friendSplit) {
                     const currentUserPaid = expense.paidById === currentUserId ? expense.amount : 0;
                     const currentUserOwed = currentUserSplit.amount;
@@ -210,32 +204,32 @@ export class UserService {
                 username: friend.username,
                 email: friend.email,
                 balance: finalBalance,
-                friendshipCreatedAt: f.createdAt
+                friendshipCreatedAt: f.createdAt,
             });
         }
         const summary = {
             totalFriends: friendList.length,
             youOwe,
-            youAreOwed
+            youAreOwed,
         };
         return {
             friends: friendList,
-            summary
+            summary,
         };
     }
     async extractNameFromId(userId) {
         const user = await prisma.user.findUnique({
             where: {
-                id: userId
-            }
+                id: userId,
+            },
         });
         return user?.name;
     }
     async getUserDetails(userId) {
         const user = await prisma.user.findUnique({
             where: {
-                id: userId
-            }
+                id: userId,
+            },
         });
         if (!user) {
             throw new Error("User not found!!");
@@ -249,24 +243,24 @@ export class UserService {
             where: {
                 splits: {
                     some: {
-                        userId: userId
-                    }
-                }
+                        userId: userId,
+                    },
+                },
             },
             include: {
                 splits: {
                     include: {
-                        user: true
-                    }
+                        user: true,
+                    },
                 },
-                paidBy: true
-            }
+                paidBy: true,
+            },
         });
         let totalOwedToUser = 0;
         let totalUserOwes = 0;
         for (const expense of expenses) {
             // Find current user's split
-            const userSplit = expense.splits.find(s => s.userId === userId);
+            const userSplit = expense.splits.find((s) => s.userId === userId);
             if (!userSplit)
                 continue;
             const userOwed = userSplit.amount;
@@ -282,13 +276,13 @@ export class UserService {
         }
         return {
             totalOwedToUser,
-            totalUserOwes
+            totalUserOwes,
         };
     }
     async getAllUserGroups(userId) {
         const groups = await prisma.groupMember.findMany({
             where: {
-                userId: userId
+                userId: userId,
             },
             include: {
                 group: {
@@ -296,29 +290,29 @@ export class UserService {
                         members: true,
                         expenses: {
                             include: {
-                                splits: true
-                            }
-                        }
-                    }
-                }
-            }
+                                splits: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         // Calculate balance for each group
-        const groupsWithBalance = groups.map(groupMember => {
+        const groupsWithBalance = groups.map((groupMember) => {
             let balance = 0;
             // Calculate user's balance in this group
             // Include settlements - they are payments that reduce debt
             for (const expense of groupMember.group.expenses) {
-                const userSplit = expense.splits.find(s => s.userId === userId);
+                const userSplit = expense.splits.find((s) => s.userId === userId);
                 if (!userSplit)
                     continue;
                 const userOwed = userSplit.amount;
                 const userPaid = expense.paidById === userId ? expense.amount : 0;
-                balance += (userPaid - userOwed);
+                balance += userPaid - userOwed;
             }
             return {
                 ...groupMember,
-                balance
+                balance,
             };
         });
         return groupsWithBalance;
@@ -327,14 +321,14 @@ export class UserService {
         // Get friend information
         const friend = await prisma.user.findUnique({
             where: {
-                id: friendId
+                id: friendId,
             },
             select: {
                 id: true,
                 name: true,
                 username: true,
-                email: true
-            }
+                email: true,
+            },
         });
         if (!friend) {
             throw new Error("Friend not found!!");
@@ -346,19 +340,19 @@ export class UserService {
                 groupId: null,
                 splits: {
                     some: {
-                        userId: currentUserId
-                    }
+                        userId: currentUserId,
+                    },
                 },
                 AND: {
                     splits: {
                         some: {
-                            userId: friendId
-                        }
-                    }
-                }
+                            userId: friendId,
+                        },
+                    },
+                },
             },
             orderBy: {
-                date: 'desc'
+                date: "desc",
             },
             include: {
                 paidBy: {
@@ -366,7 +360,7 @@ export class UserService {
                         id: true,
                         username: true,
                         name: true,
-                    }
+                    },
                 },
                 splits: {
                     include: {
@@ -374,19 +368,19 @@ export class UserService {
                             select: {
                                 id: true,
                                 username: true,
-                                name: true
-                            }
-                        }
-                    }
-                }
+                                name: true,
+                            },
+                        },
+                    },
+                },
             },
         });
         // Calculate balance from actual friend-to-friend expenses
         // This ensures group expenses don't affect friend balances
         let finalBalance = 0;
         for (const expense of expenses) {
-            const currentUserSplit = expense.splits.find(s => s.userId === currentUserId);
-            const friendSplit = expense.splits.find(s => s.userId === friendId);
+            const currentUserSplit = expense.splits.find((s) => s.userId === currentUserId);
+            const friendSplit = expense.splits.find((s) => s.userId === friendId);
             if (currentUserSplit && friendSplit) {
                 const currentUserPaid = expense.paidById === currentUserId ? expense.amount : 0;
                 const currentUserOwed = currentUserSplit.amount;
@@ -405,7 +399,7 @@ export class UserService {
             friend,
             expenses,
             balance: finalBalance,
-            expenseCount: expenses.length
+            expenseCount: expenses.length,
         };
     }
 }
