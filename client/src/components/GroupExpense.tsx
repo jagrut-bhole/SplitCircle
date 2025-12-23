@@ -82,27 +82,30 @@ export function GroupExpense() {
     const calculateBalance = () => {
         let balance = 0;
         recentExpenses.forEach(expense => {
+            // Get current user's split from the expense
+            const currentUserSplit = expense.splits?.find(s => s.userId === currentUserId);
+            const currentUserOwes = currentUserSplit?.amount || 0;
+            
             // Check for settlement using splitType
             if (expense.splitType === 'SETTLEMENT') {
                 // For settlements, check the expense splits to see who received the money
-                const userSplit = expense.splits?.find(s => s.userId === currentUserId);
                 const otherSplit = expense.splits?.find(s => s.userId !== currentUserId);
                 
                 if (expense.paidById === currentUserId && otherSplit) {
                     // You paid someone - reduces your negative balance (you owe less)
                     balance += otherSplit.amount;
-                } else if (userSplit && userSplit.amount > 0) {
+                } else if (currentUserSplit && currentUserSplit.amount > 0) {
                     // Someone paid you - reduces your positive balance (they owe you less)
-                    balance -= userSplit.amount;
+                    balance -= currentUserSplit.amount;
                 }
             } else {
-                const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
+                // Regular expense - use actual split amounts
                 if (expense.paidById === currentUserId) {
-                    // CurrentUser paid, so you lent money
-                    balance += (expense.amount - splitAmount);
+                    // CurrentUser paid, so you lent money (total - your share)
+                    balance += (expense.amount - currentUserOwes);
                 } else {
-                    // Someone else paid, so currentUser borrowed money
-                    balance -= splitAmount;
+                    // Someone else paid, so currentUser borrowed money (your share)
+                    balance -= currentUserOwes;
                 }
             }
         });
@@ -256,10 +259,17 @@ export function GroupExpense() {
                                     }
 
                                     const isPaidByCurrentUser = expense.paidById === currentUserId;
-                                    const splitAmount = expense.amount / (groupDetails?.data.group[0].members.length || 1);
+                                    
+                                    // Get current user's split amount from the expense splits
+                                    const currentUserSplit = expense.splits?.find(s => s.userId === currentUserId);
+                                    const currentUserOwes = currentUserSplit?.amount || 0;
+                                    
+                                    // Calculate what you lent or borrowed
+                                    // If you paid: you lent (total - your share)
+                                    // If someone else paid: you borrowed (your share)
                                     const yourShare = isPaidByCurrentUser 
-                                        ? expense.amount - splitAmount  // You lent
-                                        : splitAmount;  // You borrowed
+                                        ? expense.amount - currentUserOwes  // You lent: total minus your share
+                                        : currentUserOwes;  // You borrowed: your share
                                     
                                     return (
                                         <div
