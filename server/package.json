@@ -10,7 +10,8 @@
     "prepare": "husky",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
