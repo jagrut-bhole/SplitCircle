@@ -29,7 +29,6 @@ export function FriendAddExpenseModal({
     friendId,
     friendUsername,
     friendName,
-    currentUserName,
     onExpenseAdded
 }: FriendAddExpenseModalProps) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
