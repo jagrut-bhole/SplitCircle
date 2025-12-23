@@ -50,13 +50,15 @@ export class SettlementService {
         let message;
         let youOwe = 0;
         let theyOwe = 0;
-        if (actualBalance > 0) {
-            youOwe = actualBalance;
-            message = `You Owe ${friend.name} ₹${actualBalance.toFixed(2)}`;
+        // actualBalance > 0 means currentUser is OWED money (friend owes currentUser)
+        // actualBalance < 0 means currentUser OWES money (currentUser owes friend)
+        if (actualBalance < 0) {
+            youOwe = Math.abs(actualBalance);
+            message = `You Owe ${friend.name} ₹${Math.abs(actualBalance).toFixed(2)}`;
         }
-        else if (actualBalance < 0) {
-            theyOwe = Math.abs(actualBalance);
-            message = `${friend.name} Owes You ₹${Math.abs(actualBalance).toFixed(2)}`;
+        else if (actualBalance > 0) {
+            theyOwe = actualBalance;
+            message = `${friend.name} Owes You ₹${actualBalance.toFixed(2)}`;
         }
         else {
             message = `You are settled up with ${friend.name}`;
@@ -111,20 +113,26 @@ export class SettlementService {
         else {
             actualBalance = -balance.amount;
         }
-        if (actualBalance <= 0) {
+        // actualBalance < 0 means you owe money
+        // actualBalance > 0 means friend owes you
+        if (actualBalance >= 0) {
             throw new Error(`You don't owe any money to ${friendId}`);
         }
-        if (amount > actualBalance) {
-            throw new Error(`You can't settle more than you owe. You owe ₹${actualBalance.toFixed(2)}, but trying to pay ₹${amount.toFixed(2)}`);
+        const youOweAmount = Math.abs(actualBalance);
+        if (amount > youOweAmount) {
+            throw new Error(`You can't settle more than you owe. You owe ₹${youOweAmount.toFixed(2)}, but trying to pay ₹${amount.toFixed(2)}`);
         }
         let balanceChange = 0;
+        // When you pay, your negative balance (debt) decreases
+        // If currentUserId is user1Id and actualBalance is negative (you owe), paying increases the balance
+        // If currentUserId is user2Id and actualBalance is negative (you owe), paying decreases the stored balance
         if (currentUserId === user1Id) {
-            balanceChange = -amount;
+            balanceChange = amount; // Paying reduces your debt, so balance goes up
         }
         else {
-            balanceChange = amount;
+            balanceChange = -amount; // From user2's perspective, paying reduces the stored balance
         }
-        const isFullSettlement = Math.abs(amount - actualBalance) < 0.01;
+        const isFullSettlement = Math.abs(amount - youOweAmount) < 0.01;
         const result = await prisma.$transaction(async (tx) => {
             const settlementExpense = await tx.expense.create({
                 data: {
@@ -208,12 +216,16 @@ export class SettlementService {
                     },
                 },
             });
+            // remainingAmount is how much you still owe (positive value)
+            // newActualBalance < 0 means you still owe, so we take absolute value
+            // newActualBalance >= 0 means you're settled or they owe you
+            const remainingDebt = newActualBalance < 0 ? Math.abs(newActualBalance) : 0;
             return {
                 settlement: settlementExpense,
-                oldBalance: actualBalance,
+                oldBalance: youOweAmount,
                 newBalance: newActualBalance,
                 isFullSettlement,
-                remainingAmount: Math.max(0, newActualBalance),
+                remainingAmount: remainingDebt,
             };
         });
         const emailService = new EmailServices();
