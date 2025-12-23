@@ -4,9 +4,9 @@ export declare class UserService {
     searchUserByUsername(friendUsername: string, currentUserId: string): Promise<{
         user: {
             email: string;
-            name: string;
             id: string;
             username: string;
+            name: string;
         };
     } | null>;
     checkFriendshipExists(userId1: string, userId2: string): Promise<{
@@ -49,10 +49,10 @@ export declare class UserService {
     getUserDetails(userId: string): Promise<{
         user: {
             email: string;
-            name: string;
             id: string;
             username: string;
             password: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
         };
@@ -94,8 +94,8 @@ export declare class UserService {
                 createdById: string;
             })[];
         } & {
-            name: string;
             id: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
             createdById: string;
@@ -109,21 +109,21 @@ export declare class UserService {
     friendDetails(friendId: string, currentUserId: string): Promise<{
         friend: {
             email: string;
-            name: string;
             id: string;
             username: string;
+            name: string;
         };
         expenses: ({
             paidBy: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
             splits: ({
                 user: {
-                    name: string;
                     id: string;
                     username: string;
+                    name: string;
                 };
             } & {
                 userId: string;

@@ -19,15 +19,15 @@ export declare class ExpenseServices {
         count: number;
         data: ({
             paidBy: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
             splits: ({
                 user: {
-                    name: string;
                     id: string;
                     username: string;
+                    name: string;
                 };
             } & {
                 userId: string;
@@ -55,13 +55,13 @@ export declare class ExpenseServices {
     friendSingleExpenseDetail(expenseId: string, currentUserId: string): Promise<{
         expense: ({
             paidBy: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
             group: {
-                name: string;
                 id: string;
+                name: string;
                 createdAt: Date;
                 description: string | null;
             } | null;
@@ -122,10 +122,10 @@ export declare class ExpenseServices {
         expense: {
             paidBy: {
                 email: string;
-                name: string;
                 id: string;
                 username: string;
                 password: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
             };

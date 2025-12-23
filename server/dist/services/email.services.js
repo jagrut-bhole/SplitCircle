@@ -1,34 +1,53 @@
 import nodemailer from "nodemailer";
+import { google } from "googleapis";
+const OAuth2 = google.auth.OAuth2;
 export class EmailServices {
     constructor() {
-        // console.log('Email configured for:', process.env.EMAIL_USER);
-        this.transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false, // true for 465, false for other ports
+        this.transporter = this.createTransporter();
+        this.verifyConnection();
+    }
+    createTransporter() {
+        const oauth2Client = new OAuth2(process.env.GMAIL_CLIENT_ID, process.env.GMAIL_CLIENT_SECRET, "https://developers.google.com/oauthplayground");
+        oauth2Client.setCredentials({
+            refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+        });
+        return nodemailer.createTransport({
+            service: "gmail",
             auth: {
+                type: "OAuth2",
                 user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
+                clientId: process.env.GMAIL_CLIENT_ID,
+                clientSecret: process.env.GMAIL_CLIENT_SECRET,
+                refreshToken: process.env.GMAIL_REFRESH_TOKEN,
             },
         });
+    }
+    async verifyConnection() {
+        try {
+            await this.transporter.verify();
+            console.log("✅ Email service is ready (Gmail API OAuth2)");
+        }
+        catch (error) {
+            console.error("❌ Email service configuration error:", error.message);
+        }
     }
     async sendEmail(to, subject, html) {
         try {
             const info = await this.transporter.sendMail({
-                from: process.env.EMAIL_USER,
+                from: `"SplitCircle" <${process.env.EMAIL_USER}>`,
                 to: to,
                 subject: subject,
                 html: html,
             });
-            // console.log('Email Sent: ', info.messageId);
+            console.log("✅ Email sent:", info.messageId);
             return {
                 success: true,
                 message: info.messageId,
             };
         }
         catch (error) {
-            console.log("Email send error: ", error);
-            return { success: false, error };
+            console.error("❌ Email send error:", error.message);
+            return { success: false, error: error.message };
         }
     }
     async sendWelcomeEmail(name, email, username) {

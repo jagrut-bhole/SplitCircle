@@ -9,9 +9,9 @@ export declare class GroupService {
             members: ({
                 user: {
                     email: string;
-                    name: string;
                     id: string;
                     username: string;
+                    name: string;
                 };
             } & {
                 userId: string;
@@ -20,8 +20,8 @@ export declare class GroupService {
                 joinedAt: Date;
             })[];
         } & {
-            name: string;
             id: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
             createdById: string;
@@ -36,9 +36,9 @@ export declare class GroupService {
                 };
                 members: ({
                     user: {
-                        name: string;
                         id: string;
                         username: string;
+                        name: string;
                     };
                 } & {
                     userId: string;
@@ -47,8 +47,8 @@ export declare class GroupService {
                     joinedAt: Date;
                 })[];
             } & {
-                name: string;
                 id: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
                 createdById: string;
@@ -66,9 +66,9 @@ export declare class GroupService {
         group: ({
             members: ({
                 user: {
-                    name: string;
                     id: string;
                     username: string;
+                    name: string;
                 };
             } & {
                 userId: string;
@@ -77,8 +77,8 @@ export declare class GroupService {
                 joinedAt: Date;
             })[];
         } & {
-            name: string;
             id: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
             createdById: string;
@@ -86,15 +86,15 @@ export declare class GroupService {
         })[];
         recentExpenses: ({
             paidBy: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
             splits: ({
                 user: {
-                    name: string;
                     id: string;
                     username: string;
+                    name: string;
                 };
             } & {
                 userId: string;
@@ -126,9 +126,9 @@ export declare class GroupService {
                 members: ({
                     user: {
                         email: string;
-                        name: string;
                         id: string;
                         username: string;
+                        name: string;
                     };
                 } & {
                     userId: string;
@@ -137,8 +137,8 @@ export declare class GroupService {
                     joinedAt: Date;
                 })[];
             } & {
-                name: string;
                 id: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
                 createdById: string;
@@ -153,19 +153,19 @@ export declare class GroupService {
         percentage?: number;
     }>, participantUsernames: string[]): Promise<({
         paidBy: {
-            name: string;
             id: string;
             username: string;
+            name: string;
         };
         group: {
-            name: string;
             id: string;
+            name: string;
         } | null;
         splits: ({
             user: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
         } & {
             userId: string;
@@ -191,19 +191,19 @@ export declare class GroupService {
     }) | null>;
     updateGroupExpense(expenseId: string, groupId: string, currentUserId: string, title: string, amount: number, paidByUsername: string, participantUsernames: string[]): Promise<({
         paidBy: {
-            name: string;
             id: string;
             username: string;
+            name: string;
         };
         group: {
-            name: string;
             id: string;
+            name: string;
         } | null;
         splits: ({
             user: {
-                name: string;
                 id: string;
                 username: string;
+                name: string;
             };
         } & {
             userId: string;

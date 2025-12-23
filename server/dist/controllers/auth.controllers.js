@@ -32,7 +32,7 @@ export const registerController = asyncHandler(async (req, res) => {
             },
         });
         const emailService = new EmailServices();
-        emailService.sendWelcomeEmail(user.name, user.email, user.username);
+        emailService.sendWelcomeEmail(user.name, user.email, user.username).catch(err => console.error('Email failed:', err));
         const accessToken = generateAccessToken(user.id, email);
         const refreshToken = generateRefreshToken(user.id, email);
         const userResponse = {

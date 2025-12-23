@@ -1,6 +1,8 @@
 export declare class EmailServices {
     private transporter;
     constructor();
+    private createTransporter;
+    private verifyConnection;
     private sendEmail;
     sendWelcomeEmail(name: string, email: string, username: string): Promise<{
         success: boolean;
